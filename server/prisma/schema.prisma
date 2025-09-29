@@ -45,7 +45,7 @@ enum Tipe_Soal {
 }
 
 enum Prodi {
-  Teknik_Informatika
+  Informatika
   Sistem_Informasi
   Ilmu_Komunikasi
 }
