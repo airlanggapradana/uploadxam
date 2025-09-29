@@ -5,7 +5,7 @@ import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
 
 const Navbar = () => {
   return (
-    <nav className="fixed z-10 w-full bg-transparent shadow-md">
+    <nav className="fixed z-20 w-full bg-transparent shadow-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
         <Image
           src={
@@ -15,11 +15,19 @@ const Navbar = () => {
           height={75}
           alt={"logo"}
         />
-        <div className={"flex items-center gap-5"}>
-          <Link href="#" className="text-gray-100 hover:text-gray-800">
+        <div className={"flex items-center gap-3"}>
+          <Link
+            href={
+              "https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
+            }
+            className="rounded-md p-2 text-gray-100 transition-all duration-300 hover:bg-gray-800 hover:text-sky-300"
+          >
             <FaInstagram className={"h-6 w-6"} />
           </Link>
-          <Link href="#" className="text-gray-100 hover:text-gray-800">
+          <Link
+            href="#"
+            className="rounded-md p-2 text-gray-100 transition-all duration-300 hover:bg-gray-800 hover:text-sky-300"
+          >
             <FaWhatsapp className={"h-6 w-6"} />
           </Link>
         </div>
