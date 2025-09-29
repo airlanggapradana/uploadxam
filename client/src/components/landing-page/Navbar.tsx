@@ -5,7 +5,7 @@ import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
 
 const Navbar = () => {
   return (
-    <nav className="fixed z-20 w-full bg-transparent shadow-md">
+    <nav className="fixed z-20 w-full bg-transparent shadow-md backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
         <Image
           src={
