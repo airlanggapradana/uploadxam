@@ -4,13 +4,17 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon -r dotenv/config src/server.ts"
+    "dev": "nodemon -r dotenv/config src/server.ts",
+    "db:push": "prisma db push",
+    "db:pull": "prisma db pull",
+    "db:generate": "prisma generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@prisma/client": "^6.16.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
