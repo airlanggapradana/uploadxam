@@ -1,10 +1,11 @@
 import {Router} from 'express';
-import {createUser, deleteUser, updateUser} from "../services/users.service";
+import {deleteUser, getAllUploads, makeUpload, updateUser} from "../services/users.service";
 
 const userRouter = Router();
 
-userRouter.post('/', createUser)
+userRouter.get('/uploads', getAllUploads)
 userRouter.put('/:id', updateUser)
 userRouter.delete('/:id', deleteUser)
+userRouter.post('/upload', makeUpload)
 
 export default userRouter;

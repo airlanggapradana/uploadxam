@@ -18,6 +18,7 @@ model User {
   id        String   @id @default(cuid())
   nim       String   @unique
   name      String
+  role      Role     @default(USER)
   prodi     Prodi
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -26,17 +27,23 @@ model User {
 }
 
 model Upload {
-  id         String    @id @default(cuid())
-  title      String
-  fileUrl    String
-  tipe_soal  Tipe_Soal
-  semester   Int
-  year       Int
-  prodi      Prodi
-  uploadedAt DateTime  @default(now())
+  id          String    @id @default(cuid())
+  title       String
+  fileUrl     String
+  mata_kuliah String
+  tipe_soal   Tipe_Soal
+  semester    Int
+  year        Int
+  prodi       Prodi
+  uploadedAt  DateTime  @default(now())
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 enum Tipe_Soal {
