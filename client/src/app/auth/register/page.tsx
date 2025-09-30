@@ -1,11 +1,13 @@
 import React from "react";
 import {
   Card,
+  CardAction,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import RegisterForm from "@/components/auth/RegisterForm";
+import Link from "next/link";
 
 const Register = () => {
   return (
@@ -20,6 +22,14 @@ const Register = () => {
           <CardDescription className="text-white/70">
             Silakan daftar untuk mengakses semua soal ujian.
           </CardDescription>
+          <CardAction className="flex justify-end">
+            <Link
+              href={"/auth/login"}
+              className="max-w-[12rem] text-sm text-blue-400 transition-colors hover:text-blue-300"
+            >
+              Sudah punya akun?
+            </Link>
+          </CardAction>
         </CardHeader>
         <RegisterForm />
       </Card>

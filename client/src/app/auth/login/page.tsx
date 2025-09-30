@@ -1,10 +1,39 @@
 import React from "react";
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
+import LoginForm from "@/components/auth/LoginForm";
 
 const Login = () => {
   return (
-    <div>
-      <h1>Login</h1>
-    </div>
+    <main
+      className={
+        "relative z-10 flex min-h-screen flex-col items-center justify-center"
+      }
+    >
+      <Card className="w-full max-w-xl border border-white/20 bg-white/15 shadow-lg backdrop-blur-lg">
+        <CardHeader className="border-b border-white/10">
+          <CardTitle className="text-white">Login Akun</CardTitle>
+          <CardDescription className="text-white/70">
+            Silakan login untuk mengakses semua soal ujian.
+          </CardDescription>
+          <CardAction className="flex justify-end">
+            <Link
+              href={"/auth/register"}
+              className="max-w-[12rem] text-sm text-blue-400 transition-colors hover:text-blue-300"
+            >
+              Belum punya akun?
+            </Link>
+          </CardAction>
+        </CardHeader>
+        <LoginForm />
+      </Card>
+    </main>
   );
 };
 

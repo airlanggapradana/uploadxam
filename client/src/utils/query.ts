@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import type { CreateUserInput } from "@/zod/zod.validation";
+import type { CreateUserInput, LoginInput } from "@/zod/zod.validation";
 import { env } from "@/env";
 
 export const useRegister = () => {
@@ -19,6 +19,31 @@ export const useRegister = () => {
         if (e instanceof AxiosError) {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
           throw new Error(e.response?.data.message);
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+  });
+};
+
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: async (data: LoginInput) => {
+      try {
+        return await axios
+          .post(`${env.NEXT_PUBLIC_API_URL}/auth/login`, data, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+          })
+          .then((res) => res.data as { message: string; data: string });
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message || "Terjadi kesalahan tak terduga",
+          );
         }
         throw new Error("An unknown error occurred");
       }
