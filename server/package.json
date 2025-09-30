@@ -7,7 +7,8 @@
     "dev": "nodemon -r dotenv/config src/server.ts",
     "db:push": "prisma db push",
     "db:pull": "prisma db pull",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "db:seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,10 +24,12 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.0.0",
     "@types/cors": "^2.8.19",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.6.0",
     "@types/nodemon": "^1.19.6",
     "prisma": "^6.16.2",
     "ts-node-dev": "^2.0.0",

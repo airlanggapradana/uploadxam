@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, FileText, LogOut, Settings } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { FileText, LogOut, Settings } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +11,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { deleteCookie } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
+import { useUserSession } from "@/hooks/context";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const DashboardHeader = () => {
   const router = useRouter();
+  const session = useUserSession();
   return (
     <header className="flex items-center justify-between border-b bg-white px-6 py-4">
       <div className="flex items-center space-x-4">
@@ -24,35 +28,39 @@ const DashboardHeader = () => {
           <span className="text-gray-400">/</span>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="flex items-center space-x-2 rounded-md border border-gray-200 px-3 py-1.5 hover:bg-gray-50"
-            >
-              <div className="flex h-4 w-4 items-center justify-center rounded bg-sky-500">
-                <span className="text-xs font-medium text-white">P</span>
-              </div>
-              <span className="text-sm font-medium">Personal Team</span>
-              <ChevronDown className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem>Personal Team</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-3">
+          <Badge
+            variant="secondary"
+            className={cn(
+              session.prodi === "Informatika" &&
+                "bg-sky-500 text-sm text-gray-50",
+              session.prodi === "Sistem_Informasi" &&
+                "bg-amber-500 text-sm text-gray-50",
+              session.prodi !== "Informatika" &&
+                session.prodi !== "Sistem_Informasi" &&
+                "bg-orange-500 text-sm text-gray-50",
+            )}
+          >
+            {session.prodi === "Informatika"
+              ? "Informatika"
+              : session.prodi === "Ilmu_Komunikasi"
+                ? "Ilmu Komunikasi"
+                : session.prodi === "Sistem_Informasi"
+                  ? "Sistem Informasi"
+                  : "Unknown"}
+          </Badge>
+        </div>
       </div>
 
       <div className="flex items-center space-x-4">
-        <Button variant="ghost" size="sm" className="text-gray-800">
-          <FileText className="mr-1.5 h-4 w-4" />
-          Panduan Penggunaan
+        <Button variant="ghost" size="default" className="text-gray-800">
+          <FileText className="h-4 w-4" />
+          Panduan
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="h-8 w-8 cursor-pointer">
-              <AvatarImage src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face" />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarFallback>{session.name.slice(0, 2)}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

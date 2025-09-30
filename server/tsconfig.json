@@ -8,7 +8,6 @@
     // See also https://aka.ms/tsconfig/module
     "module": "NodeNext",
     "target": "ES2022",
-    "types": [],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -36,7 +35,11 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ]
+    // 👉 tambahin ini
   },
   "include": [
     "src/**/*.ts",

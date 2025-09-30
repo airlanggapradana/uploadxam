@@ -1,4 +1,5 @@
 import prisma from '../../prisma/prisma'
+import {Prodi} from "../../generated/prisma"
 import {Request, Response, NextFunction} from "express";
 import {createUserSchema, MakeUploadInput, makeUploadSchema} from "../zod/zod.validation";
 
@@ -138,29 +139,50 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
 
 export const getAllUploads = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const {prodi} = req.query;
+
+    // Ambil semua uploads beserta author
     const uploads = await prisma.upload.findMany({
-      include: {
-        user: true,
-      },
-      orderBy: {
-        uploadedAt: "desc",
-      },
+      include: {user: true},
+      orderBy: {uploadedAt: "desc"},
     });
 
-    // Kelompokkan prodi -> semester dalam bentuk map
-    const groupedMap = uploads.reduce((acc: Map<string, any>, upload) => {
-      const prodi = upload.user?.prodi || "Unknown";
+    // Semua prodi valid
+    const allProdis = [
+      Prodi.Informatika,
+      Prodi.Sistem_Informasi,
+      Prodi.Ilmu_Komunikasi,
+    ];
+
+    // Kalau ada filter prodi, batasi list prodi
+    const targetProdis = prodi
+      ? [prodi as Prodi]
+      : allProdis;
+
+    const groupedMap = new Map(
+      targetProdis.map((p) => [
+        p,
+        {
+          prodi: p,
+          totalUploads: 0,
+          semesters: new Map<number | string, any>(),
+        },
+      ])
+    );
+
+    // Filter uploads sesuai prodi
+    const filteredUploads = uploads.filter((u) =>
+      prodi ? u.user?.prodi === prodi : true
+    );
+
+    // Masukkan uploads ke grouping
+    for (const upload of filteredUploads) {
+      const prodiName = upload.user?.prodi || "Unknown";
       const semester = upload.semester || "Unknown";
 
-      if (!acc.has(prodi)) {
-        acc.set(prodi, {
-          prodi,
-          totalUploads: 0,
-          semesters: new Map(),
-        });
-      }
+      if (!groupedMap.has(prodiName)) continue; // skip kalau bukan target prodi
 
-      const prodiData = acc.get(prodi);
+      const prodiData = groupedMap.get(prodiName)!;
       prodiData.totalUploads += 1;
 
       if (!prodiData.semesters.has(semester)) {
@@ -171,14 +193,12 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
         });
       }
 
-      const semesterData = prodiData.semesters.get(semester);
+      const semesterData = prodiData.semesters.get(semester)!;
       semesterData.totalUploads += 1;
       semesterData.uploads.push(upload);
+    }
 
-      return acc;
-    }, new Map());
-
-    // Konversi map ke array
+    // Konversi ke array final
     const groupedArray = Array.from(groupedMap.values()).map((prodiData) => ({
       prodi: prodiData.prodi,
       totalUploads: prodiData.totalUploads,
@@ -186,7 +206,7 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
     }));
 
     res.status(200).json({
-      totalUploads: uploads.length,
+      totalUploads: filteredUploads.length,
       groupedByProdi: groupedArray,
     });
     return;
