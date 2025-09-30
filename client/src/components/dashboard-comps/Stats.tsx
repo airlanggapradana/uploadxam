@@ -24,7 +24,9 @@ const Stats = () => {
               <div className={"space-y-2"}>
                 <CardTitle>
                   <span className="flex items-center gap-2">
-                    <FileArchive />
+                    <div className={"rounded-md bg-teal-200 p-2"}>
+                      <FileArchive className={"text-teal-700"} />
+                    </div>
                     Total Files Uploaded
                   </span>
                 </CardTitle>
@@ -42,13 +44,23 @@ const Stats = () => {
                   <CardTitle>
                     <span className="flex items-center gap-2">
                       {prodi.prodi === "Informatika" && (
-                        <FaComputer className={"h-7 w-7"} />
+                        <div className={"rounded-md bg-sky-200 p-2"}>
+                          <FaComputer className={"h-6 w-6 text-sky-600"} />
+                        </div>
                       )}
                       {prodi.prodi === "Sistem_Informasi" && (
-                        <IoHardwareChipOutline className={"h-7 w-7"} />
+                        <div className={"rounded-md bg-amber-200 p-2"}>
+                          <IoHardwareChipOutline
+                            className={"h-6 w-6 text-amber-600"}
+                          />
+                        </div>
                       )}
                       {prodi.prodi === "Ilmu_Komunikasi" && (
-                        <FaPeopleRobbery className={"h-7 w-7"} />
+                        <div className={"rounded-md bg-indigo-200 p-2"}>
+                          <FaPeopleRobbery
+                            className={"h-6 w-6 text-indigo-600"}
+                          />
+                        </div>
                       )}
                       {prodi.prodi.replace("_", " ")}
                     </span>

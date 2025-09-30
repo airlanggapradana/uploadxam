@@ -38,7 +38,7 @@ const DashboardHeader = () => {
                 "bg-amber-500 text-sm text-gray-50",
               session.prodi !== "Informatika" &&
                 session.prodi !== "Sistem_Informasi" &&
-                "bg-orange-500 text-sm text-gray-50",
+                "bg-indigo-500 text-sm text-gray-50",
             )}
           >
             {session.prodi === "Informatika"
