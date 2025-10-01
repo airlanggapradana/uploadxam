@@ -26,7 +26,7 @@ export default function RootLayout({
         <TanstackProvider>
           <body>
             {children}
-            <Toaster />
+            <Toaster position={"top-center"} richColors={true} />
           </body>
         </TanstackProvider>
       </EdgeStoreProvider>

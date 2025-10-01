@@ -90,15 +90,28 @@ export const useGetExams = (
 export const useMakeUpload = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: MakeUploadInput) => {
+    mutationFn: async ({
+      data,
+      fileUrl,
+    }: {
+      data: MakeUploadInput;
+      fileUrl: string;
+    }) => {
       try {
         return await axios
-          .post(`${env.NEXT_PUBLIC_API_URL}/users/upload`, data, {
-            headers: {
-              "Content-Type": "application/json",
+          .post(
+            `${env.NEXT_PUBLIC_API_URL}/users/upload`,
+            {
+              ...data,
+              fileUrl,
             },
-            method: "POST",
-          })
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+            },
+          )
           .then((res) => res.status);
       } catch (e) {
         if (e instanceof AxiosError) {

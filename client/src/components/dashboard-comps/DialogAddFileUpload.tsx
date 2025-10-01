@@ -42,11 +42,13 @@ import { toast } from "sonner";
 const DialogAddFileUpload = () => {
   const session = useUserSession();
   const { edgestore } = useEdgeStore();
+
   const [fileUrl, setFileUrl] = React.useState<string | null>(null);
+  const [open, setOpen] = React.useState(false);
+
   const form = useForm<MakeUploadInput>({
     defaultValues: {
       title: "",
-      fileUrl: "",
       tipe_soal: "UTS",
       semester: 1,
       year: new Date().getFullYear(),
@@ -59,15 +61,27 @@ const DialogAddFileUpload = () => {
 
   const uploadFn: UploadFn = React.useCallback(
     async ({ file, onProgressChange, signal }) => {
+      if (file.type !== "application/pdf") {
+        toast.error("Only PDF files are allowed", {
+          position: "top-center",
+          richColors: true,
+        });
+      }
+      if (file.size >= 1024 * 1024 * 5) {
+        toast.error("File size exceeds 5MB", {
+          position: "top-center",
+          richColors: true,
+        });
+      }
       const res = await edgestore.publicFiles.upload({
         file,
         signal,
         onProgressChange,
+        options: {
+          temporary: true,
+        },
       });
-      // you can run some server action or api here
-      // to add the necessary data to your database
       setFileUrl(res.url);
-      console.log(res);
       return res;
     },
     [edgestore],
@@ -82,9 +96,11 @@ const DialogAddFileUpload = () => {
         richColors: true,
       });
     try {
-      const { fileUrl, ...sisa } = d;
+      await edgestore.publicFiles.confirmUpload({
+        url: fileUrl,
+      });
       const res = await handleUpload({
-        ...sisa,
+        data: d,
         fileUrl,
       });
       if (res === 201) {
@@ -93,19 +109,24 @@ const DialogAddFileUpload = () => {
           richColors: true,
         });
         form.reset();
+        setFileUrl(null);
+        setOpen(false);
       }
     } catch (e) {
       toast.error(
         e instanceof Error ? e.message : "An unexpected error occurred",
       );
+      form.reset();
+      setFileUrl(null);
+      setOpen(false);
     }
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <BiPlus />
-          Add File Upload
+          Upload File
         </Button>
       </DialogTrigger>
       <DialogContent className={"sm:max-w-4xl"}>
@@ -143,7 +164,7 @@ const DialogAddFileUpload = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className={"w-full"}>
                         <SelectValue placeholder="Select tipe soal" />
                       </SelectTrigger>
                       <SelectContent>
@@ -167,6 +188,7 @@ const DialogAddFileUpload = () => {
                       type="number"
                       placeholder="Enter semester"
                       {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -181,7 +203,12 @@ const DialogAddFileUpload = () => {
                 <FormItem>
                   <FormLabel>Year</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Enter year" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Enter year"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -241,10 +268,20 @@ const DialogAddFileUpload = () => {
                 width={850}
                 dropzoneOptions={{
                   maxSize: 1024 * 1024 * 5, // 5 MB
+                  accept: { "application/pdf": [".pdf"] },
                 }}
               />
             </UploaderProvider>
-            <Button type="submit">Submit</Button>
+            <div className={"flex items-center gap-3"}>
+              <Button
+                type="submit"
+                disabled={isPending}
+                onClick={form.handleSubmit(onSubmit)}
+              >
+                {isPending ? "Uploading..." : "Submit"}
+              </Button>
+              <Button variant={"secondary"}>Cancel</Button>
+            </div>
           </form>
         </Form>
       </DialogContent>

@@ -13,6 +13,7 @@ import { ExamSessionProvider } from "@/hooks/context";
 import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
 import { Warning } from "@/components/reusables/Warning";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
+import { Separator } from "@/components/ui/separator";
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
@@ -35,6 +36,8 @@ const Dashboard = () => {
             }
             className={"border-amber-200 bg-amber-100 text-amber-800"}
           />
+
+          <Separator />
 
           <div className={"flex items-center justify-between"}>
             <Select

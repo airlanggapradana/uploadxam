@@ -110,7 +110,7 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
       // Create upload within the transaction
       const upload = await tx.upload.create({
         data: {
-          id: `UP-${existingUser.prodi === 'Informatika' ? "IF" : existingUser.prodi === "Sistem_Informasi" ? "SI" : existingUser.prodi === "Ilmu_Komunikasi" ? "ILKM" : "unknown"}-${new Date().getDate()}`,
+          id: `UP-${existingUser.prodi === 'Informatika' ? "IF" : existingUser.prodi === "Sistem_Informasi" ? "SI" : existingUser.prodi === "Ilmu_Komunikasi" ? "ILKM" : "unknown"}-${crypto.randomUUID().slice(0, 3)}`,
           title,
           fileUrl,
           tipe_soal,

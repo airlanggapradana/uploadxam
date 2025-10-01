@@ -10,7 +10,6 @@ export const createUserSchema = z.object({
 
 export const makeUploadSchema = z.object({
   title: z.string().min(3).max(100),
-  fileUrl: z.string().url(),
   tipe_soal: z.enum(["UTS", "UAS"], { message: "Tipe soal tidak valid" }),
   semester: z.number().min(1).max(14),
   year: z
