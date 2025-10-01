@@ -139,7 +139,7 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
 
 export const getAllUploads = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {prodi} = req.query;
+    const {prodi, subject} = req.query;
 
     // Ambil semua uploads beserta author
     const uploads = await prisma.upload.findMany({
@@ -155,10 +155,9 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
     ];
 
     // Kalau ada filter prodi, batasi list prodi
-    const targetProdis = prodi
-      ? [prodi as Prodi]
-      : allProdis;
+    const targetProdis = prodi ? [prodi as Prodi] : allProdis;
 
+    // Inisialisasi groupedByProdi
     const groupedMap = new Map(
       targetProdis.map((p) => [
         p,
@@ -170,17 +169,23 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
       ])
     );
 
-    // Filter uploads sesuai prodi
-    const filteredUploads = uploads.filter((u) =>
-      prodi ? u.user?.prodi === prodi : true
-    );
+    // Filter uploads sesuai query param
+    const filteredUploads = uploads.filter((u) => {
+      const matchProdi = prodi ? u.user?.prodi === prodi : true;
+      const matchSubject = subject
+        ? u.mata_kuliah.toLowerCase().includes(
+          (subject as string).toLowerCase()
+        )
+        : true;
+      return matchProdi && matchSubject;
+    });
 
     // Masukkan uploads ke grouping
     for (const upload of filteredUploads) {
       const prodiName = upload.user?.prodi || "Unknown";
       const semester = upload.semester || "Unknown";
 
-      if (!groupedMap.has(prodiName)) continue; // skip kalau bukan target prodi
+      if (!groupedMap.has(prodiName)) continue;
 
       const prodiData = groupedMap.get(prodiName)!;
       prodiData.totalUploads += 1;
@@ -198,7 +203,7 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
       semesterData.uploads.push(upload);
     }
 
-    // Konversi ke array final
+    // Konversi hasil ke array
     const groupedArray = Array.from(groupedMap.values()).map((prodiData) => ({
       prodi: prodiData.prodi,
       totalUploads: prodiData.totalUploads,
