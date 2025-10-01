@@ -10,20 +10,31 @@ import {
 } from "@/components/ui/select";
 import { useGetExams } from "@/utils/query";
 import { ExamSessionProvider } from "@/hooks/context";
+import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
+import { Warning } from "@/components/reusables/Warning";
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
-    "Informatika" | "Sistem Informasi" | "Ilmu_Komunikasi" | "All"
+    "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All"
   >("All");
 
   const { data: exams, isLoading, error } = useGetExams(prodi);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!exams) return <div>No data available</div>;
+
   return (
     <ExamSessionProvider value={exams}>
       <main className={"w-full p-4"}>
         <div className={"space-y-5"}>
+          <Warning
+            title={"Mohon Perhatiannya!"}
+            description={
+              "Jika kamu menemukan soal yang tidak sesuai atau ada masalah lainnya, silakan laporkan ke admin melalui WhatsApp di nomor 081234567890. Terima kasih atas partisipasimu!"
+            }
+            className={"border-amber-200 bg-amber-100 text-amber-800"}
+          />
+
           <Select
             value={prodi}
             onValueChange={(value) => setProdi(value as typeof prodi)}
@@ -33,12 +44,14 @@ const Dashboard = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Informatika">Informatika</SelectItem>
-              <SelectItem value="Sistem Informasi">Sistem Informasi</SelectItem>
+              <SelectItem value="Sistem_Informasi">Sistem Informasi</SelectItem>
               <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
               <SelectItem value="All">All</SelectItem>
             </SelectContent>
           </Select>
           <Stats />
+
+          <ProdiGrid />
         </div>
       </main>
     </ExamSessionProvider>

@@ -23,7 +23,7 @@ const DashboardHeader = () => {
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">
           <span className="text-xl font-black text-black">
-            upload<span className="text-sky-600">Xam</span>
+            upload<span className="text-sky-600">xam</span>
           </span>
           <span className="text-gray-400">/</span>
         </div>
@@ -53,7 +53,7 @@ const DashboardHeader = () => {
       </div>
 
       <div className="flex items-center space-x-4">
-        <Button variant="ghost" size="default" className="text-gray-800">
+        <Button variant="secondary" size="default" className="text-gray-800">
           <FileText className="h-4 w-4" />
           Panduan
         </Button>

@@ -1,20 +1,20 @@
+"use client";
 import React from "react";
-import {
-  Grid3x3 as Grid3X3,
-  List,
-  CreditCard,
-  User,
-  Settings,
-} from "lucide-react";
+import { Grid3x3 as Grid3X3, CreditCard, User, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
+  const location = usePathname();
   const menuItems = [
-    { icon: Grid3X3, label: "Apps", active: true },
-    { icon: List, label: "Audit Logs", active: false },
-    { icon: CreditCard, label: "Billing", active: false },
-    { icon: User, label: "Account", active: false },
-    { icon: Settings, label: "Team Settings", active: false },
+    { icon: Grid3X3, label: "Apps", path: "/dashboard" },
+    { icon: CreditCard, label: "Billing", path: "/dashboard/billing" },
+    { icon: User, label: "Account", path: "/dashboard/account" },
+    {
+      icon: Settings,
+      label: "Settings",
+      path: "/dashboard/settings",
+    },
   ];
   return (
     <aside className="h-full w-64 border-r border-gray-200 bg-gray-50">
@@ -24,7 +24,7 @@ const Sidebar = () => {
             key={index}
             className={cn(
               "flex cursor-pointer items-center space-x-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
-              item.active
+              location === item.path
                 ? "border border-gray-200 bg-white text-gray-900 shadow-sm"
                 : "text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-sm",
             )}

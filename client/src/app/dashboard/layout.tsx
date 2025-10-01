@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { decodeJwtPayload } from "@/utils/helper";
 import { UserSessionProvider } from "@/hooks/context";
+import Footer from "@/components/reusables/Footer";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = await cookies();
@@ -22,7 +23,10 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         <DashboardHeader />
         <div className="flex flex-1">
           <Sidebar />
-          {children}
+          <div className={"w-full"}>
+            {children}
+            <Footer />
+          </div>
         </div>
       </div>
     </UserSessionProvider>

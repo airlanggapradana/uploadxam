@@ -53,7 +53,7 @@ export const useLogin = () => {
 };
 
 export const useGetExams = (
-  prodi?: "Informatika" | "Sistem Informasi" | "Ilmu_Komunikasi" | "All",
+  prodi?: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All",
 ) => {
   return useQuery<GetExamsResponse>({
     queryKey: ["exams", { prodi }],
