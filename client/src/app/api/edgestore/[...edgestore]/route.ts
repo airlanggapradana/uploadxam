@@ -7,10 +7,19 @@ const es = initEdgeStore.create();
  * This is the main router for the EdgeStore buckets.
  */
 const edgeStoreRouter = es.router({
-  publicFiles: es.fileBucket({
-    maxSize: 5 * 1024 * 1024, // 5 MB
-    accept: ["application/pdf"],
-  }),
+  publicFiles: es
+    .fileBucket({
+      maxSize: 5 * 1024 * 1024, // 5 MB
+      accept: ["application/pdf"],
+    })
+    .beforeUpload(({ ctx, input, fileInfo }) => {
+      console.log("beforeUpload", ctx, input, fileInfo);
+      return true; // allow upload
+    })
+    .beforeDelete(({ ctx, fileInfo }) => {
+      console.log("beforeDelete", ctx, fileInfo);
+      return true; // allow delete
+    }),
 });
 
 const handler = createEdgeStoreNextHandler({

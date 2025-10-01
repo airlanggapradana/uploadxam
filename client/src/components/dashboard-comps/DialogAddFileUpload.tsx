@@ -38,6 +38,8 @@ import {
 import { useMakeUpload } from "@/utils/query";
 import { SingleImageDropzone } from "@/components/upload/single-image";
 import { toast } from "sonner";
+import { EdgeStoreApiClientError } from "@edgestore/shared";
+import { formatFileSize } from "@edgestore/react/utils";
 
 const DialogAddFileUpload = () => {
   const session = useUserSession();
@@ -113,12 +115,23 @@ const DialogAddFileUpload = () => {
         setOpen(false);
       }
     } catch (e) {
-      toast.error(
-        e instanceof Error ? e.message : "An unexpected error occurred",
-      );
-      form.reset();
-      setFileUrl(null);
-      setOpen(false);
+      // All errors are typed and you will get intellisense for them
+      if (e instanceof EdgeStoreApiClientError) {
+        // if it fails due to the `maxSize` set in the router config
+        if (e.data.code === "FILE_TOO_LARGE") {
+          toast.error("File too large. Max size is 5MB", {
+            position: "top-center",
+            richColors: true,
+          });
+        }
+        // if it fails due to the `accept` set in the router config
+        if (e.data.code === "MIME_TYPE_NOT_ALLOWED") {
+          toast.error(`File type not allowed. Only PDF files are allowed`, {
+            position: "top-center",
+            richColors: true,
+          });
+        }
+      }
     }
   };
   return (
@@ -272,18 +285,37 @@ const DialogAddFileUpload = () => {
                 }}
               />
             </UploaderProvider>
-            <div className={"flex items-center gap-3"}>
-              <Button
-                type="submit"
-                disabled={isPending}
-                onClick={form.handleSubmit(onSubmit)}
-              >
-                {isPending ? "Uploading..." : "Submit"}
-              </Button>
-              <Button variant={"secondary"}>Cancel</Button>
-            </div>
           </form>
         </Form>
+        <div className={"flex items-center gap-3"}>
+          <Button
+            type="submit"
+            disabled={isPending}
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            {isPending ? "Uploading..." : "Submit"}
+          </Button>
+          <Button
+            variant={"secondary"}
+            onClick={async () => {
+              if (fileUrl) {
+                await edgestore.publicFiles.delete({
+                  url: fileUrl,
+                });
+                setFileUrl(null);
+                toast.success("Upload cancelled and file deleted", {
+                  position: "top-center",
+                  richColors: true,
+                });
+              }
+              form.reset();
+              setFileUrl(null);
+              setOpen(!open);
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
