@@ -1,6 +1,10 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import type { CreateUserInput, LoginInput } from "@/zod/zod.validation";
+import type {
+  CreateUserInput,
+  LoginInput,
+  MakeUploadInput,
+} from "@/zod/zod.validation";
 import { env } from "@/env";
 import type { GetExamsResponse } from "@/types/get-exams.type";
 
@@ -79,6 +83,35 @@ export const useGetExams = (
         }
         throw new Error("An unknown error occurred");
       }
+    },
+  });
+};
+
+export const useMakeUpload = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: MakeUploadInput) => {
+      try {
+        return await axios
+          .post(`${env.NEXT_PUBLIC_API_URL}/users/upload`, data, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+          })
+          .then((res) => res.status);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["exams"] });
     },
   });
 };

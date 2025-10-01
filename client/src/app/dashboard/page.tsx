@@ -12,6 +12,7 @@ import { useGetExams } from "@/utils/query";
 import { ExamSessionProvider } from "@/hooks/context";
 import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
 import { Warning } from "@/components/reusables/Warning";
+import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
@@ -35,20 +36,25 @@ const Dashboard = () => {
             className={"border-amber-200 bg-amber-100 text-amber-800"}
           />
 
-          <Select
-            value={prodi}
-            onValueChange={(value) => setProdi(value as typeof prodi)}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select Program" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Informatika">Informatika</SelectItem>
-              <SelectItem value="Sistem_Informasi">Sistem Informasi</SelectItem>
-              <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
-              <SelectItem value="All">All</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className={"flex items-center justify-between"}>
+            <Select
+              value={prodi}
+              onValueChange={(value) => setProdi(value as typeof prodi)}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Program" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Informatika">Informatika</SelectItem>
+                <SelectItem value="Sistem_Informasi">
+                  Sistem Informasi
+                </SelectItem>
+                <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
+                <SelectItem value="All">All</SelectItem>
+              </SelectContent>
+            </Select>
+            <DialogAddFileUpload />
+          </div>
           <Stats />
 
           <ProdiGrid />

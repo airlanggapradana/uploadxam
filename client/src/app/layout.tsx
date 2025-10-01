@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import TanstackProvider from "@/lib/TanstackProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -21,12 +22,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${plusJakartaSans.variable}`}>
-      <TanstackProvider>
-        <body>
-          {children}
-          <Toaster />
-        </body>
-      </TanstackProvider>
+      <EdgeStoreProvider>
+        <TanstackProvider>
+          <body>
+            {children}
+            <Toaster />
+          </body>
+        </TanstackProvider>
+      </EdgeStoreProvider>
     </html>
   );
 }
