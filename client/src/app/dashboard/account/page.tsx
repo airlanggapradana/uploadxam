@@ -28,10 +28,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { deleteCookie } from "@/utils/cookies";
+import { useRouter } from "next/navigation";
 
 const AccountPage = () => {
+  const router = useRouter();
   const session = useUserSession();
   const [isEdit, setIsEdit] = React.useState(false);
+  const [dialogConfirm, setDialogConfirm] = React.useState(false);
+  const [formData, setFormData] = React.useState<Partial<CreateUserInput>>({});
   const { mutateAsync: handleUpdate, isPending } = useUpdateProfile();
 
   const form = useForm<Partial<CreateUserInput>>({
@@ -43,14 +58,27 @@ const AccountPage = () => {
     resolver: zodResolver(createUserSchema.partial()),
   });
 
-  const onSubmit: SubmitHandler<Partial<CreateUserInput>> = async (d) => {
+  const onSubmit: SubmitHandler<Partial<CreateUserInput>> = (data) => {
+    setFormData(data);
+    setDialogConfirm(true);
+  };
+
+  const handleConfirm = async () => {
     try {
       const res = await handleUpdate({
-        data: d,
+        data: formData,
         userId: session.id,
       });
       if (res === 200) {
         toast.success("User updated successfully.");
+        setDialogConfirm(false);
+        setIsEdit(false);
+        await deleteCookie("token");
+        toast.message(
+          "Harap login kembali untuk melihat perubahan pada sesi Anda.",
+          { position: "top-center", richColors: true },
+        );
+        router.push("/auth/login");
       }
     } catch (e) {
       toast.error(
@@ -223,10 +251,12 @@ const AccountPage = () => {
         <div className="flex items-start justify-between gap-8">
           <div className="flex-1">
             <p className="mb-1 text-[15px] font-semibold text-black">
-              Delete your account
+              Hapus Akun
             </p>
-            <p className="text-[13px] leading-relaxed text-gray-600">
-              Delete your account and all its associated data.
+            <p className="max-w-2xl text-[13px] leading-relaxed text-gray-600">
+              Setelah menghapus akun, semua data Anda akan dihapus secara
+              permanen. Pastikan untuk mencadangkan informasi penting sebelum
+              melanjutkan. Tindakan ini tidak dapat dibatalkan.
             </p>
           </div>
           <Button
@@ -237,6 +267,26 @@ const AccountPage = () => {
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={dialogConfirm} onOpenChange={setDialogConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Profile Update</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to update your profile information? This
+              will modify your account details.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDialogConfirm(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirm} disabled={isPending}>
+              {isPending ? "Updating..." : "Update"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
