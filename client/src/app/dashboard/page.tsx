@@ -14,6 +14,7 @@ import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
 import { Warning } from "@/components/reusables/Warning";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
 import { Separator } from "@/components/ui/separator";
+import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
@@ -21,7 +22,7 @@ const Dashboard = () => {
   >("All");
 
   const { data: exams, isLoading, error } = useGetExams(prodi);
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <DashboardLoadingSkeleton />;
   if (error) return <div>Error: {error.message}</div>;
   if (!exams) return <div>No data available</div>;
 
