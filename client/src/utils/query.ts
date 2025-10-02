@@ -128,3 +128,38 @@ export const useMakeUpload = () => {
     },
   });
 };
+
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      data,
+      userId,
+    }: {
+      data: Partial<CreateUserInput>;
+      userId: string;
+    }) => {
+      try {
+        return await axios
+          .put(`${env.NEXT_PUBLIC_API_URL}/users/${userId}`, data, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "PUT",
+          })
+          .then((res) => res.status);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["exams"] });
+    },
+  });
+};

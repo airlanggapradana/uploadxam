@@ -32,7 +32,9 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<LoginInput> = async (d) => {
     try {
-      const res = await handleLogin(d);
+      const res = await handleLogin({
+        nim: d.nim.toUpperCase(),
+      });
       if (res.data) {
         await setCookie("token", res.data);
         toast.success("Berhasil login", {

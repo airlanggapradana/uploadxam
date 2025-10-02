@@ -3,6 +3,7 @@ import React from "react";
 import { Grid3x3 as Grid3X3, CreditCard, User, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const Sidebar = () => {
   const location = usePathname();
@@ -20,8 +21,9 @@ const Sidebar = () => {
     <aside className="h-full w-64 border-r border-gray-200 bg-gray-50">
       <nav className="space-y-1 p-4">
         {menuItems.map((item, index) => (
-          <div
+          <Link
             key={index}
+            href={item.path}
             className={cn(
               "flex cursor-pointer items-center space-x-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
               location === item.path
@@ -31,7 +33,7 @@ const Sidebar = () => {
           >
             <item.icon className="h-4 w-4" />
             <span>{item.label}</span>
-          </div>
+          </Link>
         ))}
       </nav>
     </aside>

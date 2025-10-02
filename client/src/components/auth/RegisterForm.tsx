@@ -40,7 +40,11 @@ const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<CreateUserInput> = async (d) => {
     try {
-      const res = await handleRegister(d);
+      const res = await handleRegister({
+        name: d.name,
+        nim: d.nim.toUpperCase(),
+        prodi: d.prodi,
+      });
       if (res === 201) {
         toast.success("Berhasil membuat akun, silakan login", {
           position: "top-center",
