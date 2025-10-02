@@ -19,7 +19,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   }
   return (
     <UserSessionProvider value={decoded}>
-      <div className="flex h-screen flex-col bg-white">
+      <div className="flex h-screen flex-col bg-white dark:bg-gray-900">
         <DashboardHeader />
         <div className="flex flex-1">
           <Sidebar />

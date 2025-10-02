@@ -18,7 +18,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <aside className="h-full w-64 border-r border-gray-200 bg-gray-50">
+    <aside className="h-full w-64 border-r border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
       <nav className="space-y-1 p-4">
         {menuItems.map((item, index) => (
           <Link
@@ -27,8 +27,8 @@ const Sidebar = () => {
             className={cn(
               "flex cursor-pointer items-center space-x-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
               location === item.path
-                ? "border border-gray-200 bg-white text-gray-900 shadow-sm"
-                : "text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-sm",
+                ? "border border-gray-200 bg-white text-gray-900 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                : "text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-sm dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white dark:hover:shadow-sm",
             )}
           >
             <item.icon className="h-4 w-4" />

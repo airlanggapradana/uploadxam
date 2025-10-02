@@ -5,6 +5,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import TanstackProvider from "@/lib/TanstackProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { ThemeProvider } from "@/components/dashboard-comps/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -21,13 +22,24 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable}`}>
+    <html
+      lang="en"
+      className={`${plusJakartaSans.variable}`}
+      suppressHydrationWarning={true}
+    >
       <EdgeStoreProvider>
         <TanstackProvider>
-          <body>
-            {children}
-            <Toaster position={"top-center"} richColors={true} />
-          </body>
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme={"system"}
+            enableSystem={true}
+            disableTransitionOnChange={false}
+          >
+            <body>
+              {children}
+              <Toaster position={"top-center"} richColors={true} />
+            </body>
+          </ThemeProvider>
         </TanstackProvider>
       </EdgeStoreProvider>
     </html>

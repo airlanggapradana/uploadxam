@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   return (
     <ExamSessionProvider value={exams}>
-      <main className={"w-full p-4"}>
+      <main className={"w-full p-4 dark:bg-gray-900"}>
         <div className={"space-y-5"}>
           <Warning
             title={"Mohon Perhatiannya!"}

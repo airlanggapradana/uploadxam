@@ -3,7 +3,7 @@ import { Brain, MessageSquare } from "lucide-react";
 
 const BillingPage = () => {
   return (
-    <div className="flex h-full items-center justify-center p-4">
+    <div className="flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
         <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
           {/* Header Section */}

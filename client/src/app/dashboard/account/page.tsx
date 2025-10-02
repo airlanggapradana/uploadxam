@@ -90,10 +90,10 @@ const AccountPage = () => {
   return (
     <div className="w-full p-4">
       <div className="mb-8 space-y-1">
-        <h1 className="text-3xl font-semibold tracking-tight text-black">
+        <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-white">
           Account
         </h1>
-        <p className="text-[15px] text-gray-600">
+        <p className="text-[15px] text-gray-600 dark:text-gray-400">
           Manage your account information
         </p>
       </div>
@@ -103,7 +103,9 @@ const AccountPage = () => {
       <div className="mb-8 grid grid-cols-4 gap-8">
         <div className={"col-span-3"}>
           <div className={"flex items-center justify-between"}>
-            <h2 className="mb-5 text-base font-semibold text-black">Profile</h2>
+            <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
+              Profile
+            </h2>
             <Switch onClick={() => setIsEdit(!isEdit)} />
           </div>
           <div className="flex w-full items-start gap-4">
@@ -209,12 +211,14 @@ const AccountPage = () => {
           </div>
         </div>
         <div>
-          <h2 className="mb-5 text-base font-semibold text-black">
+          <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
             Program Studi
           </h2>
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[15px] text-black">{session.prodi}</span>
+              <span className="text-[15px] text-black dark:text-white">
+                {session.prodi}
+              </span>
               <Badge
                 variant="secondary"
                 className={cn(
@@ -247,13 +251,15 @@ const AccountPage = () => {
       <Separator />
 
       <div className={"mt-8"}>
-        <h2 className="mb-5 text-base font-semibold text-black">Danger Zone</h2>
+        <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
+          Danger Zone
+        </h2>
         <div className="flex items-start justify-between gap-8">
           <div className="flex-1">
-            <p className="mb-1 text-[15px] font-semibold text-black">
+            <p className="mb-1 text-[15px] font-semibold text-black dark:text-white">
               Hapus Akun
             </p>
-            <p className="max-w-2xl text-[13px] leading-relaxed text-gray-600">
+            <p className="max-w-2xl text-[13px] leading-relaxed text-gray-600 dark:text-gray-400">
               Setelah menghapus akun, semua data Anda akan dihapus secara
               permanen. Pastikan untuk mencadangkan informasi penting sebelum
               melanjutkan. Tindakan ini tidak dapat dibatalkan.
