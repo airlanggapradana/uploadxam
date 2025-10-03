@@ -132,6 +132,13 @@ const DialogAddFileUpload = () => {
             richColors: true,
           });
         }
+      } else if (e instanceof Error) {
+        toast.error(e.message, { position: "top-center", richColors: true });
+      } else {
+        toast.error("An unknown error occurred", {
+          position: "top-center",
+          richColors: true,
+        });
       }
     }
   };
