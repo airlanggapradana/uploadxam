@@ -150,90 +150,32 @@ const DialogAddFileUpload = () => {
           Upload File
         </Button>
       </DialogTrigger>
-      <DialogContent className={"sm:max-w-4xl"}>
-        <DialogHeader>
-          <DialogTitle>Upload File Baru</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="max-h-[90vh] w-full overflow-y-auto px-2 py-4 sm:max-w-4xl sm:px-8 sm:py-6">
+        <DialogHeader className="mb-4">
+          <DialogTitle className="text-lg sm:text-xl">
+            Upload File Baru
+          </DialogTitle>
+          <DialogDescription className="text-sm sm:text-base">
             Isi form di bawah untuk mengunggah file baru.
           </DialogDescription>
         </DialogHeader>
 
-        {/* Form Component Here */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-3 sm:space-y-4"
+          >
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="tipe_soal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tipe Soal</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className={"w-full"}>
-                        <SelectValue placeholder="Select tipe soal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="UTS">UTS</SelectItem>
-                        <SelectItem value="UAS">UAS</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="kategori"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kategori</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className={"w-full"}>
-                        <SelectValue placeholder="Select kategori soal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="INTER">International</SelectItem>
-                        <SelectItem value="REGULER">Reguler</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="semester"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Semester</FormLabel>
+                  <FormLabel className="text-sm sm:text-base">Title</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      placeholder="Enter semester"
+                      placeholder="Enter title"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      className="h-9 text-sm sm:h-10 sm:text-base"
                     />
                   </FormControl>
                   <FormMessage />
@@ -241,35 +183,120 @@ const DialogAddFileUpload = () => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Year</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Enter year"
-                      {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              <FormField
+                control={form.control}
+                name="tipe_soal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm sm:text-base">
+                      Tipe Soal
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
+                          <SelectValue placeholder="Select tipe soal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="UTS">UTS</SelectItem>
+                          <SelectItem value="UAS">UAS</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="kategori"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm sm:text-base">
+                      Kategori
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
+                          <SelectValue placeholder="Select kategori soal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="INTER">International</SelectItem>
+                          <SelectItem value="REGULER">Reguler</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              <FormField
+                control={form.control}
+                name="semester"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm sm:text-base">
+                      Semester
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter semester"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="h-9 text-sm sm:h-10 sm:text-base"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="year"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm sm:text-base">Year</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter year"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="h-9 text-sm sm:h-10 sm:text-base"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="mata_kuliah"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mata Kuliah</FormLabel>
+                  <FormLabel className="text-sm sm:text-base">
+                    Mata Kuliah
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="text"
                       placeholder="Enter mata kuliah"
                       {...field}
+                      className="h-9 text-sm sm:h-10 sm:text-base"
                     />
                   </FormControl>
                   <FormMessage />
@@ -282,13 +309,15 @@ const DialogAddFileUpload = () => {
               name="prodi"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Program Studi</FormLabel>
+                  <FormLabel className="text-sm sm:text-base">
+                    Program Studi
+                  </FormLabel>
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className={"w-full"}>
+                      <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
                         <SelectValue placeholder="Select program studi" />
                       </SelectTrigger>
                       <SelectContent>
@@ -307,33 +336,45 @@ const DialogAddFileUpload = () => {
               )}
             />
 
-            <UploaderProvider uploadFn={uploadFn} autoUpload>
-              <SingleImageDropzone
-                height={250}
-                width={850}
-                dropzoneOptions={{
-                  maxSize: 1024 * 1024 * 5, // 5 MB
-                  accept: { "application/pdf": [".pdf"] },
-                }}
-              />
-            </UploaderProvider>
+            <div className="pt-2">
+              <label className="mb-2 block text-sm font-medium sm:text-base">
+                Upload File
+              </label>
+              <UploaderProvider uploadFn={uploadFn} autoUpload>
+                <div className="w-full">
+                  <SingleImageDropzone
+                    height={140}
+                    width={
+                      typeof window !== "undefined" && window.innerWidth < 640
+                        ? window.innerWidth - 48
+                        : 850
+                    }
+                    dropzoneOptions={{
+                      maxSize: 1024 * 1024 * 5,
+                      accept: { "application/pdf": [".pdf"] },
+                    }}
+                  />
+                </div>
+              </UploaderProvider>
+            </div>
           </form>
         </Form>
-        <div className={"flex items-center gap-3"}>
+
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
           <Button
             type="submit"
             disabled={isPending}
+            className="h-9 w-full text-sm sm:h-10 sm:w-auto sm:text-base"
             onClick={form.handleSubmit(onSubmit)}
           >
             {isPending ? "Uploading..." : "Submit"}
           </Button>
           <Button
-            variant={"secondary"}
+            variant="secondary"
+            className="h-9 w-full text-sm sm:h-10 sm:w-auto sm:text-base"
             onClick={async () => {
               if (fileUrl) {
-                await edgestore.publicFiles.delete({
-                  url: fileUrl,
-                });
+                await edgestore.publicFiles.delete({ url: fileUrl });
                 setFileUrl(null);
                 toast.success("Upload cancelled and file deleted", {
                   position: "top-center",

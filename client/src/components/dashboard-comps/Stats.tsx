@@ -18,7 +18,7 @@ const Stats = () => {
       {exams.groupedByProdi.length === 0 && exams.totalUploads === 0 ? (
         <NotFound />
       ) : (
-        <div className={"grid grid-cols-4 gap-5"}>
+        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <Card>
             <CardHeader className={"flex items-center justify-between"}>
               <div className={"space-y-2"}>

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Grid3x3 as Grid3X3, CreditCard, User, Settings } from "lucide-react";
+import { Grid3x3 as Grid3X3, CreditCard, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -13,7 +13,7 @@ const Sidebar = () => {
     { icon: User, label: "Account", path: "/dashboard/account" },
   ];
   return (
-    <aside className="h-full w-64 border-r border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+    <aside className="hidden h-full w-64 border-r border-gray-200 bg-gray-50 md:block dark:border-gray-800 dark:bg-gray-900">
       <nav className="space-y-1 p-4">
         {menuItems.map((item, index) => (
           <Link
