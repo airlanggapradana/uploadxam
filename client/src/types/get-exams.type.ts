@@ -22,6 +22,7 @@ export interface Upload {
   mata_kuliah: string;
   tipe_soal: "UTS" | "UAS";
   year: number;
+  kategori: "INTER" | "REGULER";
   prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
   uploadedAt: Date;
   userId: string;

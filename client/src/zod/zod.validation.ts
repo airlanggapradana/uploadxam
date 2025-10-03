@@ -16,6 +16,7 @@ export const makeUploadSchema = z.object({
     .number()
     .min(2000)
     .max(new Date().getFullYear() + 1),
+  kategori: z.enum(["INTER", "REGULER"], { message: "Kategori tidak valid" }),
   prodi: z.enum(["Informatika", "Sistem_Informasi", "Ilmu_Komunikasi"], {
     message: "Prodi tidak valid",
   }),

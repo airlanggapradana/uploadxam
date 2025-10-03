@@ -11,6 +11,7 @@ export const makeUploadSchema = z.object({
   fileUrl: z.string().url(),
   tipe_soal: z.enum(['UTS', 'UAS'], {error: 'Tipe soal tidak valid'}),
   semester: z.number().min(1).max(14),
+  kategori: z.enum(['INTER', 'REGULER'], {error: 'Kategori tidak valid'}),
   year: z.number().min(2000).max(new Date().getFullYear() + 1),
   prodi: z.enum(['Informatika', 'Sistem_Informasi', 'Ilmu_Komunikasi'], {error: 'Prodi tidak valid'}),
   mata_kuliah: z.string().min(3).max(100),

@@ -78,6 +78,7 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
       semester,
       title,
       userId,
+      kategori,
       year,
       tipe_soal,
       mata_kuliah
@@ -113,6 +114,7 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
           id: `UP-${existingUser.prodi === 'Informatika' ? "IF" : existingUser.prodi === "Sistem_Informasi" ? "SI" : existingUser.prodi === "Ilmu_Komunikasi" ? "ILKM" : "unknown"}-${crypto.randomUUID().slice(0, 3)}`,
           title,
           fileUrl,
+          kategori,
           tipe_soal,
           semester,
           year,

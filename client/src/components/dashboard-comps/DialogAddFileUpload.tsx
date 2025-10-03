@@ -52,6 +52,7 @@ const DialogAddFileUpload = () => {
     defaultValues: {
       title: "",
       tipe_soal: "UTS",
+      kategori: "REGULER",
       semester: 1,
       year: new Date().getFullYear(),
       prodi: session.prodi,
@@ -183,6 +184,30 @@ const DialogAddFileUpload = () => {
                       <SelectContent>
                         <SelectItem value="UTS">UTS</SelectItem>
                         <SelectItem value="UAS">UAS</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="kategori"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Kategori</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className={"w-full"}>
+                        <SelectValue placeholder="Select kategori soal" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="INTER">International</SelectItem>
+                        <SelectItem value="REGULER">Reguler</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>

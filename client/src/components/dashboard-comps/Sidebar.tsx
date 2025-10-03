@@ -9,13 +9,8 @@ const Sidebar = () => {
   const location = usePathname();
   const menuItems = [
     { icon: Grid3X3, label: "Apps", path: "/dashboard" },
-    { icon: CreditCard, label: "Billing", path: "/dashboard/billing" },
+    { icon: CreditCard, label: "Donate", path: "/dashboard/billing" },
     { icon: User, label: "Account", path: "/dashboard/account" },
-    {
-      icon: Settings,
-      label: "Settings",
-      path: "/dashboard/settings",
-    },
   ];
   return (
     <aside className="h-full w-64 border-r border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">

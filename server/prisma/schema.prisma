@@ -33,12 +33,18 @@ model Upload {
   mata_kuliah String
   tipe_soal   Tipe_Soal
   semester    Int
+  kategori    Kategori  @default(REGULER)
   year        Int
   prodi       Prodi
   uploadedAt  DateTime  @default(now())
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+enum Kategori {
+  INTER
+  REGULER
 }
 
 enum Role {

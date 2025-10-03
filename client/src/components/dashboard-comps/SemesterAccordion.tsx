@@ -48,15 +48,26 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
                 <h4 className="line-clamp-1 font-medium text-slate-800 dark:text-slate-100">
                   {upload.title}
                 </h4>
-                <Badge
-                  className={`${
-                    upload.tipe_soal === "UAS"
-                      ? "bg-blue-500 text-white"
-                      : "bg-green-500 text-white"
-                  }`}
-                >
-                  {upload.tipe_soal}
-                </Badge>
+                <div className={"flex items-center gap-3"}>
+                  <Badge
+                    className={`${
+                      upload.tipe_soal === "UAS"
+                        ? "bg-blue-500 text-white"
+                        : "bg-green-500 text-white"
+                    }`}
+                  >
+                    {upload.tipe_soal}
+                  </Badge>
+                  <Badge
+                    className={`${
+                      upload.kategori === "REGULER"
+                        ? "bg-gray-500 text-white"
+                        : "bg-sky-500 text-white"
+                    }`}
+                  >
+                    {upload.kategori}
+                  </Badge>
+                </div>
               </div>
               <div className="space-y-1.5 text-sm text-slate-600 dark:text-slate-300">
                 <div className="flex items-center gap-2">
