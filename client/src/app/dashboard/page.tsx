@@ -48,7 +48,7 @@ const Dashboard = () => {
 
           <Separator />
 
-          <div className={"flex items-center justify-between"}>
+          <div className={"flex items-start justify-between sm:items-center"}>
             <div className={"space-y-3"}>
               <Select
                 value={prodi}

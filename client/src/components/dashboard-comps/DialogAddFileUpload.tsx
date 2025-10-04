@@ -144,18 +144,23 @@ const DialogAddFileUpload = () => {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className={"hidden sm:flex"}>
         <Button>
           <BiPlus />
           Upload File
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[90vh] w-full overflow-y-auto px-2 py-4 sm:max-w-4xl sm:px-8 sm:py-6">
-        <DialogHeader className="mb-4">
-          <DialogTitle className="text-lg sm:text-xl">
+      <DialogTrigger asChild className={"flex sm:hidden"}>
+        <Button size="icon">
+          <BiPlus />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] max-w-[95vw] overflow-y-auto p-4 sm:max-h-[90vh] sm:max-w-4xl sm:p-6">
+        <DialogHeader className="mb-3 sm:mb-4">
+          <DialogTitle className="text-base font-semibold sm:text-xl">
             Upload File Baru
           </DialogTitle>
-          <DialogDescription className="text-sm sm:text-base">
+          <DialogDescription className="text-xs sm:text-sm">
             Isi form di bawah untuk mengunggah file baru.
           </DialogDescription>
         </DialogHeader>
@@ -170,26 +175,28 @@ const DialogAddFileUpload = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base">Title</FormLabel>
+                  <FormLabel className="text-xs font-medium sm:text-sm">
+                    Title
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter title"
                       {...field}
-                      className="h-9 text-sm sm:h-10 sm:text-base"
+                      className="h-9 text-sm focus-visible:ring-1 sm:h-10"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <FormField
                 control={form.control}
                 name="tipe_soal"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm sm:text-base">
+                    <FormLabel className="text-xs font-medium sm:text-sm">
                       Tipe Soal
                     </FormLabel>
                     <FormControl>
@@ -197,7 +204,7 @@ const DialogAddFileUpload = () => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
+                        <SelectTrigger className="h-9 w-full text-sm focus:ring-1 sm:h-10">
                           <SelectValue placeholder="Select tipe soal" />
                         </SelectTrigger>
                         <SelectContent>
@@ -206,7 +213,7 @@ const DialogAddFileUpload = () => {
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -216,7 +223,7 @@ const DialogAddFileUpload = () => {
                 name="kategori"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm sm:text-base">
+                    <FormLabel className="text-xs font-medium sm:text-sm">
                       Kategori
                     </FormLabel>
                     <FormControl>
@@ -224,7 +231,7 @@ const DialogAddFileUpload = () => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
+                        <SelectTrigger className="h-9 w-full text-sm focus:ring-1 sm:h-10">
                           <SelectValue placeholder="Select kategori soal" />
                         </SelectTrigger>
                         <SelectContent>
@@ -233,31 +240,31 @@ const DialogAddFileUpload = () => {
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2">
               <FormField
                 control={form.control}
                 name="semester"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm sm:text-base">
+                    <FormLabel className="text-xs font-medium sm:text-sm">
                       Semester
                     </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Enter semester"
+                        placeholder="Semester"
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
-                        className="h-9 text-sm sm:h-10 sm:text-base"
+                        className="h-9 text-sm focus-visible:ring-1 sm:h-10"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -267,17 +274,19 @@ const DialogAddFileUpload = () => {
                 name="year"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm sm:text-base">Year</FormLabel>
+                    <FormLabel className="text-xs font-medium sm:text-sm">
+                      Year
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Enter year"
+                        placeholder="Year"
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
-                        className="h-9 text-sm sm:h-10 sm:text-base"
+                        className="h-9 text-sm focus-visible:ring-1 sm:h-10"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -288,7 +297,7 @@ const DialogAddFileUpload = () => {
               name="mata_kuliah"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base">
+                  <FormLabel className="text-xs font-medium sm:text-sm">
                     Mata Kuliah
                   </FormLabel>
                   <FormControl>
@@ -296,10 +305,10 @@ const DialogAddFileUpload = () => {
                       type="text"
                       placeholder="Enter mata kuliah"
                       {...field}
-                      className="h-9 text-sm sm:h-10 sm:text-base"
+                      className="h-9 text-sm focus-visible:ring-1 sm:h-10"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
@@ -309,7 +318,7 @@ const DialogAddFileUpload = () => {
               name="prodi"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base">
+                  <FormLabel className="text-xs font-medium sm:text-sm">
                     Program Studi
                   </FormLabel>
                   <FormControl>
@@ -317,7 +326,7 @@ const DialogAddFileUpload = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
+                      <SelectTrigger className="h-9 w-full text-sm focus:ring-1 sm:h-10">
                         <SelectValue placeholder="Select program studi" />
                       </SelectTrigger>
                       <SelectContent>
@@ -331,22 +340,22 @@ const DialogAddFileUpload = () => {
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
 
-            <div className="pt-2">
-              <label className="mb-2 block text-sm font-medium sm:text-base">
+            <div className="pt-1 sm:pt-2">
+              <label className="mb-2 block text-xs font-medium sm:text-sm">
                 Upload File
               </label>
               <UploaderProvider uploadFn={uploadFn} autoUpload>
                 <div className="w-full">
                   <SingleImageDropzone
-                    height={140}
+                    height={120}
                     width={
                       typeof window !== "undefined" && window.innerWidth < 640
-                        ? window.innerWidth - 48
+                        ? Math.min(window.innerWidth - 64, 400)
                         : 850
                     }
                     dropzoneOptions={{
@@ -360,18 +369,10 @@ const DialogAddFileUpload = () => {
           </form>
         </Form>
 
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+        <div className="mt-3 flex flex-col-reverse gap-2 sm:mt-4 sm:flex-row sm:gap-3">
           <Button
-            type="submit"
-            disabled={isPending}
-            className="h-9 w-full text-sm sm:h-10 sm:w-auto sm:text-base"
-            onClick={form.handleSubmit(onSubmit)}
-          >
-            {isPending ? "Uploading..." : "Submit"}
-          </Button>
-          <Button
-            variant="secondary"
-            className="h-9 w-full text-sm sm:h-10 sm:w-auto sm:text-base"
+            variant="outline"
+            className="h-9 w-full text-xs sm:h-10 sm:w-auto sm:text-sm"
             onClick={async () => {
               if (fileUrl) {
                 await edgestore.publicFiles.delete({ url: fileUrl });
@@ -387,6 +388,14 @@ const DialogAddFileUpload = () => {
             }}
           >
             Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="h-9 w-full text-xs sm:h-10 sm:w-auto sm:text-sm"
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            {isPending ? "Uploading..." : "Submit"}
           </Button>
         </div>
       </DialogContent>
