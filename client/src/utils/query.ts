@@ -58,16 +58,20 @@ export const useLogin = () => {
   });
 };
 
-export const useGetExams = (
-  prodi?: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All",
-) => {
+export const useGetExams = ({
+  prodi,
+  subject,
+}: {
+  prodi?: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All";
+  subject?: string;
+}) => {
   return useQuery<GetExamsResponse>({
-    queryKey: ["exams", { prodi }],
+    queryKey: ["exams", { prodi, subject }],
     queryFn: async () => {
       try {
         return await axios
           .get(
-            `${env.NEXT_PUBLIC_API_URL}/users/uploads${prodi !== "All" ? `?prodi=${prodi}` : ""}`,
+            `${env.NEXT_PUBLIC_API_URL}/users/uploads${prodi && prodi !== "All" ? `?prodi=${prodi}` : ""}${subject ? `${prodi && prodi !== "All" ? "&" : "?"}subject=${subject}` : ""}`,
             {
               headers: {
                 "Content-Type": "application/json",

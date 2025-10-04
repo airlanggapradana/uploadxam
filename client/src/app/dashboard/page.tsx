@@ -15,13 +15,21 @@ import { Warning } from "@/components/reusables/Warning";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
 import { Separator } from "@/components/ui/separator";
 import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
+import { useDebounce } from "use-debounce";
+import { Input } from "@/components/ui/input";
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
     "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All"
   >("All");
+  const [subject, setSubject] = React.useState<string | undefined>(undefined);
+  const [debouncedSubject] = useDebounce(subject, 1000);
 
-  const { data: exams, isLoading, error } = useGetExams(prodi);
+  const {
+    data: exams,
+    isLoading,
+    error,
+  } = useGetExams({ prodi, subject: debouncedSubject });
   if (isLoading) return <DashboardLoadingSkeleton />;
   if (error) return <div>Error: {error.message}</div>;
   if (!exams) return <div>No data available</div>;
@@ -41,22 +49,51 @@ const Dashboard = () => {
           <Separator />
 
           <div className={"flex items-center justify-between"}>
-            <Select
-              value={prodi}
-              onValueChange={(value) => setProdi(value as typeof prodi)}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select Program" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Informatika">Informatika</SelectItem>
-                <SelectItem value="Sistem_Informasi">
-                  Sistem Informasi
-                </SelectItem>
-                <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
-                <SelectItem value="All">All</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className={"space-y-3"}>
+              <Select
+                value={prodi}
+                onValueChange={(value) => setProdi(value as typeof prodi)}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select Program" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Informatika">Informatika</SelectItem>
+                  <SelectItem value="Sistem_Informasi">
+                    Sistem Informasi
+                  </SelectItem>
+                  <SelectItem value="Ilmu_Komunikasi">
+                    Ilmu Komunikasi
+                  </SelectItem>
+                  <SelectItem value="All">All</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <div className="relative w-72">
+                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-300">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+                    />
+                  </svg>
+                </span>
+                <Input
+                  className="w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:text-white"
+                  placeholder={"Cari berdasarkan mata kuliah..."}
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </div>
+            </div>
             <DialogAddFileUpload />
           </div>
           <Stats />
