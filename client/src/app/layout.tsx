@@ -6,6 +6,7 @@ import TanstackProvider from "@/lib/TanstackProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { ThemeProvider } from "@/components/dashboard-comps/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "UploadXam | Bank Soal Digital FKI UMS",
@@ -39,6 +40,7 @@ export default function RootLayout({
             <body>
               {children}
               <Toaster position={"top-center"} richColors={true} />
+              <Analytics />
             </body>
           </ThemeProvider>
         </TanstackProvider>
