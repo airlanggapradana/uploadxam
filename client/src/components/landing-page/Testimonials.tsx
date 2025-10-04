@@ -16,9 +16,9 @@ const Testimonials = () => {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
-        <div className="max-w-md sm:max-w-2xl">
+        <div className="max-w-md sm:max-w-4xl">
           <TestimonialCard
-            quote="I'm tired of seeing my relatives worrying about what kind of questions will be on the exams.UploadExam exists because they can access past questions easily and prepare better."
+            quote="I'm tired of seeing my relatives worrying about what kind of questions will be on the exams. UploadXam exists to help students like me prepare for exams more effectively."
             author="Airlangga Pradana"
             title="Teknik Informatika '24"
             avatarUrl="https://res.cloudinary.com/airlanggapradana/image/upload/v1759160258/super_resolution_20250918161920060_xwhg9b.jpg"

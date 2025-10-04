@@ -33,7 +33,7 @@ const Hero = () => {
           </Badge>
         </div>
 
-        <h1 className="mt-5 max-w-2xl bg-gradient-to-br from-sky-100 to-sky-700 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+        <h1 className="mt-5 max-w-2xl bg-gradient-to-br from-sky-100 to-sky-700 bg-clip-text py-5 text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
           Akses semua soal ujian jadi lebih mudah.
         </h1>
         <p className="mt-4 mb-7 max-w-xl text-sm leading-6 text-gray-300 sm:text-base">
