@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteCookie } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
+import UserUploads from "@/components/account-comps/UserUploads";
 
 const AccountPage = () => {
   const router = useRouter();
@@ -250,6 +251,22 @@ const AccountPage = () => {
       </div>
       <Separator />
 
+      <div className="mt-8 mb-8 space-y-1">
+        <h2 className="text-lg font-semibold text-black dark:text-white">
+          Your Uploads
+        </h2>
+        <p className="text-[15px] text-gray-600 dark:text-gray-400">
+          Tempat kamu mengelola semua file yang pernah kamu upload sebelumnya.
+        </p>
+
+        {/* UserUploads Component */}
+        <div className="mt-4 grid grid-cols-4 gap-5">
+          {/* Replace the div below with the actual UserUploads component */}
+          <UserUploads />
+        </div>
+      </div>
+
+      <Separator />
       <div className={"mt-8"}>
         <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
           Danger Zone

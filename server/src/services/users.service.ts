@@ -1,7 +1,13 @@
 import prisma from '../../prisma/prisma'
 import {Prodi} from "../../generated/prisma"
 import {Request, Response, NextFunction} from "express";
-import {createUserSchema, MakeUploadInput, makeUploadSchema} from "../zod/zod.validation";
+import {
+  createUserSchema,
+  MakeUploadInput,
+  makeUploadSchema,
+  UpdateUploadInput,
+  updateUploadSchema
+} from "../zod/zod.validation";
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -139,6 +145,77 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
   }
 }
 
+export const updateUpload = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const {id} = req.params;
+    const {
+      prodi,
+      fileUrl,
+      mata_kuliah,
+      year,
+      semester,
+      title,
+      userId,
+      kategori,
+      tipe_soal
+    }: UpdateUploadInput = updateUploadSchema.parse(req.body)
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        id: userId!
+      }
+    })
+    if (!existingUser) {
+      res.status(404).json({
+        message: 'User tidak ditemukan'
+      })
+      return;
+    }
+    if (existingUser.prodi !== prodi) {
+      res.status(400).json({
+        message: 'Program studi user tidak sesuai dengan upload'
+      })
+      return;
+    }
+
+    const existingUpload = await prisma.upload.findUnique({
+      where: {
+        id: id!
+      }
+    })
+    if (!existingUpload) {
+      res.status(404).json({
+        message: 'Upload tidak ditemukan'
+      })
+      return;
+    }
+
+    const updatedUpload = await prisma.upload.update({
+      where: {
+        id: existingUpload.id
+      },
+      data: {
+        title: title ? title : existingUpload.title,
+        fileUrl: fileUrl ? fileUrl : existingUpload.fileUrl,
+        tipe_soal: tipe_soal ? tipe_soal : existingUpload.tipe_soal,
+        semester: semester ? semester : existingUpload.semester,
+        kategori: kategori ? kategori : existingUpload.kategori,
+        year: year ? year : existingUpload.year,
+        prodi: prodi ? prodi : existingUpload.prodi,
+        mata_kuliah: mata_kuliah ? mata_kuliah : existingUpload.mata_kuliah,
+        userId: userId ? userId : existingUpload.userId
+      }
+    })
+    res.status(200).json({
+      message: 'Upload updated successfully',
+      data: updatedUpload
+    })
+    return;
+  } catch (e) {
+    next(e)
+  }
+}
+
 export const getAllUploads = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {prodi, subject} = req.query;
@@ -216,6 +293,86 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
       totalUploads: filteredUploads.length,
       groupedByProdi: groupedArray,
     });
+    return;
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const getUserUploads = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const {userId} = req.params
+
+    // Ambil semua upload milik user tertentu
+    const uploads = await prisma.upload.findMany({
+      where: {
+        user: {
+          id: userId!
+        }
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            nim: true,
+            name: true,
+            prodi: true,
+          },
+        },
+      },
+      orderBy: {
+        uploadedAt: "desc", // urutkan dari yang terbaru
+      },
+    })
+
+    // Kalau user belum pernah upload apa pun
+    if (uploads.length === 0) {
+      res.status(200).json({
+        message: "No uploads found for this user",
+        total: 0,
+        uploads: [],
+      })
+      return;
+    }
+
+    res.status(200).json({
+      total: uploads.length,
+      user: uploads[0]?.user,
+      uploads,
+    })
+    return;
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const deleteSingleUpload = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const {id} = req.params
+
+    // cek apakah upload ada
+    const existing = await prisma.upload.findUnique({
+      where: {id: id!},
+      include: {user: true},
+    })
+
+    if (!existing) {
+      res.status(404).json({
+        message: "Upload not found",
+        id,
+      })
+      return;
+    }
+
+    // hapus upload
+    await prisma.upload.delete({
+      where: {id: id!},
+    })
+
+    res.status(200).json({
+      message: "Upload deleted successfully",
+      deletedUpload: existing.fileUrl
+    })
     return;
   } catch (error) {
     next(error);

@@ -18,10 +18,13 @@ export const makeUploadSchema = z.object({
   userId: z.string().min(1, 'User ID harus diisi'),
 })
 
+export const updateUploadSchema = makeUploadSchema.partial()
+
 export const loginSchema = z.object({
   nim: z.string().min(8).max(15),
 })
 
+export type UpdateUploadInput = z.infer<typeof updateUploadSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type MakeUploadInput = z.infer<typeof makeUploadSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
