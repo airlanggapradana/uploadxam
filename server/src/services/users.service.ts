@@ -107,9 +107,15 @@ export const makeUpload = async (req: Request, res: Response, next: NextFunction
       }
 
       // Check if user's program matches the upload program
-      if (existingUser.prodi !== prodi) {
+      if (existingUser.prodi !== prodi && existingUser.role !== 'ADMIN') {
+        if (existingUser.prodi !== prodi) {
+          res.status(400).json({
+            message: 'Program studi user tidak sesuai dengan upload'
+          })
+          return null;
+        }
         res.status(400).json({
-          message: 'Program studi user tidak sesuai dengan upload'
+          message: 'Hanya admin yang dapat mengunggah untuk program studi lain'
         })
         return null;
       }

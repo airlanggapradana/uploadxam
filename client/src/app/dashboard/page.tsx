@@ -41,7 +41,7 @@ const Dashboard = () => {
           <Warning
             title={"Mohon Perhatiannya!"}
             description={
-              "Jika kamu menemukan soal yang tidak sesuai atau ada masalah lainnya, silakan laporkan ke admin melalui WhatsApp di nomor 081234567890. Terima kasih atas partisipasimu!"
+              "Jika kamu menemukan soal yang tidak sesuai atau ada masalah lainnya, silakan laporkan ke admin melalui WhatsApp di nomor 081227151326. Terima kasih atas partisipasimu!"
             }
             className={"border-amber-200 bg-amber-100 text-amber-800"}
           />
