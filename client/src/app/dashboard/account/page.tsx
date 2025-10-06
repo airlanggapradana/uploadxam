@@ -260,7 +260,7 @@ const AccountPage = () => {
         </p>
 
         {/* UserUploads Component */}
-        <div className="mt-4 grid grid-cols-4 gap-5">
+        <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
           {/* Replace the div below with the actual UserUploads component */}
           <UserUploads />
         </div>
