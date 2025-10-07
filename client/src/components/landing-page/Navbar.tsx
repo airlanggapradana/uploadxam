@@ -9,6 +9,7 @@ import {
   FaXmark,
   FaQuestion,
 } from "react-icons/fa6";
+import { Book } from "lucide-react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -73,6 +74,12 @@ const Navbar = () => {
               className="flex items-center gap-2 text-gray-100 hover:text-sky-300"
             >
               <FaWhatsapp /> WhatsApp
+            </Link>
+            <Link
+              href="/panduan"
+              className="flex items-center gap-2 text-gray-100 hover:text-sky-300"
+            >
+              <Book className={"w-4"} /> Panduan
             </Link>
           </div>
         )}

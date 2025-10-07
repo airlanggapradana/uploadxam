@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -18,6 +18,8 @@ import {
   CircleAlert as AlertCircle,
   Sun,
   Moon,
+  Menu,
+  X,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -28,6 +30,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface NavItem {
   id: string;
@@ -46,6 +49,22 @@ interface ContentSection {
 
 const PanduanPage = () => {
   const [activeSection, setActiveSection] = useState("introduction");
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Check if screen size is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
 
   const navigation: NavItem[] = [
     {
@@ -230,7 +249,7 @@ const PanduanPage = () => {
               <p className="leading-relaxed text-slate-700 dark:text-gray-400">
                 Gunakan fitur pencarian untuk menemukan soal yang Anda butuhkan:
               </p>
-              <div className="rounded-lg bg-slate-900 p-4 font-mono text-sm text-slate-100">
+              <div className="overflow-x-auto rounded-lg bg-slate-900 p-4 font-mono text-sm text-slate-100">
                 <p className="text-green-400"># Langkah-langkah pencarian:</p>
                 <p className="mt-2">
                   1. Masukkan kata kunci (mata kuliah/topik)
@@ -363,19 +382,93 @@ const PanduanPage = () => {
 
   const { setTheme } = useTheme();
 
+  // Navigation Menu Component for mobile
+  const MobileNavigation = () => (
+    <div className="space-y-1 p-4">
+      {navigation.map((item) => (
+        <Button
+          key={item.id}
+          onClick={() => {
+            setActiveSection(item.id);
+            setIsMenuOpen(false);
+          }}
+          variant="ghost"
+          className={`flex w-full items-center justify-start gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all ${
+            activeSection === item.id
+              ? "bg-slate-100 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100"
+              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-100"
+          }`}
+        >
+          <div className="flex h-5 w-5 items-center justify-center">
+            {item.icon}
+          </div>
+          <span>{item.title}</span>
+        </Button>
+      ))}
+    </div>
+  );
+
+  // Tab Navigation Component for mobile
+  const TabNavigation = () => (
+    <div className="flex gap-2 overflow-x-auto border-b border-slate-200 px-4 py-2 dark:border-slate-800">
+      {navigation.map((item) => (
+        <Button
+          key={item.id}
+          onClick={() => setActiveSection(item.id)}
+          variant="ghost"
+          size="sm"
+          className={`flex-shrink-0 ${
+            activeSection === item.id
+              ? "bg-slate-100 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100"
+              : "text-slate-600 dark:text-slate-400"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <div className="flex h-4 w-4 items-center justify-center">
+              {item.icon}
+            </div>
+            <span>{item.title}</span>
+          </div>
+        </Button>
+      ))}
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950">
-      <div className="sticky top-0 z-10 border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
+      <div className="sticky top-0 z-20 border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-4">
+          {isMobile && (
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[240px] sm:w-[300px]">
+                <div className="flex items-center gap-2 py-4">
+                  <BookOpen className="h-5 w-5 text-slate-900 dark:text-slate-100" />
+                  <span className="text-lg font-bold text-black dark:text-white">
+                    upload<span className="text-sky-600">xam</span>
+                  </span>
+                </div>
+                <Separator className="my-2" />
+                <MobileNavigation />
+              </SheetContent>
+            </Sheet>
+          )}
+
           <Link href={"/"} className={"flex items-center gap-3"}>
             <BookOpen className="h-6 w-6 text-slate-900 dark:text-slate-100" />
             <span className="text-xl font-black text-black dark:text-white">
               upload<span className="text-sky-600">xam</span>
             </span>
           </Link>
+
           <Badge variant="secondary" className="ml-auto">
             v1.0
           </Badge>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
@@ -397,59 +490,65 @@ const PanduanPage = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+
+        {/* Tab navigation for medium screens */}
+        {isMobile && <TabNavigation />}
       </div>
 
       <div className="mx-auto flex max-w-7xl">
-        <aside className="sticky top-[57px] min-h-[calc(100vh-57px)] w-64 border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
-          <ScrollArea className="h-[calc(100vh-57px)]">
-            <div className="space-y-1 p-4">
-              {navigation.map((item) => (
-                <Button
-                  key={item.id}
-                  onClick={() => setActiveSection(item.id)}
-                  variant="ghost"
-                  className={`flex w-full items-center justify-start gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all ${
-                    activeSection === item.id
-                      ? "bg-slate-100 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-100"
-                  }`}
-                >
-                  <div className="flex h-5 w-5 items-center justify-center">
-                    {item.icon}
-                  </div>
-                  <span>{item.title}</span>
-                </Button>
-              ))}
-            </div>
-          </ScrollArea>
-        </aside>
+        {/* Desktop Sidebar */}
+        {!isMobile && (
+          <aside className="sticky top-[57px] hidden min-h-[calc(100vh-57px)] w-64 border-r border-slate-200 bg-white md:block dark:border-slate-800 dark:bg-slate-950">
+            <ScrollArea className="h-[calc(100vh-57px)]">
+              <div className="space-y-1 p-4">
+                {navigation.map((item) => (
+                  <Button
+                    key={item.id}
+                    onClick={() => setActiveSection(item.id)}
+                    variant="ghost"
+                    className={`flex w-full items-center justify-start gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all ${
+                      activeSection === item.id
+                        ? "bg-slate-100 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-100"
+                    }`}
+                  >
+                    <div className="flex h-5 w-5 items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <span>{item.title}</span>
+                  </Button>
+                ))}
+              </div>
+            </ScrollArea>
+          </aside>
+        )}
 
         <main className="flex-1">
-          <ScrollArea className="h-[calc(100vh-57px)]">
-            <div className="mx-auto max-w-3xl px-8 py-12">
-              <div className="mb-8">
-                <h2 className="mb-2 text-3xl font-bold text-slate-900 dark:text-slate-100">
+          <ScrollArea className="h-[calc(100vh-57px)] md:h-[calc(100vh-57px)]">
+            <div className="mx-auto max-w-3xl px-4 py-8 md:px-8 md:py-12">
+              <div className="mb-6 md:mb-8">
+                <h2 className="mb-2 text-2xl font-bold text-slate-900 md:text-3xl dark:text-slate-100">
                   {content[activeSection]?.title}
                 </h2>
                 <Separator className="mt-4" />
               </div>
 
-              <div className="space-y-12">
+              <div className="space-y-8 md:space-y-12">
                 {content[activeSection]?.sections.map((section, idx) => (
                   <div key={idx}>
-                    <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
+                    <h3 className="mb-3 text-lg font-semibold text-slate-900 md:mb-4 md:text-xl dark:text-slate-100">
                       {section.heading}
                     </h3>
-                    <div className="prose prose-slate max-w-none">
+                    <div className="prose prose-slate max-w-none text-sm md:text-base">
                       {section.content}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <Separator className="my-12" />
+              <Separator className="my-8 md:my-12" />
 
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-900">
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 md:p-6 dark:border-slate-700 dark:bg-slate-900">
                 <div className="flex gap-3">
                   <MessageSquare className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-600 dark:text-slate-400" />
                   <div>
