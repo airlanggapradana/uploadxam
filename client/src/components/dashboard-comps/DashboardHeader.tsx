@@ -158,6 +158,7 @@ const DashboardHeader = () => {
             variant="secondary"
             size="default"
             className="text-gray-800 dark:text-gray-200"
+            onClick={() => window.open("/panduan", "_blank")}
           >
             <FileText className="h-4 w-4" />
             Panduan

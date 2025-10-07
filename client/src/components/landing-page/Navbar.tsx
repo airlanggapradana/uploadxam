@@ -2,7 +2,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaInstagram, FaWhatsapp, FaBars, FaXmark } from "react-icons/fa6";
+import {
+  FaInstagram,
+  FaWhatsapp,
+  FaBars,
+  FaXmark,
+  FaQuestion,
+} from "react-icons/fa6";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -13,10 +19,10 @@ const Navbar = () => {
         {/* Logo */}
         <Image
           src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
-          width={70}
-          height={70}
+          width={100}
+          height={100}
           alt="logo"
-          className="h-10 w-auto sm:h-14"
+          className="h-12 w-auto"
         />
 
         {/* Desktop Icons */}
@@ -32,6 +38,12 @@ const Navbar = () => {
             className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
           >
             <FaWhatsapp className="h-6 w-6" />
+          </Link>
+          <Link
+            href="/panduan"
+            className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
+          >
+            <FaQuestion className="h-6 w-6" />
           </Link>
         </div>
 
