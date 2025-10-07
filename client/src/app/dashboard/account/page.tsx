@@ -101,16 +101,21 @@ const AccountPage = () => {
 
       <Separator className="mb-8" />
 
-      <div className="mb-8 grid grid-cols-4 gap-8">
-        <div className={"col-span-3"}>
-          <div className={"flex items-center justify-between"}>
-            <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
+      <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-8">
+        <div className="col-span-1 md:col-span-3">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-base font-semibold text-black dark:text-white">
               Profile
             </h2>
-            <Switch onClick={() => setIsEdit(!isEdit)} />
+            <div className="flex items-center gap-2">
+              <span className="hidden text-sm sm:inline">
+                {isEdit ? "Edit Mode" : "View Mode"}
+              </span>
+              <Switch onClick={() => setIsEdit(!isEdit)} />
+            </div>
           </div>
-          <div className="flex w-full items-start gap-4">
-            <Avatar className="h-[72px] w-[72px]">
+          <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:items-start">
+            <Avatar className="h-16 w-16 sm:h-[72px] sm:w-[72px]">
               <AvatarFallback>
                 {session.name.charAt(0).toUpperCase()}
               </AvatarFallback>
@@ -119,15 +124,15 @@ const AccountPage = () => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-5"
+                  className="flex flex-col gap-4 sm:gap-5"
                 >
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
-                      <FormItem className={"w-full"}>
+                      <FormItem className="w-full">
                         <FormLabel>Name</FormLabel>
-                        <FormControl className={"w-full"}>
+                        <FormControl className="w-full">
                           <Input
                             placeholder="Enter your name"
                             {...field}
@@ -168,10 +173,10 @@ const AccountPage = () => {
                         >
                           <FormControl>
                             <SelectTrigger
-                              className={"w-full"}
+                              className="w-full"
                               disabled={isPending || !isEdit}
                             >
-                              <SelectValue placeholder="Select a verified email to display" />
+                              <SelectValue placeholder="Select program studi" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -202,7 +207,7 @@ const AccountPage = () => {
                   <Button
                     type="submit"
                     disabled={isPending || !isEdit}
-                    className="mt-2 w-fit"
+                    className="mt-2 w-fit self-start"
                   >
                     {isPending ? "Saving..." : "Save"}
                   </Button>
@@ -211,11 +216,11 @@ const AccountPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
+        <div className="col-span-1 mt-6 md:mt-0">
+          <h2 className="mb-4 text-base font-semibold text-black dark:text-white">
             Program Studi
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[15px] text-black dark:text-white">
                 {session.prodi}
@@ -267,11 +272,11 @@ const AccountPage = () => {
       </div>
 
       <Separator />
-      <div className={"mt-8"}>
+      <div className="mt-8">
         <h2 className="mb-5 text-base font-semibold text-black dark:text-white">
           Danger Zone
         </h2>
-        <div className="flex items-start justify-between gap-8">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8 sm:space-y-0">
           <div className="flex-1">
             <p className="mb-1 text-[15px] font-semibold text-black dark:text-white">
               Hapus Akun
@@ -284,7 +289,7 @@ const AccountPage = () => {
           </div>
           <Button
             variant="outline"
-            className="shrink-0 border border-red-300 px-5 text-sm font-medium text-red-600 hover:border-red-400 hover:bg-red-50 hover:text-red-700"
+            className="w-full shrink-0 border border-red-300 px-5 text-sm font-medium text-red-600 hover:border-red-400 hover:bg-red-50 hover:text-red-700 sm:w-auto"
           >
             Delete Account
           </Button>
