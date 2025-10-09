@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const createUserSchema = z.object({
-  nim: z.string().min(8).max(15),
+  nim: z.string().regex(/^L\d{8,14}$/, {
+    message: "NIM hanya diperbolehkan untuk anak FKI",
+  }),
   name: z.string().min(3).max(100),
   prodi: z.enum(["Informatika", "Sistem_Informasi", "Ilmu_Komunikasi"], {
     message: "Prodi tidak valid",
@@ -27,7 +29,9 @@ export const makeUploadSchema = z.object({
 export const updateUploadSchema = makeUploadSchema.partial();
 
 export const loginSchema = z.object({
-  nim: z.string().min(8).max(15),
+  nim: z.string().regex(/^L\d{8,14}$/, {
+    message: "NIM hanya diperbolehkan untuk anak FKI",
+  }),
 });
 
 export type UpdateUploadInput = z.infer<typeof updateUploadSchema>;
