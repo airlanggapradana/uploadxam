@@ -289,6 +289,7 @@ const AccountPage = () => {
           </div>
           <Button
             variant="outline"
+            disabled={true}
             className="w-full shrink-0 border border-red-300 px-5 text-sm font-medium text-red-600 hover:border-red-400 hover:bg-red-50 hover:text-red-700 sm:w-auto"
           >
             Delete Account
