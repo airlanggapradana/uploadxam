@@ -8,15 +8,18 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
   try {
     const {name, nim, prodi}: CreateUserInput = createUserSchema.parse(req.body)
 
-    //   cek jika nim sudah ada
-    const existingUser = await prisma.user.findUnique({
+    //   cek jika nim or nama sudah ada
+    const existingUser = await prisma.user.findFirst({
       where: {
-        nim
+        OR: [
+          {nim: nim.toUpperCase()},
+          {name: name.toUpperCase()}
+        ]
       }
     })
     if (existingUser) {
       res.status(400).json({
-        message: 'NIM sudah terdaftar'
+        message: 'NIM / Nama sudah terdaftar, silakan login'
       })
       return;
     }
