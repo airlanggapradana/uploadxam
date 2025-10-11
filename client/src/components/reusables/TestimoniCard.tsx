@@ -1,6 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Quote } from "lucide-react";
+import { FaWhatsapp, FaInstagram, FaLinkedin } from "react-icons/fa";
+
+interface Social {
+  type: "instagram" | "linkedin" | "whatsapp";
+  url: string;
+}
 
 interface TestimonialCardProps {
   quote: string;
@@ -8,7 +14,14 @@ interface TestimonialCardProps {
   title: string;
   avatarUrl: string;
   avatarFallback: string;
+  socials?: Social[];
 }
+
+const socialIcons = {
+  instagram: FaInstagram,
+  linkedin: FaLinkedin,
+  whatsapp: FaWhatsapp,
+};
 
 export function TestimonialCard({
   quote,
@@ -16,6 +29,7 @@ export function TestimonialCard({
   title,
   avatarUrl,
   avatarFallback,
+  socials = [],
 }: TestimonialCardProps) {
   return (
     <Card className="mx-auto max-w-4xl border-0 bg-gradient-to-br from-pink-200 via-pink-100 to-pink-50 p-6 shadow-lg sm:p-8">
@@ -51,6 +65,25 @@ export function TestimonialCard({
             <p className="text-sm font-medium text-red-500 sm:text-base">
               {title}
             </p>
+            {socials.length > 0 && (
+              <div className="mt-2 flex justify-center gap-3 sm:justify-start">
+                {socials.map((social) => {
+                  const Icon = socialIcons[social.type];
+                  return (
+                    <a
+                      key={social.type}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 transition-colors hover:text-red-500"
+                      aria-label={social.type}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

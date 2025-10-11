@@ -16,10 +16,28 @@ const Testimonials = () => {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
-        <div className="max-w-md sm:max-w-4xl">
+        <h1 className="max-w-2xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+          Dari Mahasiswa, Untuk Mahasiswa.
+        </h1>
+
+        <div className="mt-12 max-w-md sm:max-w-4xl">
           <TestimonialCard
-            quote="I'm tired of seeing my relatives worrying about what kind of questions will be on the exams. UploadXam exists to help students like me prepare for exams more effectively."
+            quote="Aku capek ngeliat temen-temen pada bingung mikirin soal ujian kayak apa nantinya. UploadXam hadir untuk ngebantu mahasiswa kayak kita belajar dan persiapin ujian agar lebih mudah dan efektif."
             author="Airlangga Pradana"
+            socials={[
+              {
+                type: "linkedin",
+                url: "https://www.linkedin.com/in/airlanggapradana/",
+              },
+              {
+                type: "instagram",
+                url: "https://www.instagram.com/iamrangga._/",
+              },
+              {
+                type: "whatsapp",
+                url: "https://wa.me/6281227151326",
+              },
+            ]}
             title="Teknik Informatika '24"
             avatarUrl="https://res.cloudinary.com/airlanggapradana/image/upload/v1759160258/super_resolution_20250918161920060_xwhg9b.jpg"
             avatarFallback="AP"
