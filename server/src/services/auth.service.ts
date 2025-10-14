@@ -26,7 +26,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 
     const user = await prisma.user.create({
       data: {
-        id: `MHS-${prodi === 'Informatika' ? 'IF' : prodi === 'Sistem_Informasi' ? 'SI' : prodi === 'Ilmu_Komunikasi' ? 'ILKM' : prodi}-${nim.slice(7, 10)}`,
+        id: `MHS-${prodi === 'Informatika' ? 'IF' : prodi === 'Sistem_Informasi' ? 'SI' : prodi === 'Ilmu_Komunikasi' ? 'ILKM' : prodi}-${nim}`,
         name: name.toUpperCase(),
         nim: nim.toUpperCase(),
         prodi
