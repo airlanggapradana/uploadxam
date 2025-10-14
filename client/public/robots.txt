@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://uploadxam.fostiums.org
+
+# Sitemaps
+Sitemap: https://uploadxam.fostiums.org/sitemap.xml
