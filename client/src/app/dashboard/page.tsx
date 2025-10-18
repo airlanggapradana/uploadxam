@@ -17,8 +17,6 @@ import { Separator } from "@/components/ui/separator";
 import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
 import { useDebounce } from "use-debounce";
 import { Input } from "@/components/ui/input";
-import Joyride, { type Step } from "react-joyride";
-import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
@@ -26,9 +24,6 @@ const Dashboard = () => {
   >("All");
   const [subject, setSubject] = React.useState<string | undefined>(undefined);
   const [debouncedSubject] = useDebounce(subject, 1000);
-
-  const [runTour, setRunTour] = React.useState(false);
-  const [stepIndex, setStepIndex] = React.useState(0);
 
   const {
     data: exams,
@@ -39,112 +34,44 @@ const Dashboard = () => {
   if (error) return <div>Error: {error.message}</div>;
   if (!exams) return <div>No data available</div>;
 
-  // ⬅️ definisikan step Joyride
-  const steps: Step[] = [
-    {
-      target: ".warning-guide",
-      content: "Perhatikan pesan penting dari admin di sini.",
-      disableBeacon: true, // ⬅️ langsung tampil tanpa beacon
-    },
-    {
-      target: ".select-prodi-guide",
-      content: "Gunakan dropdown ini untuk memilih program studi.",
-      disableBeacon: true,
-    },
-    {
-      target: ".input-search-guide",
-      content: "Ketik nama mata kuliah untuk mencari soal.",
-      disableBeacon: true,
-    },
-    {
-      target: ".upload-button-guide",
-      content: "Klik tombol ini untuk mengunggah soal baru.",
-      disableBeacon: true,
-    },
-    {
-      target: ".stats-guide",
-      content: "Bagian ini menampilkan statistik soal yang tersedia.",
-      disableBeacon: true,
-    },
-  ];
-
   return (
     <ExamSessionProvider value={exams}>
       <main className="w-full p-4 dark:bg-gray-900">
-        <Button
-          variant={"default"}
-          onClick={() => setRunTour(true)}
-          className="fixed right-5 bottom-5 rounded-full px-4 py-2 shadow-lg"
-        >
-          ❓ Klik untuk Panduan
-        </Button>
-
         {/* ⬅️ komponen Joyride */}
-        <Joyride
-          steps={steps}
-          run={runTour}
-          stepIndex={stepIndex}
-          continuous
-          showSkipButton
-          showProgress
-          disableOverlayClose
-          styles={{
-            options: {
-              primaryColor: "#2563eb",
-              zIndex: 9999,
-            },
-          }}
-          callback={(data) => {
-            const { status, action, index, type } = data;
-            if (["finished", "skipped"].includes(status)) {
-              setRunTour(false);
-              setStepIndex(0);
-            } else {
-              // @ts-expect-error
-              if (type === "step:after" || type === "target:notFound") {
-                setStepIndex(index + 1);
-              }
-            }
-          }}
-        />
 
         <div className="space-y-5">
-          <div className="warning-guide">
-            <Warning
-              title={"Mohon Perhatiannya!"}
-              description={
-                "Jika kamu menemukan soal yang tidak sesuai atau ada masalah lainnya, silakan laporkan ke admin melalui WhatsApp di nomor 081227151326. Terima kasih atas partisipasimu!"
-              }
-              className={"border-amber-200 bg-amber-100 text-amber-800"}
-            />
-          </div>
+          <Warning
+            title={"Mohon Perhatiannya!"}
+            description={
+              "Jika kamu menemukan soal yang tidak sesuai atau ada masalah lainnya, silakan laporkan ke admin melalui WhatsApp di nomor 081227151326. Terima kasih atas partisipasimu!"
+            }
+            className={"border-amber-200 bg-amber-100 text-amber-800"}
+          />
 
           <Separator />
 
           <div className="flex items-start justify-between sm:items-center">
             <div className="space-y-3">
-              <div className="select-prodi-guide">
-                <Select
-                  value={prodi}
-                  onValueChange={(value) => setProdi(value as typeof prodi)}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Program" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Informatika">Informatika</SelectItem>
-                    <SelectItem value="Sistem_Informasi">
-                      Sistem Informasi
-                    </SelectItem>
-                    <SelectItem value="Ilmu_Komunikasi">
-                      Ilmu Komunikasi
-                    </SelectItem>
-                    <SelectItem value="All">All</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select
+                value={prodi}
+                onValueChange={(value) => setProdi(value as typeof prodi)}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select Program" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Informatika">Informatika</SelectItem>
+                  <SelectItem value="Sistem_Informasi">
+                    Sistem Informasi
+                  </SelectItem>
+                  <SelectItem value="Ilmu_Komunikasi">
+                    Ilmu Komunikasi
+                  </SelectItem>
+                  <SelectItem value="All">All</SelectItem>
+                </SelectContent>
+              </Select>
 
-              <div className="input-search-guide relative w-72">
+              <div className="relative w-72">
                 <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -170,14 +97,10 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="upload-button-guide">
-              <DialogAddFileUpload />
-            </div>
+            <DialogAddFileUpload />
           </div>
 
-          <div className="stats-guide">
-            <Stats />
-          </div>
+          <Stats />
 
           <ProdiGrid />
         </div>
