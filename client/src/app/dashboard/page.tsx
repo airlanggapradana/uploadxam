@@ -17,9 +17,10 @@ import { Separator } from "@/components/ui/separator";
 import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
 import { useDebounce } from "use-debounce";
 import { Input } from "@/components/ui/input";
-import { NextStepProvider, NextStep, useNextStep, type Tour } from "nextstepjs";
+import { NextStepProvider, NextStep, useNextStep } from "nextstepjs";
 import { Button } from "@/components/ui/button";
 import { steps } from "@/utils/DashboardTour";
+import TourCustomCard from "@/components/dashboard-comps/TourCustomCard";
 
 const DashboardTourButton = () => {
   const { startNextStep, closeNextStep } = useNextStep();
@@ -56,7 +57,12 @@ const Dashboard = () => {
     <ExamSessionProvider value={exams}>
       <main className="w-full p-4 dark:bg-gray-900">
         <NextStepProvider>
-          <NextStep steps={steps}>
+          <NextStep
+            steps={steps}
+            cardComponent={
+              TourCustomCard as unknown as React.ComponentType<any>
+            }
+          >
             <div className="space-y-5">
               <Warning
                 title={"Mohon Perhatiannya!"}
