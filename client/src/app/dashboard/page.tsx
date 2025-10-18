@@ -60,7 +60,7 @@ const Dashboard = () => {
           <NextStep
             steps={steps}
             cardComponent={
-              // ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               TourCustomCard as unknown as React.ComponentType<any>
             }
           >
