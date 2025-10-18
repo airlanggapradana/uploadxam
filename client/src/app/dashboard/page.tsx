@@ -60,6 +60,7 @@ const Dashboard = () => {
           <NextStep
             steps={steps}
             cardComponent={
+              // ts-expect-error
               TourCustomCard as unknown as React.ComponentType<any>
             }
           >
