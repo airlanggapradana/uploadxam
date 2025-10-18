@@ -161,7 +161,7 @@ const DashboardHeader = () => {
             onClick={() => window.open("/panduan", "_blank")}
           >
             <FileText className="h-4 w-4" />
-            Panduan
+            Dokumentasi
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
