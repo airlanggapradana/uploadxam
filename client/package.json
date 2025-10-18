@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "npm install --legacy-peer-deps && next build",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "check": "next lint && tsc --noEmit",
     "dev": "next dev --turbo",
