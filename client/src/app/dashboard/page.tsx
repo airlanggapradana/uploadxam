@@ -26,12 +26,19 @@ const DashboardTourButton = () => {
   const { startNextStep, closeNextStep } = useNextStep();
 
   return (
-    <div className="flex gap-2">
-      <Button onClick={() => startNextStep("uploadxam-tour")}>
-        🚀 Mulai Tour Panduan
+    <div className="flex flex-wrap gap-2">
+      <Button
+        onClick={() => startNextStep("uploadxam-tour")}
+        className="text-xs sm:text-sm"
+      >
+        🚀 Mulai Tour
       </Button>
-      <Button variant="outline" onClick={() => closeNextStep()}>
-        🔁 Reset Tour
+      <Button
+        variant="outline"
+        onClick={() => closeNextStep()}
+        className="text-xs sm:text-sm"
+      >
+        🔁 Reset
       </Button>
     </div>
   );
@@ -55,7 +62,7 @@ const Dashboard = () => {
 
   return (
     <ExamSessionProvider value={exams}>
-      <main className="w-full p-4 dark:bg-gray-900">
+      <main className="w-full p-2 sm:p-4 dark:bg-gray-900">
         <NextStepProvider>
           <NextStep
             steps={steps}
@@ -64,7 +71,7 @@ const Dashboard = () => {
               TourCustomCard as unknown as React.ComponentType<any>
             }
           >
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               <Warning
                 title={"Mohon Perhatiannya!"}
                 description={
@@ -75,14 +82,14 @@ const Dashboard = () => {
 
               <Separator />
 
-              <div className="flex items-start justify-between sm:items-center">
+              <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
                 <div className="space-y-3">
                   <div id={"tour1-step1"}>
                     <Select
                       value={prodi}
                       onValueChange={(value) => setProdi(value as typeof prodi)}
                     >
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-full sm:w-[180px]">
                         <SelectValue placeholder="Select Program" />
                       </SelectTrigger>
                       <SelectContent>
@@ -98,7 +105,7 @@ const Dashboard = () => {
                     </Select>
                   </div>
 
-                  <div id={"tour1-step2"} className="relative w-72">
+                  <div id={"tour1-step2"} className="relative w-full sm:w-72">
                     <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-300">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -117,14 +124,18 @@ const Dashboard = () => {
                     </span>
                     <Input
                       className="w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:text-white"
-                      placeholder={"Cari berdasarkan mata kuliah..."}
+                      placeholder={"Cari mata kuliah..."}
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                     />
                   </div>
                 </div>
 
-                <div className={"flex items-center gap-5"}>
+                <div
+                  className={
+                    "flex flex-wrap items-center justify-between gap-3 sm:justify-end"
+                  }
+                >
                   <DashboardTourButton />
                   <div id={"tour1-step3"}>
                     <DialogAddFileUpload />
