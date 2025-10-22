@@ -152,7 +152,7 @@ const Dashboard = () => {
                 <ProdiGrid />
               </div>
 
-              <div>
+              <div id={"tour1-step6"}>
                 <RecentActivities />
               </div>
             </div>

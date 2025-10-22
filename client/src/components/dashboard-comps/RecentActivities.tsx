@@ -6,11 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Activity, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { useGetRecentActivities } from "@/utils/query";
 import ActivityCard from "@/components/dashboard-comps/ActivityCard";
+import emptyStateImg from "../../../public/empty-state.png";
+import Image from "next/image";
 
 const RecentActivities = () => {
   const { data, isLoading, error } = useGetRecentActivities();
@@ -61,16 +63,20 @@ const RecentActivities = () => {
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center py-20">
-              <div className="bg-muted/50 mb-4 rounded-full p-4">
-                <Activity className="text-muted-foreground h-12 w-12" />
+            <div className="flex flex-col items-center justify-center px-4 py-16">
+              <div className="mb-6 overflow-hidden rounded-2xl shadow-lg">
+                <Image
+                  src={emptyStateImg}
+                  alt="No activities yet"
+                  className="h-auto w-full max-w-md"
+                />
               </div>
-              <h2 className="text-foreground mb-2 text-xl font-semibold">
-                No recent activities
+              <h2 className="text-foreground mb-2 text-2xl font-semibold">
+                Tidak Ada Aktivitas Terbaru.
               </h2>
               <p className="text-muted-foreground max-w-md text-center">
-                There haven&#39;t been any exam materials uploaded in the last
-                12 hours. Check back later!
+                Oops! kayaknya belum ada aktivitas terbaru dalam 12 jam terakhir
+                deh...
               </p>
             </div>
           )}

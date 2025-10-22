@@ -76,6 +76,21 @@ export const steps: Tour[] = [
         pointerPadding: 10,
         pointerRadius: 10,
       },
+      {
+        icon: <>🎉</>,
+        title: "Pantau Aktivitas Terbaru",
+        content: (
+          <>
+            Lihat aktivitas terbaru di platform dalam 12 jam terakhir di sini.
+          </>
+        ),
+        selector: "#tour1-step6",
+        side: "top",
+        showControls: true,
+        showSkip: true,
+        pointerPadding: 10,
+        pointerRadius: 10,
+      },
     ],
   },
 ];
