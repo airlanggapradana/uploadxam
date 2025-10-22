@@ -79,7 +79,7 @@ const Hero = () => {
             className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-sky-700 to-sky-500 px-6 py-3 text-sm font-medium text-white hover:from-sky-800 hover:to-sky-600"
           >
             <MdOutlineBookmarkAdd className="text-xl" />
-            Mulai Belajar
+            Bikin Akun Baru
           </Link>
           <Link
             href="/auth/login"
