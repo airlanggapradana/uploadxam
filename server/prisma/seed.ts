@@ -61,7 +61,7 @@ async function main() {
         semester: faker.number.int({min: 1, max: 8}),
         year: faker.number.int({min: 2020, max: 2025}),
         prodi: randomUser.prodi, // samakan dengan prodi user
-        uploadedAt: faker.date.recent({days: 90}),
+        uploadedAt: faker.date.recent({days: 0.5}),
         userId: randomUser.id,
         mata_kuliah: faker.helpers.arrayElement([
           "Matematika Diskrit",

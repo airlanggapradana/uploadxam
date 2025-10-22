@@ -384,3 +384,33 @@ export const deleteSingleUpload = async (req: Request, res: Response, next: Next
     next(error);
   }
 }
+
+export const getRecentUploads = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
+
+    const uploads = await prisma.upload.findMany({
+      where: {
+        uploadedAt: {
+          gte: twelveHoursAgo,
+        },
+      },
+      include: {
+        user: {
+          select: {id: true, name: true, nim: true, prodi: true},
+        },
+      },
+      orderBy: {
+        uploadedAt: "desc",
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      count: uploads.length,
+      data: uploads,
+    });
+  } catch (error) {
+    next(error);
+  }
+}

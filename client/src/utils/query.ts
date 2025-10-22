@@ -9,6 +9,7 @@ import type {
 import { env } from "@/env";
 import type { GetExamsResponse } from "@/types/get-exams.type";
 import type { GetUserUploadsResponse } from "@/types/get-user-uploads.type";
+import type { GetRecentActivType } from "@/types/get-recent-activ.type";
 
 export const useRegister = () => {
   return useMutation({
@@ -269,6 +270,32 @@ export const useDeleteUpload = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["exams"] });
       await queryClient.invalidateQueries({ queryKey: ["user-uploads"] });
+    },
+  });
+};
+
+export const useGetRecentActivities = () => {
+  return useQuery<GetRecentActivType>({
+    queryKey: ["activities"],
+    queryFn: async () => {
+      try {
+        return await axios
+          .get(`${env.NEXT_PUBLIC_API_URL}/users/uploads/recent`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "GET",
+          })
+          .then((res) => res.data as GetRecentActivType);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
     },
   });
 };

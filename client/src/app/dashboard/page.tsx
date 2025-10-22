@@ -21,6 +21,7 @@ import { NextStepProvider, NextStep, useNextStep } from "nextstepjs";
 import { Button } from "@/components/ui/button";
 import { steps } from "@/utils/DashboardTour";
 import TourCustomCard from "@/components/dashboard-comps/TourCustomCard";
+import RecentActivities from "@/components/dashboard-comps/RecentActivities";
 
 const DashboardTourButton = () => {
   const { startNextStep, closeNextStep } = useNextStep();
@@ -149,6 +150,10 @@ const Dashboard = () => {
 
               <div id={"tour1-step5"}>
                 <ProdiGrid />
+              </div>
+
+              <div>
+                <RecentActivities />
               </div>
             </div>
           </NextStep>
