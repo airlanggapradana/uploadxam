@@ -7,8 +7,11 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import TextHighlighter from "@/components/fancy/text/text-highlighter";
+import type { Transition } from "motion";
 
 const Hero = () => {
+  const transition = { type: "spring", duration: 1, delay: 0.4, bounce: 0 };
   return (
     <div className="relative min-h-screen w-full bg-black px-4 pt-24 sm:pt-28">
       {/* Deep Ocean Glow */}
@@ -37,9 +40,24 @@ const Hero = () => {
           Akses semua soal ujian jadi lebih mudah.
         </h1>
         <p className="mt-4 mb-7 max-w-2xl text-sm leading-6 text-gray-300 sm:text-base">
-          Dapatkan semua file ujian 📚 tiap semester tiap mata kuliah dari semua
-          prodi FKI berupa PDF langsung dari kakak tingkat 🤝 — cukup login
-          dengan NIM kamu 🚀.
+          Dapatkan{" "}
+          <TextHighlighter
+            transition={transition as Transition}
+            highlightColor="#4F46E5"
+            className={"rounded-[0.3em] p-[0.15rem] text-white"}
+          >
+            semua file ujian 📚
+          </TextHighlighter>{" "}
+          tiap semester tiap mata kuliah dari{" "}
+          <TextHighlighter
+            transition={transition as Transition}
+            highlightColor="#4F46E5"
+            className={"rounded-[0.3em] p-[0.15rem] text-white"}
+          >
+            semua prodi FKI
+          </TextHighlighter>{" "}
+          berupa PDF langsung dari kakak tingkat 🤝 — cukup login dengan NIM
+          kamu 🚀.
         </p>
 
         {/* Cards */}

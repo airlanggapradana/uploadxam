@@ -29,13 +29,13 @@ const Navbar = () => {
         {/* Desktop Icons */}
         <div className="hidden items-center gap-3 sm:flex">
           <Link
-            href="https://instagram.com/"
+            href="https://www.instagram.com/fosti_ums/"
             className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
           >
             <FaInstagram className="h-6 w-6" />
           </Link>
           <Link
-            href="#"
+            href="https://wa.me/6281227151326"
             className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
           >
             <FaWhatsapp className="h-6 w-6" />
