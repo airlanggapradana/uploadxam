@@ -35,12 +35,22 @@ const Testimonials = () => {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
-        <h1 className="max-w-2xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
-          Dari Mahasiswa, Untuk Mahasiswa.
+        <h1 className="max-w-4xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl leading-tight font-extrabold tracking-tight text-transparent sm:text-6xl">
+          Dari Mahasiswa, Untuk Mahasiswa. Gabung Bersama +
+          <CountUp
+            from={0}
+            to={Number(data?.totalUsers ?? 0)}
+            separator="."
+            startWhen={true}
+            duration={2}
+            delay={0.25}
+            className="inline"
+          />{" "}
+          Pengguna Lainnya!
         </h1>
 
         <div className="mt-12 space-y-4">
-          <div className="mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {isLoading ? (
               <div className="col-span-full flex items-center justify-center py-12">
                 <div className="space-y-2 text-center">
@@ -75,7 +85,7 @@ const Testimonials = () => {
                     <div className="flex items-end justify-between gap-3">
                       <Progress
                         value={item.percentage}
-                        className="h-2 flex-1"
+                        className="h-2 flex-1 transition-all duration-1000 ease-out"
                         style={
                           {
                             "--progress-background": prodiColors[item.prodi],

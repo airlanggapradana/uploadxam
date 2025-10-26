@@ -13,6 +13,7 @@ import type { GetRecentActivType } from "@/types/get-recent-activ.type";
 import type { GetUsersStatsResponse } from "@/types/get-users-stats.type";
 
 export const useRegister = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: CreateUserInput) => {
       try {
@@ -31,6 +32,9 @@ export const useRegister = () => {
         }
         throw new Error("An unknown error occurred");
       }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["user-stats"] });
     },
   });
 };
