@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {
   deleteSingleUpload,
   deleteUser,
-  getAllUploads, getRecentUploads,
+  getAllUploads, getRecentUploads, getUserStats,
   getUserUploads,
   makeUpload,
   updateUpload,
@@ -13,6 +13,7 @@ const userRouter = Router();
 
 userRouter.get('/uploads', getAllUploads)
 userRouter.get('/uploads/recent', getRecentUploads)
+userRouter.get('/stats', getUserStats)
 userRouter.put('/uploads/:id', updateUpload)
 userRouter.delete('/uploads/:id', deleteSingleUpload)
 userRouter.put('/:id', updateUser)

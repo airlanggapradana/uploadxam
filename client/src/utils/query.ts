@@ -10,6 +10,7 @@ import { env } from "@/env";
 import type { GetExamsResponse } from "@/types/get-exams.type";
 import type { GetUserUploadsResponse } from "@/types/get-user-uploads.type";
 import type { GetRecentActivType } from "@/types/get-recent-activ.type";
+import type { GetUsersStatsResponse } from "@/types/get-users-stats.type";
 
 export const useRegister = () => {
   return useMutation({
@@ -287,6 +288,32 @@ export const useGetRecentActivities = () => {
             method: "GET",
           })
           .then((res) => res.data as GetRecentActivType);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+  });
+};
+
+export const useGetUserStats = () => {
+  return useQuery<GetUsersStatsResponse>({
+    queryKey: ["user-stats"],
+    queryFn: async () => {
+      try {
+        return await axios
+          .get(`${env.NEXT_PUBLIC_API_URL}/users/stats`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "GET",
+          })
+          .then((res) => res.data as GetUsersStatsResponse);
       } catch (e) {
         if (e instanceof AxiosError) {
           throw new Error(

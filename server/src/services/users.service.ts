@@ -352,6 +352,48 @@ export const getUserUploads = async (req: Request, res: Response, next: NextFunc
   }
 }
 
+export const getUserStats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Hitung total user
+    const totalUsers = await prisma.user.count()
+
+    // Group user berdasarkan prodi
+    const usersByProdi = await prisma.user.groupBy({
+      by: ["prodi"],
+      _count: {prodi: true},
+    })
+
+    // Pastikan semua prodi muncul
+    const prodiList = [
+      Prodi.Informatika,
+      Prodi.Sistem_Informasi,
+      Prodi.Ilmu_Komunikasi,
+    ]
+
+    const normalized = prodiList.map((p) => {
+      const found = usersByProdi.find((d) => d.prodi === p)
+      const count = found?._count.prodi ?? 0
+
+      return {
+        prodi: p,
+        totalUsers: count,
+        percentage: totalUsers > 0
+          ? Number(((count / totalUsers) * 100).toFixed(2))
+          : 0,
+      }
+    })
+
+    res.status(200).json({
+      totalUsers,
+      breakdown: normalized,
+    })
+    return;
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({message: "Internal server error"})
+  }
+}
+
 export const deleteSingleUpload = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {id} = req.params
