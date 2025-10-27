@@ -137,6 +137,7 @@ export const useMakeUpload = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["exams"] });
+      await queryClient.invalidateQueries({ queryKey: ["activities"] });
     },
   });
 };
