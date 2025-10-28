@@ -5,7 +5,6 @@ import {
   FileText,
   LogOut,
   Moon,
-  Settings,
   Sun,
   Menu,
   X,
@@ -104,33 +103,6 @@ const DashboardHeader = () => {
           >
             <Menu className="h-6 w-6" />
           </Button>
-          {/* Logo and badge (desktop only) */}
-          <div className="hidden items-center space-x-2 md:flex">
-            <span className="text-xl font-black text-black dark:text-white">
-              upload<span className="text-sky-600">xam</span>
-            </span>
-            <span className="text-gray-400">/</span>
-            <Badge
-              variant="secondary"
-              className={cn(
-                session.prodi === "Informatika" &&
-                  "bg-sky-500 text-sm text-gray-50",
-                session.prodi === "Sistem_Informasi" &&
-                  "bg-amber-500 text-sm text-gray-50",
-                session.prodi !== "Informatika" &&
-                  session.prodi !== "Sistem_Informasi" &&
-                  "bg-indigo-500 text-sm text-gray-50",
-              )}
-            >
-              {session.prodi === "Informatika"
-                ? "Informatika"
-                : session.prodi === "Ilmu_Komunikasi"
-                  ? "Ilmu Komunikasi"
-                  : session.prodi === "Sistem_Informasi"
-                    ? "Sistem Informasi"
-                    : "Unknown"}
-            </Badge>
-          </div>
         </div>
 
         <div className="flex items-center space-x-4">

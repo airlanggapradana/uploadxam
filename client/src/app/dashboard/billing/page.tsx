@@ -1,77 +1,59 @@
+"use client";
 import React from "react";
-import { Heart, MessageSquare } from "lucide-react";
-import Link from "next/link";
+import { Heart } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const BillingPage = () => {
+  const router = useRouter();
   return (
-    <div className="flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-xl sm:max-w-2xl md:max-w-4xl">
-        <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700">
-          {/* Header Section */}
-          <div className="relative border-b border-blue-600 bg-gradient-to-r from-blue-500 to-cyan-600 p-6 sm:p-8 md:p-12">
-            {/* Animated background effect (hidden on very small devices) */}
-            <div className="absolute inset-0 hidden animate-pulse bg-gradient-to-r from-white/10 to-white/5 sm:block"></div>
-
-            <div className="relative z-10">
-              {/* Icon */}
-              <div className="mb-4 flex justify-center">
-                <div className="relative">
-                  <div className="absolute inset-0 hidden animate-pulse rounded-2xl bg-white opacity-30 blur-xl sm:block"></div>
-                  <div className="relative rounded-2xl border border-white/30 bg-white/20 p-3 shadow-xl backdrop-blur-sm sm:p-5">
-                    <Heart
-                      className="h-10 w-10 text-white sm:h-12 sm:w-12"
-                      strokeWidth={2}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Title */}
-              <h1 className="mb-3 text-center text-2xl font-bold text-white sm:text-3xl md:text-5xl">
-                Donasi Buat Developer yuk!
-              </h1>
-
-              {/* Subtitle */}
-              <p className="mx-auto max-w-xl text-center text-base leading-relaxed text-blue-50 sm:text-lg">
-                support developer untuk terus mengembangkan fitur-fitur
-                menariknya.
-              </p>
-            </div>
+    <div className="flex h-full items-center justify-center bg-gradient-to-b from-sky-50 to-white p-4">
+      <Card className="w-full max-w-2xl rounded-2xl text-center shadow-lg">
+        <CardHeader>
+          <div className="mb-2 flex justify-center">
+            <Heart className="h-10 w-10 animate-pulse text-sky-500" />
           </div>
+          <CardTitle className="text-2xl font-bold text-gray-800">
+            Bantu Kami Tetap Berkembang ❤️
+          </CardTitle>
+        </CardHeader>
 
-          {/* Content Section */}
-          <div className="p-4 sm:p-8 md:p-12">
-            {/* Status Banner */}
-            <Link
-              href={"https://saweria.co/devuploadxam"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mb-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-3 sm:p-4"
-            >
-              <MessageSquare className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600 sm:h-5 sm:w-5" />
-              <div>
-                <h3 className="mb-1 text-sm font-semibold text-amber-900 sm:text-base">
-                  UploadXam selamanya gratis!!!, tapi donasi itu sangat
-                  membantu!
-                </h3>
-                <p className="text-xs text-slate-700 sm:text-sm">
-                  Jika kamu merasa terbantu dengan platform ini, pertimbangkan
-                  untuk berdonasi. Setiap kontribusi, besar atau kecil, sangat
-                  berarti bagi kami.
-                </p>
-              </div>
-            </Link>
+        <CardContent className="space-y-4 text-gray-600">
+          <p>
+            Kami mengembangkan platform ini dengan cinta dan dedikasi agar tetap
+            cepat, aman, dan bebas diakses siapa pun.
+          </p>
+          <p>
+            Tapi di balik layar, ada biaya server, penyimpanan, dan maintenance
+            yang terus berjalan.
+          </p>
+          <p className="font-medium text-gray-800">
+            Dengan donasi kecil dari kamu, kamu ikut menjaga agar layanan ini
+            terus hidup dan berkembang 🙏
+          </p>
+        </CardContent>
 
-            {/* Footer Message */}
-            <div className="mt-6 border-t border-slate-200 pt-4 text-center">
-              <p className="text-xs text-slate-600 sm:text-sm">
-                Terima kasih atas kesabaran Anda. Keputusan akan diambil dengan
-                pertimbangan yang matang.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+        <CardFooter className="mt-4 flex flex-col gap-3">
+          <Button
+            onClick={() => router.push("https://saweria.co/devuploadxam")}
+            className="w-full rounded-xl bg-blue-500 text-white shadow-sm hover:bg-blue-600"
+          >
+            💖 Donasi Sekarang
+          </Button>
+
+          <p className="mt-2 text-xs text-gray-400">
+            Setiap donasi, sekecil apa pun, sangat berarti bagi keberlangsungan
+            proyek ini.
+          </p>
+        </CardFooter>
+      </Card>
     </div>
   );
 };
