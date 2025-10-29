@@ -29,11 +29,19 @@ export const makeUploadSchema = z.object({
 export const updateUploadSchema = makeUploadSchema.partial();
 
 export const loginSchema = z.object({
-  nim: z.string().regex(/^L\d{8,14}$/, {
+  nim: z.string().regex(/^L\d{8,14}$/i, {
     message: "NIM hanya diperbolehkan untuk anak FKI",
   }),
 });
 
+export const feedbackSchema = z.object({
+  feedback_rating: z.number().min(1).max(5),
+  feedback_type: z.enum(["bug", "feature", "improvement", "other"]),
+  email: z.string().email(),
+  message: z.string().min(10).max(1000),
+});
+
+export type FeedbackInput = z.infer<typeof feedbackSchema>;
 export type UpdateUploadInput = z.infer<typeof updateUploadSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type MakeUploadInput = z.infer<typeof makeUploadSchema>;

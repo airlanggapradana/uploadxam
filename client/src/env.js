@@ -18,6 +18,9 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_API_URL: z.string(),
+    NEXT_PUBLIC_EMAIL_SERVICE: z.string(),
+    NEXT_PUBLIC_EMAILTOUSER_TEMPLATE: z.string(),
+    NEXT_PUBLIC_EMAILTODEV_TEMPLATE: z.string(),
   },
 
   /**
@@ -27,6 +30,11 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_EMAIL_SERVICE: process.env.NEXT_PUBLIC_EMAIL_SERVICE,
+    NEXT_PUBLIC_EMAILTOUSER_TEMPLATE:
+      process.env.NEXT_PUBLIC_EMAILTOUSER_TEMPLATE,
+    NEXT_PUBLIC_EMAILTODEV_TEMPLATE:
+      process.env.NEXT_PUBLIC_EMAILTODEV_TEMPLATE,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

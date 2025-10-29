@@ -23,14 +23,14 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       <PopupDialog />
       <div className="flex bg-white dark:bg-gray-900">
         {/* Sidebar fixed di kiri */}
-        <aside className="fixed top-0 left-0 z-40 hidden h-screen w-64 border-r border-gray-200 bg-gray-50 md:block dark:border-gray-800 dark:bg-gray-900">
+        <aside className="fixed top-0 left-0 z-40 hidden h-screen w-[18rem] border-r border-gray-200 bg-gray-50 md:block dark:border-gray-800 dark:bg-gray-900">
           <Sidebar />
         </aside>
 
         {/* Main area */}
-        <div className="flex min-h-screen flex-1 flex-col md:ml-64">
+        <div className="flex min-h-screen flex-1 flex-col md:ml-[18rem]">
           {/* Header fixed di atas */}
-          <header className="fixed top-0 right-0 left-0 z-50 border-b bg-white md:left-64 dark:bg-gray-900">
+          <header className="fixed top-0 right-0 left-0 z-50 border-b bg-white md:left-[18rem] dark:bg-gray-900">
             <DashboardHeader />
           </header>
 
