@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { FeedbackInput } from "@/zod/zod.validation";
+import { type FeedbackInput, feedbackSchema } from "@/zod/zod.validation";
 import {
   Form,
   FormControl,
@@ -21,6 +21,8 @@ import { useUserSession } from "@/hooks/context";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import { env } from "@/env";
+import { ZodError } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Feedback = () => {
   const session = useUserSession();
@@ -31,6 +33,7 @@ const Feedback = () => {
       feedback_rating: 0,
       feedback_type: "feature",
     },
+    resolver: zodResolver(feedbackSchema),
   });
 
   const onSubmit: SubmitHandler<FeedbackInput> = async (d) => {
@@ -61,6 +64,14 @@ const Feedback = () => {
         form.reset();
       }
     } catch (e) {
+      if (e instanceof ZodError) {
+        toast.error(
+          `Gagal mengirim feedback: ${e.errors.map((err) => err.message).join(", ")}`,
+        );
+        form.setError("root", {
+          message: e.errors.map((err) => err.message).join(", "),
+        });
+      }
       if (e instanceof Error) {
         toast.error(`Gagal mengirim feedback: ${e.message}`);
       }
@@ -79,6 +90,13 @@ const Feedback = () => {
       </div>
 
       <Form {...form}>
+        {form.formState.errors.root && (
+          <div className="mb-4 rounded-md bg-red-50 p-4">
+            <p className="text-sm text-red-700">
+              {form.formState.errors.root.message}
+            </p>
+          </div>
+        )}
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Rating Section */}
           <FormField
@@ -195,14 +213,14 @@ const Feedback = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="space-y-3">
+              <FormItem className="space-y-1">
                 <FormLabel className="text-base font-semibold">Email</FormLabel>
+                <FormDescription>
+                  Kita akan menghubungi kamu jika diperlukan.
+                </FormDescription>
                 <FormControl>
                   <Input type="email" placeholder="your@email.com" {...field} />
                 </FormControl>
-                <p className="text-muted-foreground text-sm">
-                  Kita akan menghubungi kamu jika diperlukan.
-                </p>
                 <FormMessage />
               </FormItem>
             )}

@@ -35,10 +35,18 @@ export const loginSchema = z.object({
 });
 
 export const feedbackSchema = z.object({
-  feedback_rating: z.number().min(1).max(5),
-  feedback_type: z.enum(["bug", "feature", "improvement", "other"]),
-  email: z.string().email(),
-  message: z.string().min(10).max(1000),
+  feedback_rating: z
+    .number({ message: "Rating harus berupa angka" })
+    .min(1, { message: `Rating harus antara 1 sampai 5` })
+    .max(5, { message: `Rating harus antara 1 sampai 5` }),
+  feedback_type: z.enum(["bug", "feature", "improvement", "other"], {
+    message: "Jenis feedback tidak valid",
+  }),
+  email: z.string().email("Email tidak valid"),
+  message: z
+    .string({ message: "Pesan harus diisi" })
+    .min(10, { message: "Pesan harus antara 10 sampai 1000 karakter" })
+    .max(1000, { message: "Pesan harus antara 10 sampai 1000 karakter" }),
 });
 
 export type FeedbackInput = z.infer<typeof feedbackSchema>;
