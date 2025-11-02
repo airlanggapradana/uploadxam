@@ -19,7 +19,7 @@ Melalui UploadXam, setiap mahasiswa dapat:
   Mahasiswa dapat mengunggah file ujian dalam format **PDF** dengan mudah menggunakan integrasi **EdgeStore**.
 
 - 👤 **User Authentication**  
-  Login menggunakan akun mahasiswa (misalnya melalui NIM) untuk memastikan kontribusi berasal dari civitas FKI UMS.
+  Login menggunakan akun mahasiswa (melalui NIM) untuk memastikan kontribusi berasal dari civitas FKI UMS.
 
 - 💾 **Database Terpusat**  
   Semua data tersimpan secara aman dan terstruktur di **PostgreSQL** dengan **Prisma ORM**.
