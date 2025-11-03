@@ -23,7 +23,6 @@ import {
 import { deleteCookie } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
 import { useUserSession } from "@/hooks/context";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import Link from "next/link";

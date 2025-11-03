@@ -10,7 +10,6 @@ import {
   FaQuestion,
 } from "react-icons/fa6";
 import { Book } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
