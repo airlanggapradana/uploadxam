@@ -10,6 +10,7 @@ import {
   FaQuestion,
 } from "react-icons/fa6";
 import { Book } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -17,14 +18,24 @@ const Navbar = () => {
   return (
     <nav className="fixed z-20 w-full bg-black/30 shadow-md backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:py-5">
-        {/* Logo */}
-        <Image
-          src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
-          width={100}
-          height={100}
-          alt="logo"
-          className="h-12 w-auto"
-        />
+        {/* Logos */}
+        <div className="flex items-center gap-6">
+          <Image
+            src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
+            width={100}
+            height={100}
+            alt="logo"
+            className="h-9 w-auto md:h-10"
+          />
+          <div className="h-6 w-px bg-white/30" aria-hidden="true" />
+          <Image
+            src="https://res.cloudinary.com/airlanggapradana/image/upload/v1762154491/upscalemedia-transformed_1_zuugzn.webp"
+            width={100}
+            height={100}
+            alt="secondary-logo"
+            className="h-9 w-auto md:h-10"
+          />
+        </div>
 
         {/* Desktop Icons */}
         <div className="hidden items-center gap-3 sm:flex">

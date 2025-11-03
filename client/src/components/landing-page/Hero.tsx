@@ -2,48 +2,53 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Book, LucideUsers } from "lucide-react";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
-import { LuLogIn } from "react-icons/lu";
+import { LuLayoutDashboard, LuLogIn } from "react-icons/lu";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import TextHighlighter from "@/components/fancy/text/text-highlighter";
 import type { Transition } from "motion";
+import { VscSourceControl } from "react-icons/vsc";
 
 const Hero = () => {
   const transition = { type: "spring", duration: 1, delay: 0.4, bounce: 0 };
   return (
-    <div className="relative min-h-screen w-full bg-black px-4 pt-24 sm:pt-28">
+    <div className="relative min-h-screen w-full bg-black px-4 py-24 sm:py-24">
       {/* Deep Ocean Glow */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          background:
-            "radial-gradient(70% 55% at 50% 50%, #2a5d77 0%, #184058 18%, #0f2a43 34%, #0a1b30 50%, #071226 66%, #040d1c 80%, #020814 92%, #01040d 97%, #000309 100%)",
+          background: "#000000",
+          backgroundImage: `
+        radial-gradient(circle, rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px)
+      `,
+          backgroundSize: "30px 30px",
+          backgroundPosition: "0 0",
         }}
       />
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-          <Badge className="flex items-center border-0 bg-gradient-to-r from-sky-800 to-sky-600 px-3 py-2 text-sm shadow-md">
+          <Badge className="flex items-center border-0 bg-gradient-to-r from-red-800 to-red-600 px-3 py-2 text-sm shadow-md">
             <LucideUsers className="mr-2 h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
             <span className="text-sky-100">from students to students</span>
           </Badge>
-          <Badge className="flex items-center border-0 bg-gradient-to-r from-sky-800 to-sky-600 px-3 py-2 text-sm shadow-md">
+          <Badge className="flex items-center border-0 bg-gradient-to-r from-red-800 to-red-600 px-3 py-2 text-sm shadow-md">
             <Book className="mr-2 h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
             <span className="text-sky-100">100+ Soal Ujian</span>
           </Badge>
         </div>
 
-        <h1 className="mt-5 max-w-2xl bg-gradient-to-br from-sky-100 to-sky-700 bg-clip-text py-5 text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+        <h1 className="mt-5 max-w-2xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
           Akses semua soal ujian jadi lebih mudah.
         </h1>
         <p className="mt-4 mb-7 max-w-2xl text-sm leading-6 text-gray-300 sm:text-base">
           Dapatkan{" "}
           <TextHighlighter
             transition={transition as Transition}
-            highlightColor="#4F46E5"
+            highlightColor="#B91C1C"
             className={"rounded-[0.3em] p-[0.15rem] text-white"}
           >
             semua file ujian 📚
@@ -51,7 +56,7 @@ const Hero = () => {
           tiap semester tiap mata kuliah dari{" "}
           <TextHighlighter
             transition={transition as Transition}
-            highlightColor="#4F46E5"
+            highlightColor="#B91C1C"
             className={"rounded-[0.3em] p-[0.15rem] text-white"}
           >
             semua prodi FKI
@@ -62,9 +67,11 @@ const Hero = () => {
 
         {/* Cards */}
         <div className="mt-6 mb-10 flex flex-col items-center gap-5 sm:flex-row">
-          <Card className="w-full max-w-xs border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
+          <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
             <CardContent className="flex items-center gap-3 px-4 py-4">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-tr from-sky-600 to-sky-400 p-2" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
+                <LuLayoutDashboard className="h-6 w-6 text-white" />
+              </div>
               <div>
                 <h2 className="text-start text-sm font-semibold text-sky-100">
                   User-Friendly
@@ -76,9 +83,11 @@ const Hero = () => {
             </CardContent>
           </Card>
 
-          <Card className="w-full max-w-xs border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
+          <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
             <CardContent className="flex items-center gap-3 px-4 py-4">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-tr from-amber-600 to-yellow-400 p-2" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
+                <VscSourceControl className="h-6 w-6 text-white" />
+              </div>
               <div>
                 <h2 className="text-start text-sm font-semibold text-sky-100">
                   Sumber Terpercaya
@@ -95,14 +104,14 @@ const Hero = () => {
         <div className="flex flex-col items-center gap-4 sm:flex-row">
           <Link
             href="/auth/register"
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-sky-700 to-sky-500 px-6 py-3 text-sm font-medium text-white hover:from-sky-800 hover:to-sky-600"
+            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-red-700 to-red-500 px-6 py-3 text-sm font-medium text-white hover:from-red-800 hover:to-red-600"
           >
             <MdOutlineBookmarkAdd className="text-xl" />
             Bikin Akun Baru
           </Link>
           <Link
             href="/auth/login"
-            className="flex items-center gap-2 rounded-lg border border-sky-700 bg-transparent px-6 py-3 text-sm font-medium text-sky-200 hover:bg-sky-900"
+            className="flex items-center gap-2 rounded-lg border border-red-700 bg-transparent px-6 py-3 text-sm font-medium text-white hover:bg-red-900"
           >
             <LuLogIn className="text-xl" />
             Login dengan NIM

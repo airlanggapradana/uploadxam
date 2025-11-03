@@ -11,6 +11,7 @@ import {
   Grid3x3 as Grid3X3,
   CreditCard,
   User,
+  Command,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -32,6 +33,7 @@ const menuItems = [
   { icon: Grid3X3, label: "Apps", path: "/dashboard" },
   { icon: CreditCard, label: "Donate", path: "/dashboard/billing" },
   { icon: User, label: "Account", path: "/dashboard/account" },
+  { icon: Command, label: "Feedbacks", path: "/dashboard/feedback" },
 ];
 
 const DashboardHeader = () => {
