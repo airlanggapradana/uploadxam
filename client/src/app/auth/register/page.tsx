@@ -71,25 +71,32 @@ export const metadata: Metadata = {
 
 const Register = () => {
   return (
-    <main className="relative z-10 flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-sky-950 to-black px-4 py-10 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md rounded-xl border border-white/20 bg-white/10 p-4 shadow-xl backdrop-blur-md sm:max-w-lg sm:p-6">
-        <CardHeader className="border-b border-white/10 pb-4 sm:pb-6">
-          <CardTitle className="text-xl font-bold text-white sm:text-left sm:text-2xl">
-            Register Akun Baru
-          </CardTitle>
-          <CardDescription className="text-sm text-white/70 sm:text-left sm:text-base">
-            Silakan daftar untuk mengakses semua soal ujian.
-          </CardDescription>
-          <CardAction className="mt-3 flex justify-center sm:justify-end">
+    <main className="relative z-20 flex min-h-screen flex-col items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-2xl rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-white/3 to-white/6 p-6 shadow-2xl backdrop-blur-lg sm:p-8">
+        <div className="mb-4 flex items-center justify-between">
+          <Link href="/" className="text-sm text-white/70 hover:text-white/90">
+            ← Back to Home
+          </Link>
+          <CardAction className="p-0">
             <Link
               href={"/auth/login"}
               className="text-sm text-sky-400 transition-colors hover:text-sky-300"
             >
-              Sudah punya akun?
+              Udah punya akun?
             </Link>
           </CardAction>
+        </div>
+
+        <CardHeader className="border-b border-white/10">
+          <CardTitle className="text-2xl leading-tight font-semibold text-white">
+            Register Akun
+          </CardTitle>
+          <CardDescription className="mt-1 text-sm text-white/70">
+            Silakan membuat akun baru untuk mengakses semua soal ujian.
+          </CardDescription>
         </CardHeader>
-        <div className="mt-2">
+
+        <div className="mt-6">
           <RegisterForm />
         </div>
       </Card>

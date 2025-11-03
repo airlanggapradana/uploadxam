@@ -40,19 +40,19 @@ const Navbar = () => {
         <div className="hidden items-center gap-3 sm:flex">
           <Link
             href="https://www.instagram.com/fosti_ums/"
-            className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
+            className="rounded-md p-2 text-gray-100 transition hover:bg-red-800 hover:text-red-100"
           >
             <FaInstagram className="h-6 w-6" />
           </Link>
           <Link
             href="https://wa.me/6281227151326"
-            className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
+            className="rounded-md p-2 text-gray-100 transition hover:bg-red-800 hover:text-red-100"
           >
             <FaWhatsapp className="h-6 w-6" />
           </Link>
           <Link
             href="/panduan"
-            className="rounded-md p-2 text-gray-100 transition hover:bg-gray-800 hover:text-sky-300"
+            className="rounded-md p-2 text-gray-100 transition hover:bg-red-800 hover:text-red-100"
           >
             <FaQuestion className="h-6 w-6" />
           </Link>
