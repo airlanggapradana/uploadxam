@@ -80,9 +80,7 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
                 </div>
                 <div className="flex items-center gap-2">
                   <BiUser className="h-4 w-4 dark:text-slate-300" />
-                  <span className="text-xs">
-                    {upload.user.name} - {upload.user.nim}
-                  </span>
+                  <span className="text-xs">{upload.user.name}</span>
                 </div>
               </div>
               <div className="mt-3 flex items-center justify-between">
