@@ -116,10 +116,6 @@ const ActivityCard = ({ activity }: ActivityCardProps) => {
               </span>
               <span className="text-muted-foreground">•</span>
               <span className="text-muted-foreground text-xs md:text-sm">
-                {activity.user.nim}
-              </span>
-              <span className="text-muted-foreground">•</span>
-              <span className="text-muted-foreground text-xs md:text-sm">
                 {activity.user.prodi.replace(/_/g, " ")}
               </span>
             </div>
