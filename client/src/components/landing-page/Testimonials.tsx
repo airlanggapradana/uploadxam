@@ -140,7 +140,7 @@ const Testimonials = () => {
                 },
               ]}
               title="Teknik Informatika '24"
-              avatarUrl="https://res.cloudinary.com/airlanggapradana/image/upload/v1759160258/super_resolution_20250918161920060_xwhg9b.jpg"
+              avatarUrl="https://res.cloudinary.com/airlanggapradana/image/upload/v1764150925/Gemini_Generated_Image_z0bsiez0bsiez0bs-min_hc7bnf.png"
               avatarFallback="AP"
             />
           </div>
