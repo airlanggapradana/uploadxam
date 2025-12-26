@@ -224,7 +224,7 @@ export const updateUpload = async (req: Request, res: Response, next: NextFuncti
 
 export const getAllUploads = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {prodi, subject} = req.query;
+    const {prodi, subject, sort, order, tipe_soal, kategori} = req.query;
 
     // Ambil semua uploads beserta author
     const uploads = await prisma.upload.findMany({
@@ -262,8 +262,25 @@ export const getAllUploads = async (req: Request, res: Response, next: NextFunct
           (subject as string).toLowerCase()
         )
         : true;
-      return matchProdi && matchSubject;
+      const matchTipeSoal = tipe_soal ? u.tipe_soal === tipe_soal : true;
+      const matchKategori = kategori ? u.kategori === kategori : true;
+
+      return matchProdi && matchSubject && matchTipeSoal && matchKategori;
     });
+
+    // Sorting berdasarkan tipe_soal atau kategori (opsional)
+    const sortKey = typeof sort === "string" ? sort : undefined; // 'tipe_soal' | 'kategori'
+    const sortOrder = (typeof order === "string" ? order.toLowerCase() : "asc") as "asc" | "desc";
+
+    if (sortKey === "tipe_soal" || sortKey === "kategori") {
+      filteredUploads.sort((a, b) => {
+        const av = (a[sortKey] ?? "").toString().toLowerCase();
+        const bv = (b[sortKey] ?? "").toString().toLowerCase();
+        if (av < bv) return sortOrder === "asc" ? -1 : 1;
+        if (av > bv) return sortOrder === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
 
     // Masukkan uploads ke grouping
     for (const upload of filteredUploads) {

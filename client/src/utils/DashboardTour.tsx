@@ -6,9 +6,12 @@ export const steps: Tour[] = [
     steps: [
       {
         icon: <>🎓</>,
-        title: "Filter berdasarkan Prodi",
+        title: "Filter berdasarkan prodi, tipe soal, dan kategori",
         content: (
-          <>Pilih Prodi dari dropdown untuk memfilter data pada dashboard.</>
+          <>
+            Pilih filter yg diinginkan dari dropdown untuk memfilter data pada
+            dashboard.
+          </>
         ),
         selector: "#tour1-step1",
         side: "top",

@@ -50,13 +50,24 @@ const Dashboard = () => {
     "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All"
   >("All");
   const [subject, setSubject] = React.useState<string | undefined>(undefined);
+  const [tipeSoal, setTipeSoal] = React.useState<"UTS" | "UAS" | undefined>(
+    undefined,
+  );
+  const [kategori, setKategori] = React.useState<
+    "REGULER" | "INTER" | undefined
+  >(undefined);
   const [debouncedSubject] = useDebounce(subject, 1000);
 
   const {
     data: exams,
     isLoading,
     error,
-  } = useGetExams({ prodi, subject: debouncedSubject });
+  } = useGetExams({
+    prodi,
+    subject: debouncedSubject,
+    tipe_soal: tipeSoal,
+    kategori: kategori,
+  });
   if (isLoading) return <DashboardLoadingSkeleton />;
   if (error) return <div>Error: {error.message}</div>;
   if (!exams) return <div>No data available</div>;
@@ -85,23 +96,69 @@ const Dashboard = () => {
 
               <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
                 <div className="space-y-3">
-                  <div id={"tour1-step1"}>
+                  <div id={"tour1-step1"} className="flex flex-wrap gap-3">
+                    <div>
+                      <Select
+                        value={prodi}
+                        onValueChange={(value) =>
+                          setProdi(value as typeof prodi)
+                        }
+                      >
+                        <SelectTrigger className="w-full sm:w-[180px]">
+                          <SelectValue placeholder="Select Program" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Informatika">
+                            Informatika
+                          </SelectItem>
+                          <SelectItem value="Sistem_Informasi">
+                            Sistem Informasi
+                          </SelectItem>
+                          <SelectItem value="Ilmu_Komunikasi">
+                            Ilmu Komunikasi
+                          </SelectItem>
+                          <SelectItem value="All">All</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     <Select
-                      value={prodi}
-                      onValueChange={(value) => setProdi(value as typeof prodi)}
+                      value={tipeSoal ?? "all"}
+                      onValueChange={(value) =>
+                        setTipeSoal(
+                          value === "all"
+                            ? undefined
+                            : (value as "UTS" | "UAS"),
+                        )
+                      }
                     >
-                      <SelectTrigger className="w-full sm:w-[180px]">
-                        <SelectValue placeholder="Select Program" />
+                      <SelectTrigger className="w-full sm:w-[150px]">
+                        <SelectValue placeholder="Tipe Soal" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Informatika">Informatika</SelectItem>
-                        <SelectItem value="Sistem_Informasi">
-                          Sistem Informasi
-                        </SelectItem>
-                        <SelectItem value="Ilmu_Komunikasi">
-                          Ilmu Komunikasi
-                        </SelectItem>
-                        <SelectItem value="All">All</SelectItem>
+                        <SelectItem value="all">Semua Tipe</SelectItem>
+                        <SelectItem value="UTS">UTS</SelectItem>
+                        <SelectItem value="UAS">UAS</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    <Select
+                      value={kategori ?? "all"}
+                      onValueChange={(value) =>
+                        setKategori(
+                          value === "all"
+                            ? undefined
+                            : (value as "REGULER" | "INTER"),
+                        )
+                      }
+                    >
+                      <SelectTrigger className="w-full sm:w-[200px]">
+                        <SelectValue placeholder="Kategori" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Semua Kategori</SelectItem>
+                        <SelectItem value="REGULER">Reguler</SelectItem>
+                        <SelectItem value="INTER">Inter</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

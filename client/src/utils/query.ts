@@ -67,24 +67,35 @@ export const useLogin = () => {
 export const useGetExams = ({
   prodi,
   subject,
+  tipe_soal,
+  kategori,
 }: {
   prodi?: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All";
   subject?: string;
+  tipe_soal?: "UTS" | "UAS";
+  kategori?: "REGULER" | "INTER";
 }) => {
   return useQuery<GetExamsResponse>({
-    queryKey: ["exams", { prodi, subject }],
+    queryKey: ["exams", { prodi, subject, tipe_soal, kategori }],
     queryFn: async () => {
       try {
+        const params = new URLSearchParams();
+
+        if (prodi && prodi !== "All") params.append("prodi", prodi);
+        if (subject) params.append("subject", subject);
+        if (tipe_soal) params.append("tipe_soal", tipe_soal);
+        if (kategori) params.append("kategori", kategori);
+
+        const queryString = params.toString();
+        const url = `${env.NEXT_PUBLIC_API_URL}/users/uploads${queryString ? `?${queryString}` : ""}`;
+
         return await axios
-          .get(
-            `${env.NEXT_PUBLIC_API_URL}/users/uploads${prodi && prodi !== "All" ? `?prodi=${prodi}` : ""}${subject ? `${prodi && prodi !== "All" ? "&" : "?"}subject=${subject}` : ""}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-              method: "GET",
+          .get(url, {
+            headers: {
+              "Content-Type": "application/json",
             },
-          )
+            method: "GET",
+          })
           .then((res) => res.data as GetExamsResponse);
       } catch (e) {
         if (e instanceof AxiosError) {
