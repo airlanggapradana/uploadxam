@@ -14,8 +14,8 @@ import { useRouter } from "next/navigation";
 const BillingPage = () => {
   const router = useRouter();
   return (
-    <div className="flex h-full items-center justify-center bg-white dark:bg-slate-900">
-      <Card className="w-full max-w-2xl rounded-2xl bg-white text-center shadow-lg dark:bg-slate-800">
+    <div className="flex h-full items-center justify-center bg-white dark:bg-gray-950">
+      <Card className="w-full max-w-2xl rounded-2xl bg-white text-center shadow-lg dark:bg-gray-800">
         <CardHeader>
           <div className="mb-2 flex justify-center">
             <Heart className="h-10 w-10 animate-pulse text-sky-500 dark:text-sky-400" />

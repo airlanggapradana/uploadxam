@@ -145,7 +145,11 @@ const DialogAddFileUpload = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className={"hidden sm:flex"}>
-        <Button>
+        <Button
+          className={
+            "text-xs font-semibold sm:text-sm dark:bg-sky-600 dark:text-sky-100"
+          }
+        >
           <BiPlus />
           Upload File
         </Button>

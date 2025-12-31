@@ -17,9 +17,9 @@ const ProdiGrid = () => {
         return (
           <div
             key={prodiData.prodi}
-            className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg dark:bg-gray-800"
+            className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg dark:bg-gray-900"
           >
-            <div className="bg-gradient-to-br from-teal-700 to-gray-800 p-6 text-white dark:from-teal-900 dark:to-gray-900">
+            <div className="bg-gradient-to-br from-blue-700 to-sky-900 p-6 text-white dark:from-blue-900 dark:to-gray-900">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-gray-100">
                   {formatProdiName(prodiData.prodi)}
@@ -30,7 +30,7 @@ const ProdiGrid = () => {
               </div>
             </div>
 
-            <div className="bg-white p-6 dark:bg-gray-800">
+            <div className="bg-white p-6 dark:bg-gray-900">
               {prodiData.totalUploads === 0 ? (
                 <div className="py-8 text-center text-slate-500 dark:text-slate-400">
                   <Sparkles className="mx-auto mb-2 h-12 w-12 opacity-50" />

@@ -30,7 +30,7 @@ const DashboardTourButton = () => {
     <div className="flex flex-wrap gap-2">
       <Button
         onClick={() => startNextStep("uploadxam-tour")}
-        className="text-xs sm:text-sm"
+        className="text-xs sm:text-sm dark:bg-gray-100 dark:text-gray-800"
       >
         🚀 Mulai Tour
       </Button>
@@ -74,7 +74,7 @@ const Dashboard = () => {
 
   return (
     <ExamSessionProvider value={exams}>
-      <main className="w-full p-2 sm:p-4 dark:bg-gray-900">
+      <main className="w-full p-2 sm:p-4 dark:bg-gray-950">
         <NextStepProvider>
           <NextStep
             steps={steps}
@@ -104,7 +104,7 @@ const Dashboard = () => {
                           setProdi(value as typeof prodi)
                         }
                       >
-                        <SelectTrigger className="w-full sm:w-[180px]">
+                        <SelectTrigger className="w-full text-gray-300 sm:w-[180px] dark:bg-gray-800">
                           <SelectValue placeholder="Select Program" />
                         </SelectTrigger>
                         <SelectContent>
@@ -132,7 +132,7 @@ const Dashboard = () => {
                         )
                       }
                     >
-                      <SelectTrigger className="w-full sm:w-[150px]">
+                      <SelectTrigger className="w-full text-gray-300 sm:w-[150px] dark:bg-gray-800">
                         <SelectValue placeholder="Tipe Soal" />
                       </SelectTrigger>
                       <SelectContent>
@@ -152,7 +152,7 @@ const Dashboard = () => {
                         )
                       }
                     >
-                      <SelectTrigger className="w-full sm:w-[200px]">
+                      <SelectTrigger className="w-full text-gray-300 sm:w-[200px] dark:bg-gray-800">
                         <SelectValue placeholder="Kategori" />
                       </SelectTrigger>
                       <SelectContent>
@@ -181,7 +181,7 @@ const Dashboard = () => {
                       </svg>
                     </span>
                     <Input
-                      className="w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:text-white"
+                      className="w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                       placeholder={"Cari mata kuliah..."}
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}

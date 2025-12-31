@@ -21,7 +21,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <UserSessionProvider value={decoded}>
       <PopupDialog />
-      <div className="flex bg-white dark:bg-gray-900">
+      <div className="flex bg-white dark:bg-gray-950">
         {/* Sidebar fixed di kiri */}
         <aside className="fixed top-0 left-0 z-40 hidden h-screen w-[18rem] border-r border-gray-200 bg-gray-50 md:block dark:border-gray-800 dark:bg-gray-900">
           <Sidebar />
