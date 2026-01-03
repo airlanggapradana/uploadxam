@@ -53,7 +53,7 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
     if (!el) return;
 
     let scrollerTarget: Element | string | null =
-      container || document.getElementById("snap-main-container") || null;
+      container ?? document.getElementById("snap-main-container") ?? null;
 
     if (typeof scrollerTarget === "string") {
       scrollerTarget = document.querySelector(scrollerTarget);
@@ -99,7 +99,7 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
 
     const st = ScrollTrigger.create({
       trigger: el,
-      scroller: scrollerTarget || window,
+      scroller: scrollerTarget ?? window,
       start: `top ${startPct}%`,
       once: true,
       onEnter: () => tl.play(),
