@@ -10,6 +10,7 @@ import Link from "next/link";
 import TextHighlighter from "@/components/fancy/text/text-highlighter";
 import type { Transition } from "motion";
 import { VscSourceControl } from "react-icons/vsc";
+import AnimatedContent from "@/components/AnimatedContent";
 
 const Hero = () => {
   const transition = { type: "spring", duration: 1, delay: 0.4, bounce: 0 };
@@ -31,14 +32,30 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-          <Badge className="flex items-center border-0 bg-gradient-to-r from-red-800 to-red-600 px-3 py-2 text-sm shadow-md">
-            <LucideUsers className="mr-2 h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
-            <span className="text-sky-100">from students to students</span>
-          </Badge>
-          <Badge className="flex items-center border-0 bg-gradient-to-r from-red-800 to-red-600 px-3 py-2 text-sm shadow-md">
-            <Book className="mr-2 h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
-            <span className="text-sky-100">100+ Soal Ujian</span>
-          </Badge>
+          <AnimatedContent
+            distance={100}
+            delay={0.2}
+            duration={2}
+            direction={"vertical"}
+            reverse={true}
+          >
+            <Badge className="flex items-center border-0 bg-gradient-to-r from-red-800 to-red-600 px-3 py-2 text-sm shadow-md">
+              <LucideUsers className="mr-2 h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
+              <span className="text-sky-100">from students to students</span>
+            </Badge>
+          </AnimatedContent>
+          <AnimatedContent
+            distance={100}
+            delay={0.3}
+            duration={2}
+            direction={"vertical"}
+            reverse={true}
+          >
+            <Badge className="flex items-center border-0 bg-gradient-to-r from-red-800 to-red-600 px-3 py-2 text-sm shadow-md">
+              <Book className="mr-2 h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
+              <span className="text-sky-100">100+ Soal Ujian</span>
+            </Badge>
+          </AnimatedContent>
         </div>
 
         <h1 className="mt-5 max-w-2xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
@@ -67,37 +84,52 @@ const Hero = () => {
 
         {/* Cards */}
         <div className="mt-6 mb-10 flex flex-col items-center gap-5 sm:flex-row">
-          <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
-            <CardContent className="flex items-center gap-3 px-4 py-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
-                <LuLayoutDashboard className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-start text-sm font-semibold text-sky-100">
-                  User-Friendly
-                </h2>
-                <p className="text-start text-xs text-sky-200/80">
-                  Antarmuka sederhana dan mudah digunakan untuk semua
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <AnimatedContent
+            distance={200}
+            delay={0.5}
+            duration={2}
+            direction={"horizontal"}
+            reverse={true}
+          >
+            <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
+              <CardContent className="flex items-center gap-3 px-4 py-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
+                  <LuLayoutDashboard className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-start text-sm font-semibold text-sky-100">
+                    User-Friendly
+                  </h2>
+                  <p className="text-start text-xs text-sky-200/80">
+                    Antarmuka sederhana dan mudah digunakan untuk semua
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </AnimatedContent>
 
-          <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
-            <CardContent className="flex items-center gap-3 px-4 py-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
-                <VscSourceControl className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-start text-sm font-semibold text-sky-100">
-                  Sumber Terpercaya
-                </h2>
-                <p className="text-start text-xs text-sky-200/80">
-                  File diunggah oleh mahasiswa aktif, dijamin keaslianya
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <AnimatedContent
+            distance={200}
+            delay={0.5}
+            duration={2}
+            direction={"horizontal"}
+          >
+            <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
+              <CardContent className="flex items-center gap-3 px-4 py-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
+                  <VscSourceControl className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-start text-sm font-semibold text-sky-100">
+                    Sumber Terpercaya
+                  </h2>
+                  <p className="text-start text-xs text-sky-200/80">
+                    File diunggah oleh mahasiswa aktif, dijamin keaslianya
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </AnimatedContent>
         </div>
 
         {/* Buttons */}
