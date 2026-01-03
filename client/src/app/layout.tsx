@@ -85,7 +85,7 @@ export default function RootLayout({
         <TanstackProvider>
           <ThemeProvider
             attribute={"class"}
-            defaultTheme={"system"}
+            defaultTheme={"dark"}
             enableSystem={true}
             disableTransitionOnChange={false}
           >
