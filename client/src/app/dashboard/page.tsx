@@ -74,7 +74,7 @@ const Dashboard = () => {
 
   return (
     <ExamSessionProvider value={exams}>
-      <main className="w-full p-2 sm:p-4 dark:bg-gray-950">
+      <main className="w-full p-3 pb-24 sm:p-4 lg:pb-4 dark:bg-gray-950">
         <NextStepProvider>
           <NextStep
             steps={steps}
@@ -94,33 +94,30 @@ const Dashboard = () => {
 
               <Separator />
 
-              <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+              <div className="flex flex-col space-y-4 sm:space-y-5">
                 <div className="space-y-3">
-                  <div id={"tour1-step1"} className="flex flex-wrap gap-3">
-                    <div>
-                      <Select
-                        value={prodi}
-                        onValueChange={(value) =>
-                          setProdi(value as typeof prodi)
-                        }
-                      >
-                        <SelectTrigger className="w-full text-gray-300 sm:w-[180px] dark:bg-gray-800">
-                          <SelectValue placeholder="Select Program" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Informatika">
-                            Informatika
-                          </SelectItem>
-                          <SelectItem value="Sistem_Informasi">
-                            Sistem Informasi
-                          </SelectItem>
-                          <SelectItem value="Ilmu_Komunikasi">
-                            Ilmu Komunikasi
-                          </SelectItem>
-                          <SelectItem value="All">All</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                  <div
+                    id={"tour1-step1"}
+                    className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3"
+                  >
+                    <Select
+                      value={prodi}
+                      onValueChange={(value) => setProdi(value as typeof prodi)}
+                    >
+                      <SelectTrigger className="w-full text-xs text-gray-300 sm:w-[180px] sm:text-sm dark:bg-gray-800">
+                        <SelectValue placeholder="Select Program" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Informatika">Informatika</SelectItem>
+                        <SelectItem value="Sistem_Informasi">
+                          Sistem Informasi
+                        </SelectItem>
+                        <SelectItem value="Ilmu_Komunikasi">
+                          Ilmu Komunikasi
+                        </SelectItem>
+                        <SelectItem value="All">All</SelectItem>
+                      </SelectContent>
+                    </Select>
 
                     <Select
                       value={tipeSoal ?? "all"}
@@ -132,7 +129,7 @@ const Dashboard = () => {
                         )
                       }
                     >
-                      <SelectTrigger className="w-full text-gray-300 sm:w-[150px] dark:bg-gray-800">
+                      <SelectTrigger className="w-full text-xs text-gray-300 sm:w-[150px] sm:text-sm dark:bg-gray-800">
                         <SelectValue placeholder="Tipe Soal" />
                       </SelectTrigger>
                       <SelectContent>
@@ -152,7 +149,7 @@ const Dashboard = () => {
                         )
                       }
                     >
-                      <SelectTrigger className="w-full text-gray-300 sm:w-[200px] dark:bg-gray-800">
+                      <SelectTrigger className="w-full text-xs text-gray-300 sm:w-[200px] sm:text-sm dark:bg-gray-800">
                         <SelectValue placeholder="Kategori" />
                       </SelectTrigger>
                       <SelectContent>
@@ -163,7 +160,7 @@ const Dashboard = () => {
                     </Select>
                   </div>
 
-                  <div id={"tour1-step2"} className="relative w-full sm:w-72">
+                  <div id={"tour1-step2"} className="relative w-full">
                     <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-300">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +178,7 @@ const Dashboard = () => {
                       </svg>
                     </span>
                     <Input
-                      className="w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      className="w-full rounded-md border-gray-300 pl-10 text-xs shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                       placeholder={"Cari mata kuliah..."}
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
@@ -189,13 +186,9 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div
-                  className={
-                    "flex flex-wrap items-center justify-between gap-3 sm:justify-end"
-                  }
-                >
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                   <DashboardTourButton />
-                  <div id={"tour1-step3"}>
+                  <div id={"tour1-step3"} className="w-full sm:w-auto">
                     <DialogAddFileUpload />
                   </div>
                 </div>

@@ -14,18 +14,18 @@ import { useRouter } from "next/navigation";
 const BillingPage = () => {
   const router = useRouter();
   return (
-    <div className="flex h-full items-center justify-center bg-white dark:bg-gray-950">
+    <div className="flex min-h-screen items-center justify-center bg-white px-4 py-8 pb-24 sm:px-6 lg:h-full lg:pb-8 dark:bg-gray-950">
       <Card className="w-full max-w-2xl rounded-2xl bg-white text-center shadow-lg dark:bg-gray-800">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <div className="mb-2 flex justify-center">
-            <Heart className="h-10 w-10 animate-pulse text-sky-500 dark:text-sky-400" />
+            <Heart className="h-8 w-8 animate-pulse text-sky-500 sm:h-10 sm:w-10 dark:text-sky-400" />
           </div>
-          <CardTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+          <CardTitle className="text-xl font-bold text-gray-800 sm:text-2xl dark:text-gray-100">
             Bantu Kami Tetap Berkembang ❤️
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="space-y-4 text-gray-600 dark:text-gray-300">
+        <CardContent className="space-y-3 p-4 text-sm text-gray-600 sm:space-y-4 sm:p-6 sm:text-base dark:text-gray-300">
           <p>
             Kami mengembangkan platform ini dengan cinta dan dedikasi agar tetap
             cepat, aman, dan bebas diakses siapa pun.
@@ -40,10 +40,10 @@ const BillingPage = () => {
           </p>
         </CardContent>
 
-        <CardFooter className="mt-4 flex flex-col gap-3">
+        <CardFooter className="mt-3 flex flex-col gap-3 p-4 sm:mt-4 sm:p-6">
           <Button
             onClick={() => router.push("https://saweria.co/devuploadxam")}
-            className="w-full rounded-xl bg-blue-500 text-white shadow-sm hover:bg-blue-600 dark:bg-blue-500/95 dark:hover:bg-blue-600"
+            className="w-full rounded-xl bg-blue-500 py-5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 sm:py-6 sm:text-base dark:bg-blue-500/95 dark:hover:bg-blue-600"
           >
             💖 Donasi Sekarang
           </Button>
