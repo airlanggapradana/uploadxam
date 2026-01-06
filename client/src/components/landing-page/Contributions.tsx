@@ -33,7 +33,7 @@ const Contributions = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-gray-950 via-red-900/50 to-gray-950 px-6 py-20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-gray-950 via-red-900 to-gray-950 px-6 py-20">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent" />
       <div className="bg-grid-white/[0.02] absolute inset-0" />
