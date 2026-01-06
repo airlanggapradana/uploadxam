@@ -11,6 +11,7 @@ import type { GetExamsResponse } from "@/types/get-exams.type";
 import type { GetUserUploadsResponse } from "@/types/get-user-uploads.type";
 import type { GetRecentActivType } from "@/types/get-recent-activ.type";
 import type { GetUsersStatsResponse } from "@/types/get-users-stats.type";
+import type { GetRepoStatsType } from "@/types/get-repo-stats.type";
 
 export const useRegister = () => {
   const queryClient = useQueryClient();
@@ -339,6 +340,23 @@ export const useGetUserStats = () => {
         }
         throw new Error("An unknown error occurred");
       }
+    },
+  });
+};
+
+export const useGetGithubStats = () => {
+  return useQuery({
+    queryKey: ["repo-stats"],
+    queryFn: async () => {
+      return await axios
+        .get(`https://api.github.com/repos/airlanggapradana/uploadxam`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${env.NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+          },
+          method: "GET",
+        })
+        .then((res) => res.data as GetRepoStatsType);
     },
   });
 };
