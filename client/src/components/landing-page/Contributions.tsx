@@ -111,7 +111,7 @@ const Contributions = () => {
         <div className="border-t border-gray-800/50 pt-12">
           {isLoading ? (
             <div className="flex flex-wrap items-center justify-center gap-12 text-center md:gap-20">
-              {[1, 2, 3].map((i) => (
+              {[1, 2].map((i) => (
                 <div key={i} className="group cursor-pointer">
                   <div className="mb-2 h-14 w-24 animate-pulse rounded-lg bg-gray-800/50" />
                   <div className="mx-auto h-4 w-20 animate-pulse rounded bg-gray-800/50" />
