@@ -257,6 +257,7 @@ export const getAllUploads = async (
       Prodi.Informatika,
       Prodi.Sistem_Informasi,
       Prodi.Ilmu_Komunikasi,
+      Prodi.Kecerdasan_Buatan,
     ];
 
     // Kalau ada filter prodi, batasi list prodi
@@ -415,6 +416,7 @@ export const getUserStats = async (
       Prodi.Informatika,
       Prodi.Sistem_Informasi,
       Prodi.Ilmu_Komunikasi,
+      Prodi.Kecerdasan_Buatan,
     ];
 
     const normalized = prodiList.map((p) => {
