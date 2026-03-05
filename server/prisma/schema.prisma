@@ -61,4 +61,5 @@ enum Prodi {
   Informatika
   Sistem_Informasi
   Ilmu_Komunikasi
+  Kecerdasan_Buatan
 }
