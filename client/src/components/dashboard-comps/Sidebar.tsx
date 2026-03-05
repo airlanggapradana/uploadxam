@@ -60,9 +60,11 @@ const Sidebar = () => {
                 "bg-purple-500 text-gray-50 dark:bg-purple-500/40 dark:text-purple-300",
             )}
           >
-            {session.prodi
-              ?.replace("_", " ")
-              .replace(/\b\w/g, (c) => c.toUpperCase()) || "Unknown"}
+            {session.prodi === "Kecerdasan_Buatan"
+              ? "AI"
+              : session.prodi
+                  ?.replace("_", " ")
+                  .replace(/\b\w/g, (c) => c.toUpperCase()) || "Unknown"}
           </Badge>
         </div>
 

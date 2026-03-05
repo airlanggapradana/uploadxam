@@ -13,7 +13,11 @@ export interface Activities {
   semester: number;
   kategori: "REGULER" | "INTER";
   year: number;
-  prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
+  prodi:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan";
   uploadedAt: Date;
   userId: string;
   user: User;
@@ -23,5 +27,9 @@ export interface User {
   id: string;
   name: string;
   nim: string;
-  prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
+  prodi:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan";
 }
