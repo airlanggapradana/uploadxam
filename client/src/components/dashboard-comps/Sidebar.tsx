@@ -27,6 +27,8 @@ const Sidebar = () => {
       "bg-amber-500 text-white hover:bg-amber-600 dark:bg-amber-600 dark:text-gray-900 dark:hover:bg-amber-700",
     Ilmu_Komunikasi:
       "bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:text-gray-900 dark:hover:bg-indigo-600",
+    Kecerdasan_Buatan:
+      "bg-purple-500 text-white hover:bg-purple-600 dark:bg-purple-500 dark:text-gray-900 dark:hover:bg-purple-600",
     default:
       "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600",
   };
@@ -54,6 +56,8 @@ const Sidebar = () => {
                 "bg-amber-500 text-gray-50 dark:bg-amber-500/40 dark:text-amber-300",
               session.prodi === "Ilmu_Komunikasi" &&
                 "bg-indigo-500 text-gray-50 dark:bg-indigo-800 dark:text-indigo-100",
+              session.prodi === "Kecerdasan_Buatan" &&
+                "bg-purple-500 text-gray-50 dark:bg-purple-500/40 dark:text-purple-300",
             )}
           >
             {session.prodi

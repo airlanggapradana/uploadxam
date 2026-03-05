@@ -4,7 +4,11 @@ export interface GetExamsResponse {
 }
 
 export interface GroupedByProdi {
-  prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
+  prodi:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan";
   totalUploads: number;
   semesters: Semester[];
 }
@@ -23,7 +27,11 @@ export interface Upload {
   tipe_soal: "UTS" | "UAS";
   year: number;
   kategori: "INTER" | "REGULER";
-  prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
+  prodi:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan";
   uploadedAt: Date;
   userId: string;
   semester: number;
@@ -35,7 +43,11 @@ export interface User {
   nim: string;
   role: "USER" | "ADMIN";
   name: string;
-  prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
+  prodi:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan";
   createdAt: Date;
   updatedAt: Date;
 }

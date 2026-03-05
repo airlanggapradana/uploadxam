@@ -47,7 +47,11 @@ const DashboardTourButton = () => {
 
 const Dashboard = () => {
   const [prodi, setProdi] = React.useState<
-    "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All"
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan"
+    | "All"
   >("All");
   const [subject, setSubject] = React.useState<string | undefined>(undefined);
   const [tipeSoal, setTipeSoal] = React.useState<"UTS" | "UAS" | undefined>(
@@ -114,6 +118,9 @@ const Dashboard = () => {
                         </SelectItem>
                         <SelectItem value="Ilmu_Komunikasi">
                           Ilmu Komunikasi
+                        </SelectItem>
+                        <SelectItem value="Kecerdasan_Buatan">
+                          Artificial Intelligence
                         </SelectItem>
                         <SelectItem value="All">All</SelectItem>
                       </SelectContent>

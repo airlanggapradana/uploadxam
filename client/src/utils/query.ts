@@ -71,7 +71,12 @@ export const useGetExams = ({
   tipe_soal,
   kategori,
 }: {
-  prodi?: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi" | "All";
+  prodi?:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan"
+    | "All";
   subject?: string;
   tipe_soal?: "UTS" | "UAS";
   kategori?: "REGULER" | "INTER";

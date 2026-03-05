@@ -2,7 +2,11 @@ export interface JWTPayload {
   id: string;
   name: string;
   nim: string;
-  prodi: "Informatika" | "Sistem_Informasi" | "Ilmu_Komunikasi";
+  prodi:
+    | "Informatika"
+    | "Sistem_Informasi"
+    | "Ilmu_Komunikasi"
+    | "Kecerdasan_Buatan";
   iat: number;
   exp: number;
 }

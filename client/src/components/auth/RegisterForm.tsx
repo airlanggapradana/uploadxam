@@ -144,6 +144,9 @@ const RegisterForm = () => {
                       <SelectItem value="Ilmu_Komunikasi">
                         Ilmu Komunikasi
                       </SelectItem>
+                      <SelectItem value="Kecerdasan_Buatan">
+                        Artificial Intelligence
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-xs text-red-500 sm:text-sm" />

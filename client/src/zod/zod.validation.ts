@@ -5,9 +5,12 @@ export const createUserSchema = z.object({
     message: "NIM hanya diperbolehkan untuk anak FKI",
   }),
   name: z.string().min(3).max(100),
-  prodi: z.enum(["Informatika", "Sistem_Informasi", "Ilmu_Komunikasi"], {
-    message: "Prodi tidak valid",
-  }),
+  prodi: z.enum(
+    ["Informatika", "Sistem_Informasi", "Ilmu_Komunikasi", "Kecerdasan_Buatan"],
+    {
+      message: "Prodi tidak valid",
+    },
+  ),
 });
 
 export const makeUploadSchema = z.object({
@@ -19,9 +22,12 @@ export const makeUploadSchema = z.object({
     .min(2000)
     .max(new Date().getFullYear() + 1),
   kategori: z.enum(["INTER", "REGULER"], { message: "Kategori tidak valid" }),
-  prodi: z.enum(["Informatika", "Sistem_Informasi", "Ilmu_Komunikasi"], {
-    message: "Prodi tidak valid",
-  }),
+  prodi: z.enum(
+    ["Informatika", "Sistem_Informasi", "Ilmu_Komunikasi", "Kecerdasan_Buatan"],
+    {
+      message: "Prodi tidak valid",
+    },
+  ),
   mata_kuliah: z.string().min(3).max(100),
   userId: z.string().min(1, "User ID harus diisi"),
 });

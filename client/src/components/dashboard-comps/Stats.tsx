@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { FileArchive } from "lucide-react";
 import NotFound from "@/components/dashboard-comps/NotFound";
-import { FaComputer, FaPeopleRobbery } from "react-icons/fa6";
+import { FaBrain, FaComputer, FaPeopleRobbery } from "react-icons/fa6";
 import { IoHardwareChipOutline } from "react-icons/io5";
 import { useExamSession } from "@/hooks/context";
 
@@ -61,6 +61,9 @@ const Stats = () => {
                     )}
                     {prodi.prodi === "Ilmu_Komunikasi" && (
                       <FaPeopleRobbery className="h-5 w-5 text-indigo-600 sm:h-6 sm:w-6 dark:text-indigo-400" />
+                    )}
+                    {prodi.prodi === "Kecerdasan_Buatan" && (
+                      <FaBrain className="h-5 w-5 text-purple-600 sm:h-6 sm:w-6 dark:text-purple-400" />
                     )}
                   </div>
                   <div className="text-2xl font-bold sm:text-3xl">
