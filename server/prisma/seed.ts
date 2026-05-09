@@ -33,6 +33,7 @@ async function main() {
     Prodi.Informatika,
     Prodi.Sistem_Informasi,
     Prodi.Ilmu_Komunikasi,
+    Prodi.Kecerdasan_Buatan,
   ];
   const users = [];
 
