@@ -1,5 +1,7 @@
 # 📘 UploadXam
 
+<img width="1024" height="572" alt="image" src="https://github.com/user-attachments/assets/806ba151-8781-43ef-a131-5686d7046633" />
+
 **UploadXam** adalah platform berbasis web yang ditujukan untuk seluruh mahasiswa **Fakultas Komunikasi dan Informatika, Universitas Muhammadiyah Surakarta (UMS)**.  
 Tujuannya sederhana: **mempermudah akses dan kolaborasi antar mahasiswa** dalam berbagi serta mengarsipkan **soal-soal ujian UTS dan UAS dari tahun ke tahun.**
 
