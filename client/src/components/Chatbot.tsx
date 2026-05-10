@@ -1,9 +1,9 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Loader2, Bot } from "lucide-react";
-import { GoogleGenAI } from "@google/genai";
 import { env } from "@/env";
-import { SYSTEM_INSTRUCTION } from "@/data/llm_knowledge";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Message {
   id: string;
@@ -47,31 +47,29 @@ export function Chatbot() {
     setIsTyping(true);
 
     try {
-      const apiKey = env.NEXT_PUBLIC_GEMINI_API_KEY;
-      if (!apiKey) throw new Error("API Key not found");
-
-      const ai = new GoogleGenAI({ apiKey });
-
+      // PERUBAHAN UTAMA: Kirim data ke backend Express Anda, bukan panggil LLM di klien
+      // Susun ulang format agar siap dipakai oleh backend
       const contents = messages
-        .filter((msg) => msg.id !== "1") // skip initial greeting
+        .filter((msg) => msg.id !== "1")
         .map((msg) => ({
           role: msg.sender === "user" ? "user" : "model",
           parts: [{ text: msg.text }],
         }));
       contents.push({ role: "user", parts: [{ text: userText }] });
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: contents,
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-          temperature: 0.2,
-        },
+      // Sesuaikan URL backend API Anda (contoh: http://localhost:5000/api/chat)
+      const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents }),
       });
+
+      if (!res.ok) throw new Error("Gagal mengambil respon dari server");
+      const data = await res.json();
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: response.text || "Maaf, terjadi kesalahan.",
+        text: data.reply || "Maaf, terjadi kesalahan.",
         sender: "bot",
       };
 
@@ -145,7 +143,40 @@ export function Chatbot() {
                     : "rounded-2xl rounded-tl-sm border border-[#5C1A1A] bg-[#240A0A] text-[#FECACA]"
                 }`}
               >
-                {msg.text}
+                {/* PERUBAHAN DI SINI: Gunakan ReactMarkdown untuk sender "bot" */}
+                {msg.sender === "bot" ? (
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    // className="prose prose-invert prose-sm max-w-none break-words"
+                    components={{
+                      // Kustomisasi agar list dan paragraf tidak memiliki margin berlebih
+                      p: ({ children }) => (
+                        <p className="mb-1 last:mb-0">{children}</p>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="ml-4 list-disc space-y-1">{children}</ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="ml-4 list-decimal space-y-1">
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => (
+                        <li className="marker:text-red-400">{children}</li>
+                      ),
+                      strong: ({ children }) => (
+                        <strong className="font-bold text-white">
+                          {children}
+                        </strong>
+                      ),
+                    }}
+                  >
+                    {msg.text}
+                  </ReactMarkdown>
+                ) : (
+                  /* User message biasanya teks biasa tanpa markdown kompleks */
+                  <span className="whitespace-pre-wrap">{msg.text}</span>
+                )}
               </div>
             </div>
           ))}

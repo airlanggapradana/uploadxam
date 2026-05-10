@@ -22,7 +22,6 @@ export const env = createEnv({
     NEXT_PUBLIC_EMAILTOUSER_TEMPLATE: z.string(),
     NEXT_PUBLIC_EMAILTODEV_TEMPLATE: z.string(),
     NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN: z.string(),
-    NEXT_PUBLIC_GEMINI_API_KEY: z.string(),
   },
 
   /**
@@ -39,7 +38,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_EMAILTODEV_TEMPLATE,
     NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN:
       process.env.NEXT_PUBLIC_GITHUB_PERSONAL_ACCESS_TOKEN,
-    NEXT_PUBLIC_GEMINI_API_KEY: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
