@@ -4,6 +4,7 @@ import Testimonials from "@/components/landing-page/Testimonials";
 import Preview from "@/components/landing-page/Preview";
 import Contributions from "@/components/landing-page/Contributions";
 import SlidesSection from "@/components/landing-page/SlideSection";
+import { Chatbot } from "@/components/Chatbot";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <SlidesSection />
       <Preview />
       <Contributions />
+      <Chatbot />
     </main>
   );
 }

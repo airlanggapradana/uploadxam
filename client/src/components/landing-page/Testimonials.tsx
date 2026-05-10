@@ -10,12 +10,14 @@ const prodiDisplayNames: Record<string, string> = {
   Informatika: "Informatika",
   Sistem_Informasi: "Sistem Informasi",
   Ilmu_Komunikasi: "Ilmu Komunikasi",
+  Kecerdasan_Buatan: "Kecerdasan Buatan",
 };
 
 const prodiColors: Record<string, string> = {
   Informatika: "#59ceff", // blue
   Sistem_Informasi: "#ffc255", // yellow
   Ilmu_Komunikasi: "#f88627", // orange
+  Kecerdasan_Buatan: "#36e095", // green
 };
 
 const Testimonials = () => {
