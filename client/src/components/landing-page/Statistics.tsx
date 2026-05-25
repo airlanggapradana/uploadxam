@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { TestimonialCard } from "@/components/reusables/TestimoniCard";
 import { useGetUserStats } from "@/utils/query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -20,11 +19,11 @@ const prodiColors: Record<string, string> = {
   Kecerdasan_Buatan: "#36e095", // green
 };
 
-const Testimonials = () => {
+const Statistics = () => {
   const { data, isLoading, error } = useGetUserStats();
 
   return (
-    <div className="relative min-h-screen w-full bg-black px-4 py-16 sm:py-24">
+    <div className="relative min-h-screen w-full bg-black px-4 py-16 sm:py-20">
       {/* Background */}
       <div
         className="absolute inset-0 z-0"
@@ -122,34 +121,10 @@ const Testimonials = () => {
               </div>
             )}
           </div>
-
-          <div className="max-w-md sm:max-w-4xl">
-            <TestimonialCard
-              quote="Aku capek ngeliat temen-temen pada bingung mikirin soal ujian kayak apa nantinya. UploadXam hadir untuk ngebantu mahasiswa kayak kita belajar dan persiapin ujian agar lebih mudah dan efektif."
-              author="Airlangga Pradana"
-              socials={[
-                {
-                  type: "linkedin",
-                  url: "https://www.linkedin.com/in/airlanggapradana/",
-                },
-                {
-                  type: "instagram",
-                  url: "https://www.instagram.com/iamrangga._/",
-                },
-                {
-                  type: "whatsapp",
-                  url: "https://wa.me/6281227151326",
-                },
-              ]}
-              title="Teknik Informatika '24"
-              avatarUrl="https://res.cloudinary.com/airlanggapradana/image/upload/v1764150925/Gemini_Generated_Image_z0bsiez0bsiez0bs-min_hc7bnf.png"
-              avatarFallback="AP"
-            />
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Testimonials;
+export default Statistics;

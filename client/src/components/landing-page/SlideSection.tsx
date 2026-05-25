@@ -32,7 +32,7 @@ const SlidesSection = () => {
           <span className="mb-3 inline-block rounded-full border border-red-500 bg-red-700 px-3 py-1 text-xs font-medium text-red-200 sm:mb-4 sm:px-4 sm:py-1.5 sm:text-sm">
             Presentation
           </span>
-          <h2 className="mb-3 bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-4 text-2xl font-bold tracking-tight text-transparent sm:mb-4 sm:text-3xl md:text-4xl lg:text-5xl">
+          <h2 className="mb-3 bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-4 text-2xl font-extrabold tracking-tight text-transparent sm:mb-4 sm:text-3xl md:text-4xl lg:text-5xl">
             Ini Platform Apa Sih Kak?
           </h2>
           <p className="mx-auto max-w-2xl px-2 text-sm leading-relaxed text-gray-400 sm:text-base md:text-lg">
