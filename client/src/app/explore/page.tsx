@@ -29,6 +29,7 @@ import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
 import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
 import { Warning } from "@/components/reusables/Warning";
+import DonationDialog from "@/components/dashboard-comps/PopUpDialog";
 
 // Separate content component that consumes search parameters
 const ExploreContent = () => {
@@ -85,6 +86,7 @@ const ExploreContent = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-gray-950 dark:text-gray-100">
+      <DonationDialog />
       {/* Decorative Radial Gradients */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-red-500/10 blur-3xl dark:bg-red-950/20" />
@@ -289,6 +291,38 @@ const ExploreContent = () => {
             Belum ada berkas soal yang tersedia.
           </div>
         )}
+
+        {/* Simple Donation Section */}
+        <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition dark:border-gray-800 dark:bg-gray-900/40 max-w-3xl mx-auto text-center">
+          <div className="mb-3 flex justify-center">
+            <span className="rounded-full bg-red-100 p-2.5 dark:bg-red-950/30">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-red-600 dark:text-red-500 animate-pulse"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </span>
+          </div>
+          <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">
+            Dukung Kami Tetap Berkarya ❤️
+          </h3>
+          <p className="mt-2 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
+            Kami membangun platform ini agar gratis dan bermanfaat bagi seluruh mahasiswa FKI. Untuk menjaga server tetap menyala, kami menerima donasi dengan senang hati.
+          </p>
+          <div className="mt-4">
+            <a
+              href="https://saweria.co/devuploadxam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-lg bg-yellow-500 px-5 py-2 text-xs font-bold text-white transition hover:bg-yellow-600"
+            >
+              Donasi via Saweria 🪙
+            </a>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
