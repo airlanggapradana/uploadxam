@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { useUpdateProfile } from "@/utils/query";
+import { useUpdateProfile, useDeleteAccount } from "@/utils/query";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type CreateUserInput, createUserSchema } from "@/zod/zod.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,8 +53,10 @@ const Dashboard = () => {
   // Edit profile states
   const [isEdit, setIsEdit] = useState(false);
   const [dialogConfirm, setDialogConfirm] = useState(false);
+  const [dialogDeleteConfirm, setDialogDeleteConfirm] = useState(false);
   const [formData, setFormData] = useState<Partial<CreateUserInput>>({});
   const { mutateAsync: handleUpdate, isPending } = useUpdateProfile();
+  const { mutateAsync: handleDeleteAccount, isPending: isDeleting } = useDeleteAccount();
 
   const form = useForm<Partial<CreateUserInput>>({
     defaultValues: {
@@ -90,6 +92,22 @@ const Dashboard = () => {
     } catch (e) {
       toast.error(
         e instanceof Error ? e.message : "An unknown error occurred.",
+      );
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      const res = await handleDeleteAccount(session.id);
+      if (res === 200) {
+        toast.success("Akun berhasil dihapus.");
+        setDialogDeleteConfirm(false);
+        await deleteCookie("token");
+        router.push("/auth/login");
+      }
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : "Gagal menghapus akun.",
       );
     }
   };
@@ -304,6 +322,25 @@ const Dashboard = () => {
                   </Badge>
                 </div>
               </div>
+
+              <Separator />
+
+              <div className="space-y-2 pt-2">
+                <h4 className="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider">
+                  Zona Bahaya
+                </h4>
+                <p className="text-[11px] leading-relaxed text-slate-500 dark:text-gray-400">
+                  Menghapus akun Anda akan menghapus data profil secara permanen. Berkas soal yang telah Anda unggah akan tetap dipertahankan di platform.
+                </p>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="w-full font-bold text-xs"
+                  onClick={() => setDialogDeleteConfirm(true)}
+                >
+                  Hapus Akun Permanen
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -324,6 +361,30 @@ const Dashboard = () => {
             </AlertDialogCancel>
             <AlertDialogAction onClick={handleConfirm} disabled={isPending} className="bg-red-600 text-white hover:bg-red-700">
               {isPending ? "Memproses..." : "Perbarui & Relogin"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete Account confirm Dialog */}
+      <AlertDialog open={dialogDeleteConfirm} onOpenChange={setDialogDeleteConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-red-600">Konfirmasi Hapus Akun</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin menghapus akun Anda secara permanen? Tindakan ini tidak dapat dibatalkan. Data profil Anda akan dihapus sepenuhnya dari server.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDialogDeleteConfirm(false)}>
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              disabled={isDeleting}
+              className="bg-red-600 text-white hover:bg-red-700 font-semibold"
+            >
+              {isDeleting ? "Menghapus..." : "Hapus Akun Permanen"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

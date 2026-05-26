@@ -2,7 +2,6 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BookOpen, Search, ArrowLeft, LogIn, Sparkles, Sun, Moon } from "lucide-react";
 import { useDebounce } from "use-debounce";
@@ -125,14 +124,6 @@ const ExploreContent = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <Image
-              src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
-              width={80}
-              height={80}
-              alt="logo fosti"
-              className="h-8 w-auto invert dark:invert-0"
-            />
-            <div className="h-4 w-px bg-slate-300 dark:bg-gray-800" />
             <span className="text-sm font-black tracking-tight text-slate-800 dark:text-white">
               upload<span className="text-red-600">xam</span>
             </span>
