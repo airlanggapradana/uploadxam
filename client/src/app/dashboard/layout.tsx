@@ -6,8 +6,6 @@ import { redirect } from "next/navigation";
 import { decodeJwtPayload } from "@/utils/helper";
 import { UserSessionProvider } from "@/hooks/context";
 import Footer from "@/components/reusables/Footer";
-import PopupDialog from "@/components/dashboard-comps/PopUpDialog";
-
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
@@ -20,7 +18,6 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   }
   return (
     <UserSessionProvider value={decoded}>
-      <PopupDialog />
       <div className="flex min-h-screen bg-white dark:bg-gray-950">
         {/* Sidebar - Hidden on mobile, fixed on desktop */}
         <aside className="fixed top-0 left-0 z-40 hidden h-screen w-16 border-r border-gray-200 bg-gray-50 md:w-20 lg:block lg:w-64 dark:border-gray-800 dark:bg-gray-900">
