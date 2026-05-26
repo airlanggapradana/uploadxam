@@ -20,7 +20,7 @@ const DashboardHeader = () => {
   const { setTheme } = useTheme();
 
   return (
-    <header className="flex items-center justify-between border-b bg-white px-6 py-4 dark:bg-gray-900">
+    <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 bg-white/80 backdrop-blur-md px-6 py-3.5 dark:border-gray-800 dark:bg-gray-950/80">
       {/* Left section: Empty space for alignment */}
       <div className="flex items-center">
         <DropdownMenu>

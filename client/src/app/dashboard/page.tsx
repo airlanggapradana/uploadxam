@@ -95,7 +95,7 @@ const Dashboard = () => {
   };
 
   return (
-    <main className="w-full p-4 pb-24 sm:p-6 lg:pb-6 dark:bg-gray-950">
+    <div className="w-full py-4 pb-12">
       {/* Welcome Banner */}
       <div className="mb-6 rounded-2xl bg-gradient-to-br from-red-700 to-sky-900 p-6 text-white shadow-lg dark:from-red-950 dark:to-gray-900">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -328,7 +328,7 @@ const Dashboard = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </main>
+    </div>
   );
 };
 

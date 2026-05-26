@@ -4,9 +4,10 @@ import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { BookOpen, Search, ArrowLeft, LogIn, Sparkles } from "lucide-react";
+import { BookOpen, Search, ArrowLeft, LogIn, Sparkles, Sun, Moon } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import { toast } from "sonner";
+import { useTheme } from "next-themes";
 
 import { useGetExams } from "@/utils/query";
 import { ExamSessionProvider, UserSessionProvider } from "@/hooks/context";
@@ -23,6 +24,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import Stats from "@/components/dashboard-comps/Stats";
 import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
@@ -45,6 +52,7 @@ const ExploreContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialSubject = searchParams.get("subject") || "";
+  const { setTheme } = useTheme();
 
   const [prodi, setProdi] = useState<
     | "Informatika"
@@ -130,7 +138,29 @@ const ExploreContent = () => {
             </span>
           </div>
 
-          <div>
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg">
+                  <Sun className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90 text-slate-700 hover:text-slate-900" />
+                  <Moon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0 text-gray-400 hover:text-white" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {session ? (
               <Link href="/dashboard">
                 <Button size="sm" className="bg-red-600 text-white hover:bg-red-700">
