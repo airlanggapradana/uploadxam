@@ -22,8 +22,8 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         {/* Header - Full Width */}
         <DashboardHeader />
 
-        {/* Content area - Centered max-w-6xl */}
-        <main className="flex-1 px-4 py-6 sm:px-6 md:px-8 max-w-6xl mx-auto w-full">
+        {/* Content area - Centered max-w-7xl */}
+        <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
           {children}
           <Footer />
         </main>
