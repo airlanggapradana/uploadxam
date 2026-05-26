@@ -81,22 +81,22 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable}`}
       suppressHydrationWarning={true}
     >
-      <EdgeStoreProvider>
-        <TanstackProvider>
-          <ThemeProvider
-            attribute={"class"}
-            defaultTheme={"system"}
-            enableSystem={true}
-            disableTransitionOnChange={false}
-          >
-            <body>
+      <body suppressHydrationWarning={true}>
+        <EdgeStoreProvider>
+          <TanstackProvider>
+            <ThemeProvider
+              attribute={"class"}
+              defaultTheme={"system"}
+              enableSystem={true}
+              disableTransitionOnChange={false}
+            >
               {children}
               <Toaster position={"top-center"} richColors={true} />
               <Analytics />
-            </body>
-          </ThemeProvider>
-        </TanstackProvider>
-      </EdgeStoreProvider>
+            </ThemeProvider>
+          </TanstackProvider>
+        </EdgeStoreProvider>
+      </body>
     </html>
   );
 }
