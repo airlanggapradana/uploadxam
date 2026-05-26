@@ -300,7 +300,7 @@ const Dashboard = () => {
                 <div className="flex justify-between">
                   <span className="text-slate-500">Role</span>
                   <Badge variant="outline" className="border-red-500 text-red-500 font-semibold">
-                    {session.role || "USER"}
+                    MAHASISWA
                   </Badge>
                 </div>
               </div>
