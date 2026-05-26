@@ -30,6 +30,15 @@ import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUploa
 import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
 import { Warning } from "@/components/reusables/Warning";
 import DonationDialog from "@/components/dashboard-comps/PopUpDialog";
+import Feedback from "@/components/dashboard-comps/Feedback";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // Separate content component that consumes search parameters
 const ExploreContent = () => {
@@ -48,6 +57,7 @@ const ExploreContent = () => {
   const [tipeSoal, setTipeSoal] = useState<"UTS" | "UAS" | undefined>(undefined);
   const [kategori, setKategori] = useState<"REGULER" | "INTER" | undefined>(undefined);
   const [debouncedSubject] = useDebounce(subject, 500);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   // Authenticated upload session state
   const [session, setSession] = useState<JWTPayload | null>(null);
@@ -327,9 +337,31 @@ const ExploreContent = () => {
 
       {/* Footer */}
       <footer className="mt-16 border-t border-slate-200 bg-white py-6 dark:border-gray-900 dark:bg-gray-950">
-        <p className="text-center text-xs text-slate-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} FOSTI UMS. All rights reserved.
-        </p>
+        <div className="mx-auto max-w-7xl px-4 flex flex-col items-center justify-between gap-4 sm:flex-row sm:px-6 lg:px-8">
+          <p className="text-center text-xs text-slate-500 dark:text-gray-400 sm:text-left">
+            &copy; {new Date().getFullYear()} FOSTI UMS. All rights reserved.
+          </p>
+
+          {/* Public Feedback Trigger Modal */}
+          <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
+            <DialogTrigger asChild>
+              <button className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline dark:text-red-400 dark:hover:text-red-300 transition flex items-center gap-1 cursor-pointer">
+                Kirim Masukan & Saran 💬
+              </button>
+            </DialogTrigger>
+            <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] max-w-[95vw] overflow-y-auto p-4 sm:max-h-[90vh] sm:max-w-2xl sm:p-6 bg-white dark:bg-gray-900">
+              <DialogHeader className="mb-3 sm:mb-4">
+                <DialogTitle className="text-base font-semibold sm:text-xl">
+                  Bagikan Masukan Anda
+                </DialogTitle>
+                <DialogDescription className="text-xs sm:text-sm">
+                  Masukan Anda sangat berharga bagi kami untuk terus menyempurnakan platform UploadXam.
+                </DialogDescription>
+              </DialogHeader>
+              <Feedback />
+            </DialogContent>
+          </Dialog>
+        </div>
       </footer>
     </div>
   );
