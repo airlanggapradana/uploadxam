@@ -1,27 +1,55 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Book, LucideUsers } from "lucide-react";
+import { Book, LucideUsers, Search, Compass } from "lucide-react";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { LuLayoutDashboard, LuLogIn } from "react-icons/lu";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import TextHighlighter from "@/components/fancy/text/text-highlighter";
 import type { Transition } from "motion";
 import { VscSourceControl } from "react-icons/vsc";
+import { getCookieClient } from "@/utils/cookie-client";
+import { decodeJwtPayload } from "@/utils/helper";
 
 const Hero = () => {
   const transition = { type: "spring", duration: 1, delay: 0.4, bounce: 0 };
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = getCookieClient("token");
+    if (token) {
+      const decoded = decodeJwtPayload(token);
+      if (decoded) {
+        setIsLoggedIn(true);
+      }
+    }
+  }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/explore?subject=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push("/explore");
+    }
+  };
+
   return (
-    <div className="relative min-h-screen w-full bg-black px-4 py-24 sm:py-24">
+    <div className="relative min-h-screen w-full bg-black px-4 py-24 sm:py-24 animate-fadeIn">
       {/* Deep Ocean Glow */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background: "#000000",
           backgroundImage: `
-        radial-gradient(circle, rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px)
+        radial-gradient(circle, rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px)
       `,
           backgroundSize: "30px 30px",
           backgroundPosition: "0 0",
@@ -65,8 +93,30 @@ const Hero = () => {
           kamu 🚀.
         </p>
 
+        {/* Public search bar right inside Hero */}
+        <form onSubmit={handleSearchSubmit} className="relative z-20 w-full max-w-md mx-auto mb-8 px-2 sm:px-0">
+          <div className="relative">
+            <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+              <Search className="h-5 w-5 text-red-500" />
+            </span>
+            <input
+              type="text"
+              className="w-full h-12 rounded-xl border border-red-800/30 bg-black/60 pl-11 pr-28 text-sm text-white placeholder:text-gray-500 shadow-lg shadow-red-950/20 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none"
+              placeholder="Cari mata kuliah (contoh: Algoritma)..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="absolute right-1.5 top-1.5 h-9 rounded-lg bg-gradient-to-r from-red-700 to-red-600 px-4 text-xs font-bold text-white hover:from-red-800 hover:to-red-700 transition"
+            >
+              Cari Soal
+            </button>
+          </div>
+        </form>
+
         {/* Cards */}
-        <div className="mt-6 mb-10 flex flex-col items-center gap-5 sm:flex-row">
+        <div className="mt-2 mb-10 flex flex-col items-center gap-5 sm:flex-row">
           <Card className="w-full max-w-sm border border-sky-800/30 bg-transparent shadow-lg shadow-sky-900/20 backdrop-blur-md sm:max-w-sm">
             <CardContent className="flex items-center gap-3 px-4 py-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-red-600 to-red-400 p-2">
@@ -103,19 +153,29 @@ const Hero = () => {
         {/* Buttons */}
         <div className="flex flex-col items-center gap-4 sm:flex-row">
           <Link
-            href="/auth/register"
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-red-700 to-red-500 px-6 py-3 text-sm font-medium text-white hover:from-red-800 hover:to-red-600"
+            href="/explore"
+            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-red-700 to-red-500 px-6 py-3 text-sm font-bold text-white hover:from-red-800 hover:to-red-600 transition shadow-lg shadow-red-950/30"
           >
-            <MdOutlineBookmarkAdd className="text-xl" />
-            Bikin Akun Baru
+            <Compass className="h-5 w-5" />
+            Explore Semua Soal
           </Link>
-          <Link
-            href="/auth/login"
-            className="flex items-center gap-2 rounded-lg border border-red-700 bg-transparent px-6 py-3 text-sm font-medium text-white hover:bg-red-900"
-          >
-            <LuLogIn className="text-xl" />
-            Login dengan NIM
-          </Link>
+          {isLoggedIn ? (
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 rounded-lg border border-red-700 bg-transparent px-6 py-3 text-sm font-bold text-white hover:bg-red-900/40 transition"
+            >
+              <LuLayoutDashboard className="h-5 w-5 text-red-400" />
+              Buka Dashboard
+            </Link>
+          ) : (
+            <Link
+              href="/auth/login"
+              className="flex items-center gap-2 rounded-lg border border-red-700 bg-transparent px-6 py-3 text-sm font-bold text-white hover:bg-red-900/40 transition"
+            >
+              <LuLogIn className="h-5 w-5 text-red-400" />
+              Upload Soal Ujian
+            </Link>
+          )}
         </div>
 
         {/* Support */}
