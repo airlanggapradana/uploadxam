@@ -13,6 +13,7 @@ interface Message {
 
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -31,6 +32,28 @@ export function Chatbot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen, isTyping]);
+
+  useEffect(() => {
+    const dismissed = localStorage.getItem("dismissedChatTooltip");
+    if (!dismissed) {
+      const timer = setTimeout(() => {
+        setShowTooltip(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const handleOpenChat = () => {
+    setIsOpen(true);
+    setShowTooltip(false);
+    localStorage.setItem("dismissedChatTooltip", "true");
+  };
+
+  const handleDismissTooltip = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowTooltip(false);
+    localStorage.setItem("dismissedChatTooltip", "true");
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
@@ -89,9 +112,28 @@ export function Chatbot() {
 
   return (
     <>
+      {/* Floating Button Tooltip */}
+      {showTooltip && !isOpen && (
+        <div className="fixed right-24 bottom-6 z-50 flex items-center gap-2 rounded-xl border border-[#5C1A1A] bg-[#240A0A] px-4 py-2.5 text-xs text-[#FECACA] shadow-lg animate-in slide-in-from-right-5 fade-in duration-300">
+          <div className="flex items-center gap-1.5 font-semibold">
+            <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+            Tanya AI Xandy! 🤖💬
+          </div>
+          <button
+            onClick={handleDismissTooltip}
+            className="ml-2 rounded-full p-0.5 hover:bg-[#5C1A1A] hover:text-white transition-colors"
+            aria-label="Tutup tips"
+          >
+            <X size={14} />
+          </button>
+          {/* Arrow pointing right */}
+          <div className="absolute top-1/2 -right-1.5 h-3 w-3 -translate-y-1/2 rotate-45 border-r border-t border-[#5C1A1A] bg-[#240A0A]" />
+        </div>
+      )}
+
       {/* Floating Button */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenChat}
         className={`fixed right-6 bottom-6 flex h-14 w-14 items-center justify-center rounded-full bg-red-500 text-white shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all duration-300 hover:scale-105 hover:bg-red-600 ${isOpen ? "pointer-events-none scale-0 opacity-0" : "scale-100 opacity-100"} z-50`}
         aria-label="Buka Chatbot"
       >

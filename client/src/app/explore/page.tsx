@@ -2,11 +2,11 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { BookOpen, Search, ArrowLeft, LogIn, Sparkles } from "lucide-react";
+import { BookOpen, Search, ArrowLeft, LogIn, Sparkles, Sun, Moon } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import { toast } from "sonner";
+import { useTheme } from "next-themes";
 
 import { useGetExams } from "@/utils/query";
 import { ExamSessionProvider, UserSessionProvider } from "@/hooks/context";
@@ -23,18 +23,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import Stats from "@/components/dashboard-comps/Stats";
 import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
 import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
 import { Warning } from "@/components/reusables/Warning";
+import DonationDialog from "@/components/dashboard-comps/PopUpDialog";
+import Feedback from "@/components/dashboard-comps/Feedback";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // Separate content component that consumes search parameters
 const ExploreContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialSubject = searchParams.get("subject") || "";
+  const { setTheme } = useTheme();
 
   const [prodi, setProdi] = useState<
     | "Informatika"
@@ -47,6 +64,7 @@ const ExploreContent = () => {
   const [tipeSoal, setTipeSoal] = useState<"UTS" | "UAS" | undefined>(undefined);
   const [kategori, setKategori] = useState<"REGULER" | "INTER" | undefined>(undefined);
   const [debouncedSubject] = useDebounce(subject, 500);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   // Authenticated upload session state
   const [session, setSession] = useState<JWTPayload | null>(null);
@@ -85,6 +103,7 @@ const ExploreContent = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-gray-950 dark:text-gray-100">
+      <DonationDialog />
       {/* Decorative Radial Gradients */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-red-500/10 blur-3xl dark:bg-red-950/20" />
@@ -105,20 +124,34 @@ const ExploreContent = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <Image
-              src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
-              width={80}
-              height={80}
-              alt="logo fosti"
-              className="h-8 w-auto invert dark:invert-0"
-            />
-            <div className="h-4 w-px bg-slate-300 dark:bg-gray-800" />
             <span className="text-sm font-black tracking-tight text-slate-800 dark:text-white">
               upload<span className="text-red-600">xam</span>
             </span>
           </div>
 
-          <div>
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg">
+                  <Sun className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90 text-slate-700 hover:text-slate-900" />
+                  <Moon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0 text-gray-400 hover:text-white" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {session ? (
               <Link href="/dashboard">
                 <Button size="sm" className="bg-red-600 text-white hover:bg-red-700">
@@ -289,13 +322,67 @@ const ExploreContent = () => {
             Belum ada berkas soal yang tersedia.
           </div>
         )}
+
+        {/* Simple Donation Section */}
+        <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition dark:border-gray-800 dark:bg-gray-900/40 max-w-3xl mx-auto text-center">
+          <div className="mb-3 flex justify-center">
+            <span className="rounded-full bg-red-100 p-2.5 dark:bg-red-950/30">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-red-600 dark:text-red-500 animate-pulse"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </span>
+          </div>
+          <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">
+            Dukung Kami Tetap Berkarya ❤️
+          </h3>
+          <p className="mt-2 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
+            Kami membangun platform ini agar gratis dan bermanfaat bagi seluruh mahasiswa FKI. Untuk menjaga server tetap menyala, kami menerima donasi dengan senang hati.
+          </p>
+          <div className="mt-4">
+            <a
+              href="https://saweria.co/devuploadxam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-lg bg-yellow-500 px-5 py-2 text-xs font-bold text-white transition hover:bg-yellow-600"
+            >
+              Donasi via Saweria 🪙
+            </a>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
       <footer className="mt-16 border-t border-slate-200 bg-white py-6 dark:border-gray-900 dark:bg-gray-950">
-        <p className="text-center text-xs text-slate-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} FOSTI UMS. All rights reserved.
-        </p>
+        <div className="mx-auto max-w-7xl px-4 flex flex-col items-center justify-between gap-4 sm:flex-row sm:px-6 lg:px-8">
+          <p className="text-center text-xs text-slate-500 dark:text-gray-400 sm:text-left">
+            &copy; {new Date().getFullYear()} FOSTI UMS. All rights reserved.
+          </p>
+
+          {/* Public Feedback Trigger Modal */}
+          <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
+            <DialogTrigger asChild>
+              <button className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline dark:text-red-400 dark:hover:text-red-300 transition flex items-center gap-1 cursor-pointer">
+                Kirim Masukan & Saran 💬
+              </button>
+            </DialogTrigger>
+            <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] max-w-[95vw] overflow-y-auto p-4 sm:max-h-[90vh] sm:max-w-2xl sm:p-6 bg-white dark:bg-gray-900">
+              <DialogHeader className="mb-3 sm:mb-4">
+                <DialogTitle className="text-base font-semibold sm:text-xl">
+                  Bagikan Masukan Anda
+                </DialogTitle>
+                <DialogDescription className="text-xs sm:text-sm">
+                  Masukan Anda sangat berharga bagi kami untuk terus menyempurnakan platform UploadXam.
+                </DialogDescription>
+              </DialogHeader>
+              <Feedback />
+            </DialogContent>
+          </Dialog>
+        </div>
       </footer>
     </div>
   );

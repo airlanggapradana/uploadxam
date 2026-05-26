@@ -1,6 +1,26 @@
 "use client";
-import React from "react";
-import Stats from "@/components/dashboard-comps/Stats";
+
+import React, { useState } from "react";
+import { useUserSession } from "@/hooks/context";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
+import { useUpdateProfile, useDeleteAccount } from "@/utils/query";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { type CreateUserInput, createUserSchema } from "@/zod/zod.validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -8,215 +28,368 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGetExams } from "@/utils/query";
-import { ExamSessionProvider } from "@/hooks/context";
-import ProdiGrid from "@/components/dashboard-comps/ProdiGrid";
-import { Warning } from "@/components/reusables/Warning";
+import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { deleteCookie } from "@/utils/cookies";
+import { useRouter } from "next/navigation";
+import UserUploads from "@/components/account-comps/UserUploads";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
-import { Separator } from "@/components/ui/separator";
-import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/DashboardLoadingSkeleton";
-import { useDebounce } from "use-debounce";
-import { Input } from "@/components/ui/input";
-import { NextStepProvider, NextStep, useNextStep } from "nextstepjs";
-import { Button } from "@/components/ui/button";
-import { steps } from "@/utils/DashboardTour";
-import TourCustomCard from "@/components/dashboard-comps/TourCustomCard";
-import RecentActivities from "@/components/dashboard-comps/RecentActivities";
-
-const DashboardTourButton = () => {
-  const { startNextStep, closeNextStep } = useNextStep();
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      <Button
-        onClick={() => startNextStep("uploadxam-tour")}
-        className="text-xs sm:text-sm dark:bg-gray-100 dark:text-gray-800"
-      >
-        🚀 Mulai Tour
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() => closeNextStep()}
-        className="text-xs sm:text-sm"
-      >
-        🔁 Reset
-      </Button>
-    </div>
-  );
-};
+import { FileText, User as UserIcon, Plus } from "lucide-react";
 
 const Dashboard = () => {
-  const [prodi, setProdi] = React.useState<
-    | "Informatika"
-    | "Sistem_Informasi"
-    | "Ilmu_Komunikasi"
-    | "Kecerdasan_Buatan"
-    | "All"
-  >("All");
-  const [subject, setSubject] = React.useState<string | undefined>(undefined);
-  const [tipeSoal, setTipeSoal] = React.useState<"UTS" | "UAS" | undefined>(
-    undefined,
-  );
-  const [kategori, setKategori] = React.useState<
-    "REGULER" | "INTER" | undefined
-  >(undefined);
-  const [debouncedSubject] = useDebounce(subject, 1000);
+  const router = useRouter();
+  const session = useUserSession();
+  const [activeTab, setActiveTab] = useState<"uploads" | "profile">("uploads");
+  
+  // Edit profile states
+  const [isEdit, setIsEdit] = useState(false);
+  const [dialogConfirm, setDialogConfirm] = useState(false);
+  const [dialogDeleteConfirm, setDialogDeleteConfirm] = useState(false);
+  const [formData, setFormData] = useState<Partial<CreateUserInput>>({});
+  const { mutateAsync: handleUpdate, isPending } = useUpdateProfile();
+  const { mutateAsync: handleDeleteAccount, isPending: isDeleting } = useDeleteAccount();
 
-  const {
-    data: exams,
-    isLoading,
-    error,
-  } = useGetExams({
-    prodi,
-    subject: debouncedSubject,
-    tipe_soal: tipeSoal,
-    kategori: kategori,
+  const form = useForm<Partial<CreateUserInput>>({
+    defaultValues: {
+      nim: session.nim,
+      name: session.name,
+      prodi: session.prodi,
+    },
+    resolver: zodResolver(createUserSchema.partial()),
   });
-  if (isLoading) return <DashboardLoadingSkeleton />;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!exams) return <div>No data available</div>;
+
+  const onSubmit: SubmitHandler<Partial<CreateUserInput>> = (data) => {
+    setFormData(data);
+    setDialogConfirm(true);
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const res = await handleUpdate({
+        data: formData,
+        userId: session.id,
+      });
+      if (res === 200) {
+        toast.success("User updated successfully.");
+        setDialogConfirm(false);
+        setIsEdit(false);
+        await deleteCookie("token");
+        toast.message(
+          "Harap login kembali untuk melihat perubahan pada sesi Anda.",
+          { position: "top-center", richColors: true },
+        );
+        router.push("/auth/login");
+      }
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : "An unknown error occurred.",
+      );
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      const res = await handleDeleteAccount(session.id);
+      if (res === 200) {
+        toast.success("Akun berhasil dihapus.");
+        setDialogDeleteConfirm(false);
+        await deleteCookie("token");
+        router.push("/auth/login");
+      }
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : "Gagal menghapus akun.",
+      );
+    }
+  };
 
   return (
-    <ExamSessionProvider value={exams}>
-      <main className="w-full p-3 pb-24 sm:p-4 lg:pb-4 dark:bg-gray-950">
-        <NextStepProvider>
-          <NextStep
-            steps={steps}
-            cardComponent={
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              TourCustomCard as unknown as React.ComponentType<any>
-            }
-          >
-            <div className="space-y-4 sm:space-y-5">
-              <Warning
-                title={"Mohon Perhatiannya!"}
-                description={
-                  "Jika kamu menemukan soal yang tidak sesuai atau ada masalah lainnya, silakan laporkan ke admin melalui WhatsApp di nomor 081227151326. Terima kasih atas partisipasimu!"
-                }
-                className={"border-amber-200 bg-amber-100 text-amber-800"}
-              />
+    <div className="w-full py-4 pb-12">
+      {/* Welcome Banner */}
+      <div className="mb-6 rounded-2xl bg-gradient-to-br from-red-700 to-sky-900 p-6 text-white shadow-lg dark:from-red-950 dark:to-gray-900">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <Avatar className="h-16 w-16 border-2 border-white/20 bg-white/10">
+              <AvatarFallback className="bg-transparent text-xl font-bold text-white">
+                {session.name.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h1 className="text-xl font-bold sm:text-2xl">
+                Selamat datang kembali, {session.name}! 👋
+              </h1>
+              <p className="text-xs text-slate-200 sm:text-sm">
+                NIM: {session.nim} | Program Studi: {session.prodi?.replace(/_/g, " ")}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Badge className="bg-white/20 text-white hover:bg-white/30 border-0">
+              FKI UMS
+            </Badge>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs Selector */}
+      <div className="mb-8 flex border-b border-slate-200 dark:border-gray-800">
+        <button
+          onClick={() => setActiveTab("uploads")}
+          className={cn(
+            "flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all duration-200 outline-none",
+            activeTab === "uploads"
+              ? "border-red-600 text-red-600 dark:border-red-500 dark:text-red-500"
+              : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200"
+          )}
+        >
+          <FileText className="h-4 w-4" />
+          Daftar Soal Saya
+        </button>
+        <button
+          onClick={() => setActiveTab("profile")}
+          className={cn(
+            "flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all duration-200 outline-none",
+            activeTab === "profile"
+              ? "border-red-600 text-red-600 dark:border-red-500 dark:text-red-500"
+              : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200"
+          )}
+        >
+          <UserIcon className="h-4 w-4" />
+          Ubah Profil Akun
+        </button>
+      </div>
+
+      {/* Tab 1: Soal Saya */}
+      {activeTab === "uploads" && (
+        <div className="space-y-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">
+                Koleksi Unggahan Soal
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
+                Tempat Anda mengelola dan melihat semua soal ujian yang telah Anda bagikan.
+              </p>
+            </div>
+            {/* Direct Upload Button */}
+            <div>
+              <DialogAddFileUpload />
+            </div>
+          </div>
+
+          <Separator />
+
+          {/* UserUploads Grid */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <UserUploads />
+          </div>
+        </div>
+      )}
+
+      {/* Tab 2: Ubah Profil Akun */}
+      {activeTab === "profile" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">
+                Informasi Profil
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
+                Ubah nama lengkap, NIM, atau program studi akun Anda.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-semibold">
+                {isEdit ? "Mode Edit" : "Mode Lihat"}
+              </span>
+              <Switch checked={isEdit} onCheckedChange={setIsEdit} />
+            </div>
+          </div>
+
+          <Separator />
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="md:col-span-2 space-y-5">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
+                >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nama Lengkap</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Masukkan nama lengkap"
+                            {...field}
+                            disabled={isPending || !isEdit}
+                            className="bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-800"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="nim"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>NIM (Nomor Induk Mahasiswa)</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Masukkan NIM Anda"
+                            {...field}
+                            disabled={isPending || !isEdit}
+                            className="bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-800"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="prodi"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Program Studi</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          disabled={isPending || !isEdit}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="bg-white dark:bg-gray-900 border-slate-200 dark:border-gray-800">
+                              <SelectValue placeholder="Pilih Program Studi" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Informatika">Informatika</SelectItem>
+                            <SelectItem value="Sistem_Informasi">Sistem Informasi</SelectItem>
+                            <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
+                            <SelectItem value="Kecerdasan_Buatan">Kecerdasan Buatan</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    disabled={isPending || !isEdit}
+                    className="mt-2 bg-red-600 text-white hover:bg-red-700 font-semibold"
+                  >
+                    {isPending ? "Menyimpan..." : "Simpan Perubahan"}
+                  </Button>
+                </form>
+              </Form>
+            </div>
+
+            {/* Sidebar metadata */}
+            <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900/50 space-y-4">
+              <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
+                Status Akun
+              </h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Program Studi</span>
+                  <span className="font-semibold">{session.prodi?.replace(/_/g, " ")}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Fakultas</span>
+                  <span className="font-semibold text-red-600 dark:text-red-400">FKI UMS</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Role</span>
+                  <Badge variant="outline" className="border-red-500 text-red-500 font-semibold">
+                    MAHASISWA
+                  </Badge>
+                </div>
+              </div>
 
               <Separator />
 
-              <div className="flex flex-col space-y-4 sm:space-y-5">
-                <div className="space-y-3">
-                  <div
-                    id={"tour1-step1"}
-                    className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3"
-                  >
-                    <Select
-                      value={prodi}
-                      onValueChange={(value) => setProdi(value as typeof prodi)}
-                    >
-                      <SelectTrigger className="w-full text-xs text-gray-300 sm:w-[180px] sm:text-sm dark:bg-gray-800">
-                        <SelectValue placeholder="Select Program" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Informatika">Informatika</SelectItem>
-                        <SelectItem value="Sistem_Informasi">
-                          Sistem Informasi
-                        </SelectItem>
-                        <SelectItem value="Ilmu_Komunikasi">
-                          Ilmu Komunikasi
-                        </SelectItem>
-                        <SelectItem value="Kecerdasan_Buatan">
-                          Artificial Intelligence
-                        </SelectItem>
-                        <SelectItem value="All">All</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select
-                      value={tipeSoal ?? "all"}
-                      onValueChange={(value) =>
-                        setTipeSoal(
-                          value === "all"
-                            ? undefined
-                            : (value as "UTS" | "UAS"),
-                        )
-                      }
-                    >
-                      <SelectTrigger className="w-full text-xs text-gray-300 sm:w-[150px] sm:text-sm dark:bg-gray-800">
-                        <SelectValue placeholder="Tipe Soal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Semua Tipe</SelectItem>
-                        <SelectItem value="UTS">UTS</SelectItem>
-                        <SelectItem value="UAS">UAS</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select
-                      value={kategori ?? "all"}
-                      onValueChange={(value) =>
-                        setKategori(
-                          value === "all"
-                            ? undefined
-                            : (value as "REGULER" | "INTER"),
-                        )
-                      }
-                    >
-                      <SelectTrigger className="w-full text-xs text-gray-300 sm:w-[200px] sm:text-sm dark:bg-gray-800">
-                        <SelectValue placeholder="Kategori" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Semua Kategori</SelectItem>
-                        <SelectItem value="REGULER">Reguler</SelectItem>
-                        <SelectItem value="INTER">Inter</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div id={"tour1-step2"} className="relative w-full">
-                    <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-300">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
-                        />
-                      </svg>
-                    </span>
-                    <Input
-                      className="w-full rounded-md border-gray-300 pl-10 text-xs shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                      placeholder={"Cari mata kuliah..."}
-                      value={subject}
-                      onChange={(e) => setSubject(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                  <DashboardTourButton />
-                  <div id={"tour1-step3"} className="w-full sm:w-auto">
-                    <DialogAddFileUpload />
-                  </div>
-                </div>
-              </div>
-
-              <div id={"tour1-step4"}>
-                <Stats />
-              </div>
-
-              <div id={"tour1-step5"}>
-                <ProdiGrid />
-              </div>
-
-              <div id={"tour1-step6"}>
-                <RecentActivities />
+              <div className="space-y-2 pt-2">
+                <h4 className="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider">
+                  Zona Bahaya
+                </h4>
+                <p className="text-[11px] leading-relaxed text-slate-500 dark:text-gray-400">
+                  Menghapus akun Anda akan menghapus data profil secara permanen. Berkas soal yang telah Anda unggah akan tetap dipertahankan di platform.
+                </p>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="w-full font-bold text-xs"
+                  onClick={() => setDialogDeleteConfirm(true)}
+                >
+                  Hapus Akun Permanen
+                </Button>
               </div>
             </div>
-          </NextStep>
-        </NextStepProvider>
-      </main>
-    </ExamSessionProvider>
+          </div>
+        </div>
+      )}
+
+      {/* Profile confirm Dialog */}
+      <AlertDialog open={dialogConfirm} onOpenChange={setDialogConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Konfirmasi Perubahan Profil</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin memperbarui data profil Anda? Anda akan diminta untuk masuk log (login) kembali untuk memperbarui sesi Anda.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDialogConfirm(false)}>
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirm} disabled={isPending} className="bg-red-600 text-white hover:bg-red-700">
+              {isPending ? "Memproses..." : "Perbarui & Relogin"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete Account confirm Dialog */}
+      <AlertDialog open={dialogDeleteConfirm} onOpenChange={setDialogDeleteConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-red-600">Konfirmasi Hapus Akun</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin menghapus akun Anda secara permanen? Tindakan ini tidak dapat dibatalkan. Data profil Anda akan dihapus sepenuhnya dari server.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDialogDeleteConfirm(false)}>
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              disabled={isDeleting}
+              className="bg-red-600 text-white hover:bg-red-700 font-semibold"
+            >
+              {isDeleting ? "Menghapus..." : "Hapus Akun Permanen"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 };
 

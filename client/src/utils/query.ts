@@ -365,3 +365,27 @@ export const useGetGithubStats = () => {
     },
   });
 };
+
+export const useDeleteAccount = () => {
+  return useMutation({
+    mutationFn: async (userId: string) => {
+      try {
+        return await axios
+          .delete(`${env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => res.status);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+  });
+};

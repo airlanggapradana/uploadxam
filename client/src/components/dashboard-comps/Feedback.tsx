@@ -17,7 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUserSession } from "@/hooks/context";
+import { UserSessionContext } from "@/hooks/context";
+import { useContext } from "react";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import { env } from "@/env";
@@ -25,7 +26,7 @@ import { ZodError } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const Feedback = () => {
-  const session = useUserSession();
+  const session = useContext(UserSessionContext);
   const form = useForm<FeedbackInput>({
     defaultValues: {
       email: "",
@@ -42,7 +43,7 @@ const Feedback = () => {
         publicKey: "nr7zXwODAaCASokJ7",
       });
       const templateParams = {
-        user_name: session.name,
+        user_name: session?.name || "Pengguna Publik",
         user_email: d.email,
         rating: d.feedback_rating,
         feedback_text: d.message,
