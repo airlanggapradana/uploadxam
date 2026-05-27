@@ -60,9 +60,9 @@ const Navbar = () => {
             Explore Soal
           </Link>
           <Link
-            href="/panduan"
+            href="/docs"
             className="rounded-md p-2 text-gray-100 transition hover:bg-white/10"
-            title="Panduan"
+            title="Dokumentasi"
           >
             <FaQuestion className="h-5 w-5" />
           </Link>
@@ -125,11 +125,11 @@ const Navbar = () => {
               <Compass className="h-4 w-4 text-red-500" /> Explore Soal
             </Link>
             <Link
-              href="/panduan"
+              href="/docs"
               onClick={() => setOpen(false)}
               className="flex items-center gap-2 text-sm font-bold text-gray-100 hover:text-red-400"
             >
-              <Book className="h-4 w-4" /> Panduan
+              <Book className="h-4 w-4" /> Dokumentasi
             </Link>
 
             <div className="h-px w-2/3 bg-white/10 my-1" />
