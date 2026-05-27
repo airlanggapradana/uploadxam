@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { BookOpen, Search, ArrowLeft, LogIn, Sparkles, Sun, Moon } from "lucide-react";
+import { BookOpen, Search, ArrowLeft, LogIn, Sparkles, Sun, Moon, FileText } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
@@ -152,15 +152,27 @@ const ExploreContent = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Dokumentasi */}
+            <Link href="/docs">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="text-gray-800 dark:text-gray-200 hidden sm:flex items-center gap-1.5"
+              >
+                <FileText className="h-4 w-4" />
+                Dokumentasi
+              </Button>
+            </Link>
+
             {session ? (
               <Link href="/dashboard">
-                <Button size="sm" className="bg-red-600 text-white hover:bg-red-700">
+                <Button size="sm" className="bg-red-600 text-white hover:bg-red-700 font-semibold">
                   Dashboard
                 </Button>
               </Link>
             ) : (
               <Link href="/auth/login">
-                <Button size="sm" variant="outline" className="flex items-center gap-2">
+                <Button size="sm" variant="outline" className="flex items-center gap-2 font-semibold">
                   <LogIn className="h-4 w-4" />
                   Masuk NIM
                 </Button>

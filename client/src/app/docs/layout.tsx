@@ -1,12 +1,12 @@
 import React from "react";
 import type { Metadata } from "next";
-import media from "../../../public/panduan.png";
+import media from "../../../public/docs.png";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://uploadxam.fostiums.org/panduan"),
-  title: "Panduan Penggunaan | UploadXam",
+  metadataBase: new URL("https://uploadxam.fostiums.org/docs"),
+  title: "Dokumentasi Penggunaan | UploadXam",
   description:
-    "Kumpulan panduan penggunaan UploadXam untuk mahasiswa di FKI UMS.",
+    "Kumpulan dokumentasi penggunaan UploadXam untuk mahasiswa di FKI UMS.",
   keywords: [
     "UploadXam",
     "Bank Soal Digital",
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://uploadxam.fostiums.org/panduan",
-    title: "Panduan Penggunaan | UploadXam",
+    url: "https://uploadxam.fostiums.org/docs",
+    title: "Dokumentasi Penggunaan | UploadXam",
     description:
-      "Kumpulan panduan penggunaan UploadXam untuk mahasiswa di FKI UMS.",
+      "Kumpulan dokumentasi penggunaan UploadXam untuk mahasiswa di FKI UMS.",
     images: [
       {
         url: media.src,
@@ -49,19 +49,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Panduan Penggunaan | UploadXam",
+    title: "Dokumentasi Penggunaan | UploadXam",
     description:
-      "Kumpulan panduan penggunaan UploadXam untuk mahasiswa di FKI UMS.",
+      "Kumpulan dokumentasi penggunaan UploadXam untuk mahasiswa di FKI UMS.",
     images: [media.src],
   },
   alternates: {
-    canonical: "https://uploadxam.fostiums.org/panduan",
+    canonical: "https://uploadxam.fostiums.org/docs",
   },
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const PanduanLayout = ({ children }: { children: React.ReactNode }) => {
+const DocsLayout = ({ children }: { children: React.ReactNode }) => {
   return <div>{children}</div>;
 };
 
-export default PanduanLayout;
+export default DocsLayout;

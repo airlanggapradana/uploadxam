@@ -77,7 +77,7 @@ const DashboardHeader = () => {
             variant="secondary"
             size="sm"
             className="text-gray-800 dark:text-gray-200 hidden sm:flex items-center gap-1.5"
-            onClick={() => window.open("/panduan", "_blank")}
+            onClick={() => window.open("/docs", "_blank")}
           >
             <FileText className="h-4 w-4" />
             Dokumentasi

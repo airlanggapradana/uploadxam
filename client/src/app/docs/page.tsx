@@ -48,7 +48,7 @@ interface ContentSection {
   }[];
 }
 
-const PanduanPage = () => {
+const DocsPage = () => {
   const [activeSection, setActiveSection] = useState("introduction");
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -412,7 +412,7 @@ const PanduanPage = () => {
 
           <div className="flex items-center gap-3">
             <Badge variant="secondary" className="hidden sm:inline-flex bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400 font-semibold border-0">
-              v1.0
+              v2.0
             </Badge>
 
             {/* Theme Toggle */}
@@ -524,4 +524,4 @@ const PanduanPage = () => {
   );
 };
 
-export default PanduanPage;
+export default DocsPage;
