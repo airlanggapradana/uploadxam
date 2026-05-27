@@ -37,6 +37,7 @@ import { DashboardLoadingSkeleton } from "@/components/dashboard-comps/Dashboard
 import { Warning } from "@/components/reusables/Warning";
 import DonationDialog from "@/components/dashboard-comps/PopUpDialog";
 import Feedback from "@/components/dashboard-comps/Feedback";
+import { Chatbot } from "@/components/Chatbot";
 import {
   Dialog,
   DialogContent,
@@ -397,6 +398,9 @@ const ExploreContent = () => {
           </Dialog>
         </div>
       </footer>
+
+      {/* Xandy AI Chatbot */}
+      <Chatbot />
     </div>
   );
 };
