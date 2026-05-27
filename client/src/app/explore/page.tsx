@@ -157,10 +157,11 @@ const ExploreContent = () => {
               <Button
                 variant="secondary"
                 size="sm"
-                className="text-gray-800 dark:text-gray-200 hidden sm:flex items-center gap-1.5"
+                className="text-gray-800 dark:text-gray-200 flex items-center gap-1.5 px-2 sm:px-3"
+                title="Dokumentasi"
               >
                 <FileText className="h-4 w-4" />
-                Dokumentasi
+                <span className="hidden sm:inline">Dokumentasi</span>
               </Button>
             </Link>
 
