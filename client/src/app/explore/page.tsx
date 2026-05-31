@@ -3,7 +3,16 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { BookOpen, Search, ArrowLeft, LogIn, Sparkles, Sun, Moon, FileText } from "lucide-react";
+import {
+  BookOpen,
+  Search,
+  ArrowLeft,
+  LogIn,
+  Sparkles,
+  Sun,
+  Moon,
+  FileText,
+} from "lucide-react";
 import { useDebounce } from "use-debounce";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
@@ -62,8 +71,12 @@ const ExploreContent = () => {
     | "All"
   >("All");
   const [subject, setSubject] = useState<string>(initialSubject);
-  const [tipeSoal, setTipeSoal] = useState<"UTS" | "UAS" | undefined>(undefined);
-  const [kategori, setKategori] = useState<"REGULER" | "INTER" | undefined>(undefined);
+  const [tipeSoal, setTipeSoal] = useState<"UTS" | "UAS" | undefined>(
+    undefined,
+  );
+  const [kategori, setKategori] = useState<"REGULER" | "INTER" | undefined>(
+    undefined,
+  );
   const [debouncedSubject] = useDebounce(subject, 500);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
@@ -95,7 +108,8 @@ const ExploreContent = () => {
 
   const handleUploadClick = () => {
     toast.error("Akses Ditolak", {
-      description: "Silakan login menggunakan NIM terlebih dahulu untuk mengunggah soal.",
+      description:
+        "Silakan login menggunakan NIM terlebih dahulu untuk mengunggah soal.",
       position: "top-center",
       richColors: true,
     });
@@ -117,26 +131,30 @@ const ExploreContent = () => {
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="flex items-center gap-1 text-xs font-semibold text-slate-600 transition hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 sm:text-sm"
+              className="flex items-center gap-1 text-xs font-semibold text-slate-600 transition hover:text-red-600 sm:text-sm dark:text-gray-400 dark:hover:text-red-500"
             >
               <ArrowLeft className="h-4 w-4" />
               Kembali ke Beranda
             </Link>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <span className="text-sm font-black tracking-tight text-slate-800 dark:text-white">
               upload<span className="text-red-600">xam</span>
             </span>
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-3">
             {/* Theme Toggle */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg">
-                  <Sun className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90 text-slate-700 hover:text-slate-900" />
-                  <Moon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0 text-gray-400 hover:text-white" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 rounded-lg"
+                >
+                  <Sun className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 text-slate-700 transition-all hover:text-slate-900 dark:scale-0 dark:-rotate-90" />
+                  <Moon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 text-gray-400 transition-all hover:text-white dark:scale-100 dark:rotate-0" />
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -158,7 +176,7 @@ const ExploreContent = () => {
               <Button
                 variant="secondary"
                 size="sm"
-                className="text-gray-800 dark:text-gray-200 flex items-center gap-1.5 px-2 sm:px-3"
+                className="flex items-center gap-1.5 px-2 text-gray-800 sm:px-3 dark:text-gray-200"
                 title="Dokumentasi"
               >
                 <FileText className="h-4 w-4" />
@@ -168,13 +186,20 @@ const ExploreContent = () => {
 
             {session ? (
               <Link href="/dashboard">
-                <Button size="sm" className="bg-red-600 text-white hover:bg-red-700 font-semibold">
+                <Button
+                  size="sm"
+                  className="bg-red-600 font-semibold text-white hover:bg-red-700"
+                >
                   Dashboard
                 </Button>
               </Link>
             ) : (
               <Link href="/auth/login">
-                <Button size="sm" variant="outline" className="flex items-center gap-2 font-semibold">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex items-center gap-2 font-semibold"
+                >
                   <LogIn className="h-4 w-4" />
                   Masuk NIM
                 </Button>
@@ -188,11 +213,12 @@ const ExploreContent = () => {
       <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Banner Section */}
         <div className="mb-8 text-center sm:text-left">
-          <h1 className="bg-gradient-to-r from-red-600 via-red-500 to-indigo-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-red-100 dark:via-red-400 dark:to-indigo-400 sm:text-4xl">
+          <h1 className="bg-gradient-to-r from-red-600 via-red-500 to-indigo-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl dark:from-red-100 dark:via-red-400 dark:to-indigo-400">
             Bank Soal Ujian Digital
           </h1>
-          <p className="mt-2 text-sm text-slate-600 dark:text-gray-400 sm:text-base">
-            Cari, lihat, dan unduh berkas ujian dari berbagai program studi di FKI UMS secara gratis.
+          <p className="mt-2 text-sm text-slate-600 sm:text-base dark:text-gray-400">
+            Cari, lihat, dan unduh berkas ujian dari berbagai program studi di
+            FKI UMS secara gratis.
           </p>
         </div>
 
@@ -221,27 +247,28 @@ const ExploreContent = () => {
 
               {/* Upload Soal CTA */}
               <div className="self-end lg:self-auto">
-                {hasCheckedAuth && (
-                  session ? (
+                {hasCheckedAuth &&
+                  (session ? (
                     <UserSessionProvider value={session}>
                       <DialogAddFileUpload />
                     </UserSessionProvider>
                   ) : (
                     <Button
                       onClick={handleUploadClick}
-                      className="w-full bg-gradient-to-r from-red-700 to-red-500 hover:from-red-800 hover:to-red-600 sm:w-auto text-white font-semibold"
+                      className="w-full bg-gradient-to-r from-red-700 to-red-500 font-semibold text-white hover:from-red-800 hover:to-red-600 sm:w-auto"
                     >
                       🚀 Upload Soal
                     </Button>
-                  )
-                )}
+                  ))}
               </div>
             </div>
 
             {/* Row 2: Select Filters */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-500 dark:text-gray-400">Program Studi</label>
+                <label className="text-xs font-semibold text-slate-500 dark:text-gray-400">
+                  Program Studi
+                </label>
                 <Select
                   value={prodi}
                   onValueChange={(value) => setProdi(value as typeof prodi)}
@@ -252,19 +279,29 @@ const ExploreContent = () => {
                   <SelectContent>
                     <SelectItem value="All">Semua Prodi</SelectItem>
                     <SelectItem value="Informatika">Informatika</SelectItem>
-                    <SelectItem value="Sistem_Informasi">Sistem Informasi</SelectItem>
-                    <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
-                    <SelectItem value="Kecerdasan_Buatan">Artificial Intelligence</SelectItem>
+                    <SelectItem value="Sistem_Informasi">
+                      Sistem Informasi
+                    </SelectItem>
+                    <SelectItem value="Ilmu_Komunikasi">
+                      Ilmu Komunikasi
+                    </SelectItem>
+                    <SelectItem value="Kecerdasan_Buatan">
+                      Artificial Intelligence
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-500 dark:text-gray-400">Tipe Ujian</label>
+                <label className="text-xs font-semibold text-slate-500 dark:text-gray-400">
+                  Tipe Ujian
+                </label>
                 <Select
                   value={tipeSoal ?? "all"}
                   onValueChange={(value) =>
-                    setTipeSoal(value === "all" ? undefined : (value as "UTS" | "UAS"))
+                    setTipeSoal(
+                      value === "all" ? undefined : (value as "UTS" | "UAS"),
+                    )
                   }
                 >
                   <SelectTrigger className="w-full border-slate-200 text-xs dark:border-gray-800 dark:bg-gray-950">
@@ -279,11 +316,17 @@ const ExploreContent = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-500 dark:text-gray-400">Kategori</label>
+                <label className="text-xs font-semibold text-slate-500 dark:text-gray-400">
+                  Kategori
+                </label>
                 <Select
                   value={kategori ?? "all"}
                   onValueChange={(value) =>
-                    setKategori(value === "all" ? undefined : (value as "REGULER" | "INTER"))
+                    setKategori(
+                      value === "all"
+                        ? undefined
+                        : (value as "REGULER" | "INTER"),
+                    )
                   }
                 >
                   <SelectTrigger className="w-full border-slate-200 text-xs dark:border-gray-800 dark:bg-gray-950">
@@ -305,14 +348,17 @@ const ExploreContent = () => {
           <DashboardLoadingSkeleton />
         ) : error ? (
           <div className="py-12 text-center text-red-500">
-            Error: {error instanceof Error ? error.message : "Gagal memuat berkas ujian."}
+            Error:{" "}
+            {error instanceof Error
+              ? error.message
+              : "Gagal memuat berkas ujian."}
           </div>
         ) : exams ? (
           <ExamSessionProvider value={exams}>
             <div className="space-y-8">
               {/* Repository Statistics */}
               <div>
-                <h2 className="mb-4 text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-gray-400 flex items-center gap-1.5">
+                <h2 className="mb-4 flex items-center gap-1.5 text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-gray-400">
                   <Sparkles className="h-4 w-4 text-yellow-500" />
                   Statistik Bank Soal
                 </h2>
@@ -323,7 +369,7 @@ const ExploreContent = () => {
 
               {/* Grid lists of prodi and exams */}
               <div>
-                <h2 className="mb-4 text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-gray-400 flex items-center gap-1.5">
+                <h2 className="mb-4 flex items-center gap-1.5 text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-gray-400">
                   <BookOpen className="h-4 w-4 text-red-500" />
                   Katalog Soal Ujian
                 </h2>
@@ -338,12 +384,12 @@ const ExploreContent = () => {
         )}
 
         {/* Simple Donation Section */}
-        <div className="mt-16 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition dark:border-gray-800 dark:bg-gray-900/40 max-w-3xl mx-auto text-center">
+        <div className="mx-auto mt-16 max-w-3xl rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition dark:border-gray-800 dark:bg-gray-900/40">
           <div className="mb-3 flex justify-center">
             <span className="rounded-full bg-red-100 p-2.5 dark:bg-red-950/30">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-red-600 dark:text-red-500 animate-pulse"
+                className="h-6 w-6 animate-pulse text-red-600 dark:text-red-500"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -354,8 +400,10 @@ const ExploreContent = () => {
           <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">
             Dukung Kami Tetap Berkarya ❤️
           </h3>
-          <p className="mt-2 text-xs text-slate-600 dark:text-gray-400 sm:text-sm">
-            Kami membangun platform ini agar gratis dan bermanfaat bagi seluruh mahasiswa FKI. Untuk menjaga server tetap menyala, kami menerima donasi dengan senang hati.
+          <p className="mt-2 text-xs text-slate-600 sm:text-sm dark:text-gray-400">
+            Kami membangun platform ini agar gratis dan bermanfaat bagi seluruh
+            mahasiswa FKI. Untuk menjaga server tetap menyala, kami menerima
+            donasi dengan senang hati.
           </p>
           <div className="mt-4">
             <a
@@ -372,25 +420,26 @@ const ExploreContent = () => {
 
       {/* Footer */}
       <footer className="mt-16 border-t border-slate-200 bg-white py-6 dark:border-gray-900 dark:bg-gray-950">
-        <div className="mx-auto max-w-7xl px-4 flex flex-col items-center justify-between gap-4 sm:flex-row sm:px-6 lg:px-8">
-          <p className="text-center text-xs text-slate-500 dark:text-gray-400 sm:text-left">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
+          <p className="text-center text-xs text-slate-500 sm:text-left dark:text-gray-400">
             &copy; {new Date().getFullYear()} FOSTI UMS. All rights reserved.
           </p>
 
           {/* Public Feedback Trigger Modal */}
           <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
             <DialogTrigger asChild>
-              <button className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline dark:text-red-400 dark:hover:text-red-300 transition flex items-center gap-1 cursor-pointer">
+              <button className="flex cursor-pointer items-center gap-1 text-xs font-semibold text-red-600 transition hover:text-red-700 hover:underline dark:text-red-400 dark:hover:text-red-300">
                 Kirim Masukan & Saran 💬
               </button>
             </DialogTrigger>
-            <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] max-w-[95vw] overflow-y-auto p-4 sm:max-h-[90vh] sm:max-w-2xl sm:p-6 bg-white dark:bg-gray-900">
+            <DialogContent className="max-h-[90vh] w-[calc(100vw-2rem)] max-w-[95vw] overflow-y-auto bg-white p-4 sm:max-h-[90vh] sm:max-w-2xl sm:p-6 dark:bg-gray-900">
               <DialogHeader className="mb-3 sm:mb-4">
                 <DialogTitle className="text-base font-semibold sm:text-xl">
                   Bagikan Masukan Anda
                 </DialogTitle>
                 <DialogDescription className="text-xs sm:text-sm">
-                  Masukan Anda sangat berharga bagi kami untuk terus menyempurnakan platform UploadXam.
+                  Masukan Anda sangat berharga bagi kami untuk terus
+                  menyempurnakan platform UploadXam.
                 </DialogDescription>
               </DialogHeader>
               <Feedback />
