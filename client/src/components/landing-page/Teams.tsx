@@ -18,6 +18,22 @@ const teamMembers = [
       },
     ],
   },
+  {
+    author: "Yodha Agasthya",
+    title: "Contributor",
+    quote:
+      "Berfokus pada pengembangan fitur dan peningkatan antarmuka website agar pengalaman pengguna semakin memukau dan nyaman digunakan.",
+    avatarUrl:
+      "https://res.cloudinary.com/dstonqhew/image/upload/q_auto/f_auto/v1780590107/Good_Photos_ikbukh.png",
+    avatarFallback: "YA",
+    socials: [
+      { type: "instagram" as const, url: "https://www.instagram.com/ydh_anp/" },
+      {
+        type: "linkedin" as const,
+        url: "https://www.linkedin.com/in/yodha-agasthya-novianto-putra/",
+      },
+    ],
+  },
 ];
 
 function Teams() {
