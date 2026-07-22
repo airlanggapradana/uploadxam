@@ -23,12 +23,12 @@ const DashboardHeader = () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-950/80">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8 w-full">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Left section: Navigation */}
         <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="flex items-center gap-1 text-xs font-semibold text-slate-600 transition hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 sm:text-sm"
+            className="flex items-center gap-1 text-xs font-semibold text-slate-600 transition hover:text-red-600 sm:text-sm dark:text-gray-400 dark:hover:text-red-500"
           >
             <ArrowLeft className="h-4 w-4" />
             Beranda
@@ -36,17 +36,10 @@ const DashboardHeader = () => {
           <div className="h-3 w-px bg-slate-300 dark:bg-gray-800" />
           <Link
             href="/explore"
-            className="text-xs font-semibold text-slate-600 transition hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 sm:text-sm"
+            className="text-xs font-semibold text-slate-600 transition hover:text-red-600 sm:text-sm dark:text-gray-400 dark:hover:text-red-500"
           >
             Penjelajah Soal
           </Link>
-        </div>
-
-        {/* Center section: Logo (No FOSTI logo image) */}
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-black tracking-tight text-slate-800 dark:text-white">
-            upload<span className="text-red-600">xam</span>
-          </span>
         </div>
 
         {/* Right section: Actions */}
@@ -54,9 +47,13 @@ const DashboardHeader = () => {
           {/* Theme Toggle */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg">
-                <Sun className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90 text-slate-700 hover:text-slate-900" />
-                <Moon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0 text-gray-400 hover:text-white" />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 rounded-lg"
+              >
+                <Sun className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 text-slate-700 transition-all hover:text-slate-900 dark:scale-0 dark:-rotate-90" />
+                <Moon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 text-gray-400 transition-all hover:text-white dark:scale-100 dark:rotate-0" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </DropdownMenuTrigger>
@@ -76,7 +73,7 @@ const DashboardHeader = () => {
           <Button
             variant="secondary"
             size="sm"
-            className="text-gray-800 dark:text-gray-200 flex items-center gap-1.5 px-2 sm:px-3"
+            className="flex items-center gap-1.5 px-2 text-gray-800 sm:px-3 dark:text-gray-200"
             title="Dokumentasi"
             onClick={() => window.open("/docs", "_blank")}
           >
@@ -87,7 +84,7 @@ const DashboardHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="h-8 w-8 cursor-pointer ring-1 ring-slate-200 dark:ring-gray-800">
-                <AvatarFallback className="bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-300 font-semibold text-xs">
+                <AvatarFallback className="bg-red-100 text-xs font-semibold text-red-700 dark:bg-red-950/40 dark:text-red-300">
                   {session.name.slice(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>

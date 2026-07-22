@@ -1,8 +1,9 @@
-import { FileText, Clock, User, BookOpen, Calendar } from "lucide-react";
+import { FileText, Clock, User, BookOpen, Calendar, Eye, Download, Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { Activities } from "@/types/get-recent-activ.type";
 import { Button } from "@/components/ui/button";
+import { useIncrementDownload, useIncrementView } from "@/utils/query";
 
 interface ActivityCardProps {
   activity: Activities;
@@ -30,6 +31,15 @@ const ActivityCard = ({ activity }: ActivityCardProps) => {
     new Date().getTime() - new Date(activity.uploadedAt).getTime() <
     12 * 60 * 60 * 1000;
 
+  const { mutate: trackDownload } = useIncrementDownload();
+  const { mutate: trackView } = useIncrementView();
+
+  const handleOpen = () => {
+    trackView(activity.id);
+    trackDownload(activity.id);
+    window.open(activity.fileUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <Card className="group border-border relative overflow-hidden bg-[var(--gradient-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)]">
       <div className="p-4 sm:p-6">
@@ -39,9 +49,7 @@ const ActivityCard = ({ activity }: ActivityCardProps) => {
             <Button
               aria-label="Open file"
               className="flex h-8 w-8 items-center justify-center bg-indigo-100 p-2 hover:bg-indigo-200 md:h-10 md:w-10 md:p-3"
-              onClick={() =>
-                window.open(activity.fileUrl, "_blank", "noopener,noreferrer")
-              }
+              onClick={handleOpen}
             >
               <FileText className="h-4 w-4 text-indigo-500 md:h-5 md:w-5" />
             </Button>
@@ -104,19 +112,36 @@ const ActivityCard = ({ activity }: ActivityCardProps) => {
           </div>
         </div>
 
-        {/* User Info */}
+        {/* User Info & Stats */}
         <div className="border-border border-t pt-4">
-          <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-            <div className="rounded-full bg-gray-200 p-1.5">
-              <User className="h-3.5 w-3.5 text-gray-500" />
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-2 text-sm">
+              <div className="rounded-full bg-gray-200 p-1.5">
+                <User className="h-3.5 w-3.5 text-gray-500" />
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-sm">
+                <span className="text-foreground text-sm font-medium">
+                  {activity.user.name}
+                </span>
+                <span className="text-muted-foreground">•</span>
+                <span className="text-muted-foreground text-xs md:text-sm">
+                  {activity.user.prodi.replace(/_/g, " ")}
+                </span>
+              </div>
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-sm">
-              <span className="text-foreground text-sm font-medium">
-                {activity.user.name}
+
+            <div className="text-muted-foreground flex items-center gap-3 text-xs">
+              <span className="flex items-center gap-1" title="Total Dilihat">
+                <Eye className="h-3.5 w-3.5 opacity-70" />
+                {activity.views ?? 0}
               </span>
-              <span className="text-muted-foreground">•</span>
-              <span className="text-muted-foreground text-xs md:text-sm">
-                {activity.user.prodi.replace(/_/g, " ")}
+              <span className="flex items-center gap-1" title="Total Diunduh">
+                <Download className="h-3.5 w-3.5 opacity-70" />
+                {activity.downloads ?? 0}
+              </span>
+              <span className="flex items-center gap-1" title="Total Dicari">
+                <Search className="h-3.5 w-3.5 opacity-70" />
+                {activity.searches ?? 0}
               </span>
             </div>
           </div>

@@ -289,6 +289,21 @@ export const getAllUploads = async (
       return matchProdi && matchSubject && matchTipeSoal && matchKategori;
     });
 
+    if (
+      subject &&
+      typeof subject === "string" &&
+      subject.trim() !== "" &&
+      filteredUploads.length > 0
+    ) {
+      const matchedIds = filteredUploads.map((u) => u.id);
+      prisma.upload
+        .updateMany({
+          where: { id: { in: matchedIds } },
+          data: { searches: { increment: 1 } },
+        })
+        .catch(console.error);
+    }
+
     // Sorting berdasarkan tipe_soal atau kategori (opsional)
     const sortKey = typeof sort === "string" ? sort : undefined; // 'tipe_soal' | 'kategori'
     const sortOrder = (
@@ -508,6 +523,48 @@ export const getRecentUploads = async (
       count: uploads.length,
       data: uploads,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const incrementView = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const upload = await prisma.upload.update({
+      where: { id: id! },
+      data: { views: { increment: 1 } },
+    });
+    res.status(200).json({
+      message: "View count incremented",
+      data: upload,
+    });
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const incrementDownload = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const upload = await prisma.upload.update({
+      where: { id: id! },
+      data: { downloads: { increment: 1 } },
+    });
+    res.status(200).json({
+      message: "Download count incremented",
+      data: upload,
+    });
+    return;
   } catch (error) {
     next(error);
   }

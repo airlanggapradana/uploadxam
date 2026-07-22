@@ -32,6 +32,9 @@ export interface Upload {
     | "Sistem_Informasi"
     | "Ilmu_Komunikasi"
     | "Kecerdasan_Buatan";
+  views?: number;
+  downloads?: number;
+  searches?: number;
   uploadedAt: Date;
   userId: string;
   semester: number;

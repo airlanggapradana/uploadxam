@@ -1,5 +1,5 @@
 import type { Semester } from "@/types/get-exams.type";
-import { BookOpen, Calendar, ChevronDown, ChevronUp } from "lucide-react";
+import { BookOpen, Calendar, ChevronDown, ChevronUp, Eye, Download, Search } from "lucide-react";
 import { BiUser } from "react-icons/bi";
 import {
   Collapsible,
@@ -9,9 +9,12 @@ import {
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { useIncrementDownload, useIncrementView } from "@/utils/query";
 
 function SemesterAccordion({ semester }: { semester: Semester }) {
   const [open, setOpen] = useState(false);
+  const { mutate: trackDownload } = useIncrementDownload();
+  const { mutate: trackView } = useIncrementView();
 
   return (
     <Collapsible
@@ -82,6 +85,20 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
                   <BiUser className="h-4 w-4 dark:text-slate-300" />
                   <span className="text-xs">{upload.user.name}</span>
                 </div>
+                <div className="flex items-center gap-3 pt-1 text-xs text-slate-500 dark:text-slate-400">
+                  <span className="flex items-center gap-1" title="Total Dilihat">
+                    <Eye className="h-3.5 w-3.5 text-slate-400" />
+                    {upload.views ?? 0}
+                  </span>
+                  <span className="flex items-center gap-1" title="Total Diunduh">
+                    <Download className="h-3.5 w-3.5 text-slate-400" />
+                    {upload.downloads ?? 0}
+                  </span>
+                  <span className="flex items-center gap-1" title="Total Dicari">
+                    <Search className="h-3.5 w-3.5 text-slate-400" />
+                    {upload.searches ?? 0}
+                  </span>
+                </div>
               </div>
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-xs text-slate-500 dark:text-slate-400">
@@ -98,6 +115,10 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
                   href={upload.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => {
+                    trackView(upload.id);
+                    trackDownload(upload.id);
+                  }}
                   className="text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   Lihat File →

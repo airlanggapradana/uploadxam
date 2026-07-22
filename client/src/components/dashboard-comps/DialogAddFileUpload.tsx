@@ -39,7 +39,8 @@ import { useMakeUpload } from "@/utils/query";
 import { SingleImageDropzone } from "@/components/upload/single-image";
 import { toast } from "sonner";
 import { EdgeStoreApiClientError } from "@edgestore/shared";
-import { formatFileSize } from "@edgestore/react/utils";
+import { getCoursesByProdi } from "@/data/courses";
+import { SearchableCourseSelect } from "@/components/ui/searchable-course-select";
 
 const DialogAddFileUpload = () => {
   const session = useUserSession();
@@ -61,6 +62,12 @@ const DialogAddFileUpload = () => {
     },
     resolver: zodResolver(makeUploadSchema),
   });
+
+  const selectedProdi = form.watch("prodi") || session.prodi || "Informatika";
+  const courseOptions = React.useMemo(
+    () => getCoursesByProdi(selectedProdi),
+    [selectedProdi],
+  );
 
   const uploadFn: UploadFn = React.useCallback(
     async ({ file, onProgressChange, signal }) => {
@@ -298,27 +305,6 @@ const DialogAddFileUpload = () => {
 
             <FormField
               control={form.control}
-              name="mata_kuliah"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs font-medium sm:text-sm">
-                    Mata Kuliah
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Enter mata kuliah"
-                      {...field}
-                      className="h-9 text-sm focus-visible:ring-1 sm:h-10"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="prodi"
               render={({ field }) => (
                 <FormItem>
@@ -327,7 +313,10 @@ const DialogAddFileUpload = () => {
                   </FormLabel>
                   <FormControl>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        form.setValue("mata_kuliah", "");
+                      }}
                       defaultValue={field.value}
                     >
                       <SelectTrigger className="h-9 w-full text-sm focus:ring-1 sm:h-10">
@@ -341,8 +330,32 @@ const DialogAddFileUpload = () => {
                         <SelectItem value="Ilmu_Komunikasi">
                           Ilmu Komunikasi
                         </SelectItem>
+                        <SelectItem value="Kecerdasan_Buatan">
+                          Kecerdasan Buatan
+                        </SelectItem>
                       </SelectContent>
                     </Select>
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="mata_kuliah"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs font-medium sm:text-sm">
+                    Mata Kuliah
+                  </FormLabel>
+                  <FormControl>
+                    <SearchableCourseSelect
+                      options={courseOptions}
+                      value={field.value ?? ""}
+                      onValueChange={field.onChange}
+                      placeholder="Pilih atau cari mata kuliah..."
+                    />
                   </FormControl>
                   <FormMessage className="text-xs" />
                 </FormItem>

@@ -389,3 +389,43 @@ export const useDeleteAccount = () => {
     },
   });
 };
+
+export const useIncrementView = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (uploadId: string) => {
+      try {
+        return await axios
+          .patch(`${env.NEXT_PUBLIC_API_URL}/users/uploads/${uploadId}/view`)
+          .then((res) => res.data);
+      } catch {
+        // Silent failure for stats
+      }
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["exams"] });
+      void queryClient.invalidateQueries({ queryKey: ["user-uploads"] });
+      void queryClient.invalidateQueries({ queryKey: ["recent-uploads"] });
+    },
+  });
+};
+
+export const useIncrementDownload = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (uploadId: string) => {
+      try {
+        return await axios
+          .patch(`${env.NEXT_PUBLIC_API_URL}/users/uploads/${uploadId}/download`)
+          .then((res) => res.data);
+      } catch {
+        // Silent failure for stats
+      }
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["exams"] });
+      void queryClient.invalidateQueries({ queryKey: ["user-uploads"] });
+      void queryClient.invalidateQueries({ queryKey: ["recent-uploads"] });
+    },
+  });
+};

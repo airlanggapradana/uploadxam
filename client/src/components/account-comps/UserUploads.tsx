@@ -7,7 +7,7 @@ import {
 } from "@/utils/query";
 import { useUserSession } from "@/hooks/context";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Calendar, Edit, Trash } from "lucide-react";
+import { BookOpen, Calendar, Edit, Trash, Eye, Download, Search } from "lucide-react";
 import { BiUser } from "react-icons/bi";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEdgeStore } from "@/lib/edgestore";
 import { EdgeStoreApiClientError } from "@edgestore/shared";
 import { formatFileSize } from "@edgestore/react/utils";
+import { getCoursesByProdi } from "@/data/courses";
+import { SearchableCourseSelect } from "@/components/ui/searchable-course-select";
 
 const UserUploads = () => {
   const session = useUserSession();
@@ -78,6 +80,12 @@ const UserUploads = () => {
     },
     resolver: zodResolver(updateUploadSchema),
   });
+
+  const selectedProdi = form.watch("prodi") || session.prodi || "Informatika";
+  const courseOptions = React.useMemo(
+    () => getCoursesByProdi(selectedProdi),
+    [selectedProdi],
+  );
 
   useEffect(() => {
     if (selectedUpload) {
@@ -225,6 +233,20 @@ const UserUploads = () => {
                 <BiUser className="h-4 w-4 dark:text-slate-300" />
                 <span className="text-xs">
                   {upload.user.name} - {upload.user.nim}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 pt-1 text-xs text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1" title="Total Dilihat">
+                  <Eye className="h-3.5 w-3.5 text-slate-400" />
+                  {upload.views ?? 0}
+                </span>
+                <span className="flex items-center gap-1" title="Total Diunduh">
+                  <Download className="h-3.5 w-3.5 text-slate-400" />
+                  {upload.downloads ?? 0}
+                </span>
+                <span className="flex items-center gap-1" title="Total Dicari">
+                  <Search className="h-3.5 w-3.5 text-slate-400" />
+                  {upload.searches ?? 0}
                 </span>
               </div>
             </div>
@@ -432,27 +454,6 @@ const UserUploads = () => {
 
                 <FormField
                   control={form.control}
-                  name="mata_kuliah"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm sm:text-base">
-                        Mata Kuliah
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter mata kuliah"
-                          {...field}
-                          className="h-9 text-sm sm:h-10 sm:text-base"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
                   name="prodi"
                   render={({ field }) => (
                     <FormItem>
@@ -461,7 +462,10 @@ const UserUploads = () => {
                       </FormLabel>
                       <FormControl>
                         <Select
-                          onValueChange={field.onChange}
+                          onValueChange={(val) => {
+                            field.onChange(val);
+                            form.setValue("mata_kuliah", "");
+                          }}
                           defaultValue={field.value}
                         >
                           <SelectTrigger className="h-9 w-full text-sm sm:h-10 sm:text-base">
@@ -477,8 +481,32 @@ const UserUploads = () => {
                             <SelectItem value="Ilmu_Komunikasi">
                               Ilmu Komunikasi
                             </SelectItem>
+                            <SelectItem value="Kecerdasan_Buatan">
+                              Kecerdasan Buatan
+                            </SelectItem>
                           </SelectContent>
                         </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="mata_kuliah"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm sm:text-base">
+                        Mata Kuliah
+                      </FormLabel>
+                      <FormControl>
+                        <SearchableCourseSelect
+                          options={courseOptions}
+                          value={field.value ?? ""}
+                          onValueChange={field.onChange}
+                          placeholder="Pilih atau cari mata kuliah..."
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

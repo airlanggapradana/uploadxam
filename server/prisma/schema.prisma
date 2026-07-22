@@ -36,6 +36,9 @@ model Upload {
   kategori    Kategori  @default(REGULER)
   year        Int
   prodi       Prodi
+  views       Int       @default(0)
+  downloads   Int       @default(0)
+  searches    Int       @default(0)
   uploadedAt  DateTime  @default(now())
 
   userId String

@@ -14,6 +14,9 @@ export interface Upload {
   kategori: string;
   year: number;
   prodi: string;
+  views?: number;
+  downloads?: number;
+  searches?: number;
   uploadedAt: Date;
   userId: string;
   user: User;
