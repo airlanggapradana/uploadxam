@@ -9,10 +9,12 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { useGetGithubStats } from "@/utils/query";
+import { useGetGithubStats, useGetPageViews } from "@/utils/query";
 
 const Contributions = () => {
   const { data, isLoading, error } = useGetGithubStats();
+  const { data: pageViewsData, isLoading: pageViewsLoading } = useGetPageViews();
+  const combinedLoading = isLoading || pageViewsLoading;
   const steps = [
     {
       icon: GitFork,
@@ -109,9 +111,9 @@ const Contributions = () => {
 
         {/* Stats */}
         <div className="border-t border-gray-800/50 pt-12">
-          {isLoading ? (
+          {combinedLoading ? (
             <div className="flex flex-wrap items-center justify-center gap-12 text-center md:gap-20">
-              {[1, 2].map((i) => (
+              {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="group cursor-pointer">
                   <div className="mb-2 h-14 w-24 animate-pulse rounded-lg bg-gray-800/50" />
                   <div className="mx-auto h-4 w-20 animate-pulse rounded bg-gray-800/50" />
@@ -133,6 +135,26 @@ const Contributions = () => {
                 </p>
                 <p className="text-sm font-medium tracking-wider text-gray-500 uppercase">
                   GitHub Stars
+                </p>
+              </div>
+              <div className="group cursor-pointer">
+                <p className="mb-2 bg-gradient-to-br from-purple-400 to-pink-500 bg-clip-text text-5xl font-bold text-transparent transition-transform group-hover:scale-110">
+                  {pageViewsData?.pageviews !== null && pageViewsData?.pageviews !== undefined
+                    ? pageViewsData.pageviews.toLocaleString()
+                    : "—"}
+                </p>
+                <p className="text-sm font-medium tracking-wider text-gray-500 uppercase">
+                  Kali Dilihat
+                </p>
+              </div>
+              <div className="group cursor-pointer">
+                <p className="mb-2 bg-gradient-to-br from-blue-400 to-cyan-500 bg-clip-text text-5xl font-bold text-transparent transition-transform group-hover:scale-110">
+                  {pageViewsData?.visitors !== null && pageViewsData?.visitors !== undefined
+                    ? pageViewsData.visitors.toLocaleString()
+                    : "—"}
+                </p>
+                <p className="text-sm font-medium tracking-wider text-gray-500 uppercase">
+                  Pengunjung
                 </p>
               </div>
               <div className="group cursor-pointer">

@@ -366,6 +366,32 @@ export const useGetGithubStats = () => {
   });
 };
 
+export const useGetPageViews = () => {
+  return useQuery({
+    queryKey: ["page-views"],
+    queryFn: async () => {
+      // Call internal Next.js API route (server-side proxy) to avoid CORS
+      const res = await fetch("/api/page-views", {
+        method: "GET",
+      });
+
+      if (!res.ok) return null;
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const json = await res.json();
+
+      // Response: { version, query, data: { pageviews: number, visitors: number } }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const pageviews: number | null = typeof json?.data?.pageviews === "number" ? (json.data.pageviews as number) : null;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const visitors: number | null = typeof json?.data?.visitors === "number" ? (json.data.visitors as number) : null;
+
+      return { pageviews, visitors };
+    },
+    staleTime: 1000 * 60 * 5, // cache 5 minutes
+  });
+};
+
 export const useDeleteAccount = () => {
   return useMutation({
     mutationFn: async (userId: string) => {
