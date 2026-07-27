@@ -8,6 +8,7 @@ import {
   UpdateUploadInput,
   updateUploadSchema,
 } from "../zod/zod.validation";
+import { logger } from "../utils/logger";
 
 export const updateUser = async (
   req: Request,
@@ -25,6 +26,7 @@ export const updateUser = async (
       },
     });
     if (!existingUser) {
+      logger.warn(`Update user failed: User not found`, { userId: id });
       res.status(404).json({
         message: "User tidak ditemukan",
       });
@@ -41,6 +43,8 @@ export const updateUser = async (
         prodi: prodi ? prodi : existingUser.prodi,
       },
     });
+
+    logger.info(`User updated successfully`, { userId: updatedUser.id });
     res.status(200).json({
       message: "User updated successfully",
       data: updatedUser,
@@ -64,6 +68,7 @@ export const deleteUser = async (
       },
     });
     if (!existingUser) {
+      logger.warn(`Delete user failed: User not found`, { userId: id });
       res.status(404).json({
         message: "User tidak ditemukan",
       });
@@ -75,6 +80,8 @@ export const deleteUser = async (
         id: existingUser.id,
       },
     });
+
+    logger.info(`User deleted successfully`, { userId: id });
     res.status(200).json({
       message: "User deleted successfully",
     });
@@ -112,6 +119,7 @@ export const makeUpload = async (
       });
 
       if (!existingUser) {
+        logger.warn(`Create upload failed: User not found`, { userId });
         res.status(404).json({
           message: "User tidak ditemukan",
         });
@@ -121,6 +129,7 @@ export const makeUpload = async (
       // Check if user's program matches the upload program
       if (existingUser.prodi !== prodi && existingUser.role !== "ADMIN") {
         if (existingUser.prodi !== prodi) {
+          logger.warn(`Create upload failed: Prodi mismatch`, { userProdi: existingUser.prodi, uploadProdi: prodi });
           res.status(400).json({
             message: "Program studi user tidak sesuai dengan upload",
           });
@@ -153,6 +162,7 @@ export const makeUpload = async (
 
     if (!result) return;
 
+    logger.info(`Upload created successfully: ${result.id}`, { title: result.title, prodi: result.prodi, userId });
     res.status(201).json({
       message: "Upload created successfully",
       data: result,
@@ -188,12 +198,14 @@ export const updateUpload = async (
       },
     });
     if (!existingUser) {
+      logger.warn(`Update upload failed: User not found`, { userId });
       res.status(404).json({
         message: "User tidak ditemukan",
       });
       return;
     }
     if (existingUser.prodi !== prodi) {
+      logger.warn(`Update upload failed: Prodi mismatch`, { userProdi: existingUser.prodi, uploadProdi: prodi });
       res.status(400).json({
         message: "Program studi user tidak sesuai dengan upload",
       });
@@ -206,6 +218,7 @@ export const updateUpload = async (
       },
     });
     if (!existingUpload) {
+      logger.warn(`Update upload failed: Upload not found`, { uploadId: id });
       res.status(404).json({
         message: "Upload tidak ditemukan",
       });
@@ -228,6 +241,8 @@ export const updateUpload = async (
         userId: userId ? userId : existingUpload.userId,
       },
     });
+
+    logger.info(`Upload updated successfully`, { uploadId: updatedUpload.id });
     res.status(200).json({
       message: "Upload updated successfully",
       data: updatedUpload,
@@ -301,7 +316,7 @@ export const getAllUploads = async (
           where: { id: { in: matchedIds } },
           data: { searches: { increment: 1 } },
         })
-        .catch(console.error);
+        .catch((err) => logger.error("Failed to increment search count", err));
     }
 
     // Sorting berdasarkan tipe_soal atau kategori (opsional)
@@ -350,6 +365,8 @@ export const getAllUploads = async (
       semesters: Array.from(prodiData.semesters.values()),
     }));
 
+    logger.info(`Fetched uploads list (count: ${filteredUploads.length})`, { filters: req.query });
+
     res.status(200).json({
       totalUploads: filteredUploads.length,
       groupedByProdi: groupedArray,
@@ -392,6 +409,7 @@ export const getUserUploads = async (
 
     // Kalau user belum pernah upload apa pun
     if (uploads.length === 0) {
+      logger.info(`Fetched user uploads: 0 found for userId ${userId}`);
       res.status(200).json({
         message: "No uploads found for this user",
         total: 0,
@@ -400,6 +418,7 @@ export const getUserUploads = async (
       return;
     }
 
+    logger.info(`Fetched user uploads: ${uploads.length} found for userId ${userId}`);
     res.status(200).json({
       total: uploads.length,
       user: uploads[0]?.user,
@@ -446,13 +465,15 @@ export const getUserStats = async (
       };
     });
 
+    logger.info(`Calculated user statistics`, { totalUsers });
+
     res.status(200).json({
       totalUsers,
       breakdown: normalized,
     });
     return;
   } catch (error) {
-    console.error(error);
+    logger.error("Error in getUserStats:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -472,6 +493,7 @@ export const deleteSingleUpload = async (
     });
 
     if (!existing) {
+      logger.warn(`Delete upload failed: Upload not found`, { uploadId: id });
       res.status(404).json({
         message: "Upload not found",
         id,
@@ -483,6 +505,8 @@ export const deleteSingleUpload = async (
     await prisma.upload.delete({
       where: { id: id as string },
     });
+
+    logger.info(`Upload deleted successfully`, { uploadId: id, fileUrl: existing.fileUrl });
 
     res.status(200).json({
       message: "Upload deleted successfully",
@@ -518,6 +542,8 @@ export const getRecentUploads = async (
       },
     });
 
+    logger.info(`Fetched recent uploads (last 12h): ${uploads.length} item(s)`);
+
     res.status(200).json({
       success: true,
       count: uploads.length,
@@ -539,6 +565,7 @@ export const incrementView = async (
       where: { id: id as string },
       data: { views: { increment: 1 } },
     });
+    logger.info(`Incremented view count for upload ${id}`, { newViews: upload.views });
     res.status(200).json({
       message: "View count incremented",
       data: upload,
@@ -560,6 +587,7 @@ export const incrementDownload = async (
       where: { id: id as string },
       data: { downloads: { increment: 1 } },
     });
+    logger.info(`Incremented download count for upload ${id}`, { newDownloads: upload.downloads });
     res.status(200).json({
       message: "Download count incremented",
       data: upload,

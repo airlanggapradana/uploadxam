@@ -8,6 +8,7 @@ import {
 } from "../zod/zod.validation";
 import jwt from "jsonwebtoken";
 import { env } from "../env";
+import { logger } from "../utils/logger";
 
 export const createUser = async (
   req: Request,
@@ -26,6 +27,7 @@ export const createUser = async (
       },
     });
     if (existingUser) {
+      logger.warn(`Register failed: NIM/Name already registered`, { nim, name });
       res.status(400).json({
         message: "NIM / Nama sudah terdaftar, silakan login",
       });
@@ -40,6 +42,7 @@ export const createUser = async (
         prodi,
       },
     });
+    logger.info(`User registered successfully: ${user.id}`, { name: user.name, nim: user.nim, prodi: user.prodi });
     res.status(201).json({
       message: "User created successfully",
       data: user,
@@ -65,6 +68,7 @@ export const login = async (
       },
     });
     if (!existingUser) {
+      logger.warn(`Login failed: NIM not registered`, { nim });
       res.status(400).json({
         message: "NIM tidak terdaftar",
       });
@@ -82,6 +86,7 @@ export const login = async (
       { expiresIn: "1d", algorithm: "HS256" },
     );
 
+    logger.info(`User logged in successfully`, { userId: existingUser.id, nim: existingUser.nim });
     res.status(200).json({
       message: "Login successful",
       data: token,

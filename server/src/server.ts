@@ -1,11 +1,13 @@
 import express, { Application } from "express";
 import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler";
+import { requestLogger } from "./middlewares/requestLogger";
 import userRouter from "./controllers/users.controller";
 import { env } from "./env";
 import authRouter from "./controllers/auth.controller";
 import { rateLimit } from "express-rate-limit";
 import chatRouter from "./controllers/chat.controller";
+import { logger } from "./utils/logger";
 
 const app: Application = express();
 const limiter = rateLimit({
@@ -13,6 +15,7 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
 });
 
+app.use(requestLogger);
 app.use(limiter);
 app.use(cors());
 app.use(express.json());
@@ -25,5 +28,5 @@ app.use("/api/chat", chatRouter);
 app.use(errorHandler);
 
 app.listen(env.PORT, () => {
-  console.log(`Server is running on port ${env.PORT}`);
+  logger.info(`Server is running on port ${env.PORT}`);
 });
