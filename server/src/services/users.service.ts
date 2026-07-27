@@ -21,7 +21,7 @@ export const updateUser = async (
     //   cek jika user ada
     const existingUser = await prisma.user.findUnique({
       where: {
-        id: id!,
+        id: id as string,
       },
     });
     if (!existingUser) {
@@ -60,7 +60,7 @@ export const deleteUser = async (
     const { id } = req.params;
     const existingUser = await prisma.user.findUnique({
       where: {
-        id: id!,
+        id: id as string,
       },
     });
     if (!existingUser) {
@@ -202,7 +202,7 @@ export const updateUpload = async (
 
     const existingUpload = await prisma.upload.findUnique({
       where: {
-        id: id!,
+        id: id as string,
       },
     });
     if (!existingUpload) {
@@ -372,7 +372,7 @@ export const getUserUploads = async (
     const uploads = await prisma.upload.findMany({
       where: {
         user: {
-          id: userId!,
+          id: userId as string,
         },
       },
       include: {
@@ -467,7 +467,7 @@ export const deleteSingleUpload = async (
 
     // cek apakah upload ada
     const existing = await prisma.upload.findUnique({
-      where: { id: id! },
+      where: { id: id as string },
       include: { user: true },
     });
 
@@ -481,7 +481,7 @@ export const deleteSingleUpload = async (
 
     // hapus upload
     await prisma.upload.delete({
-      where: { id: id! },
+      where: { id: id as string },
     });
 
     res.status(200).json({
@@ -536,7 +536,7 @@ export const incrementView = async (
   try {
     const { id } = req.params;
     const upload = await prisma.upload.update({
-      where: { id: id! },
+      where: { id: id as string },
       data: { views: { increment: 1 } },
     });
     res.status(200).json({
@@ -557,7 +557,7 @@ export const incrementDownload = async (
   try {
     const { id } = req.params;
     const upload = await prisma.upload.update({
-      where: { id: id! },
+      where: { id: id as string },
       data: { downloads: { increment: 1 } },
     });
     res.status(200).json({
