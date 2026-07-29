@@ -35,6 +35,8 @@ export interface Upload {
   views?: number;
   downloads?: number;
   searches?: number;
+  avgRating?: number;
+  totalRatings?: number;
   uploadedAt: Date;
   userId: string;
   semester: number;

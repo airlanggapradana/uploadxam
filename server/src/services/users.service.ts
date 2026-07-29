@@ -261,11 +261,23 @@ export const getAllUploads = async (
   try {
     const { prodi, subject, sort, order, tipe_soal, kategori } = req.query;
 
-    // Ambil semua uploads beserta author
+    // Ambil semua uploads beserta author dan agregasi rating
     const uploads = await prisma.upload.findMany({
-      include: { user: true },
+      include: {
+        user: true,
+        _count: { select: { ratings: true } },
+      },
       orderBy: { uploadedAt: "desc" },
     });
+
+    // Ambil agregasi rata-rata rating per upload
+    const ratingAggregations = await prisma.rating.groupBy({
+      by: ["uploadId"],
+      _avg: { value: true },
+    });
+    const ratingMap = new Map(
+      ratingAggregations.map((r) => [r.uploadId, r._avg.value ?? 0]),
+    );
 
     // Semua prodi valid
     const allProdis = [
@@ -355,14 +367,26 @@ export const getAllUploads = async (
 
       const semesterData = prodiData.semesters.get(semester)!;
       semesterData.totalUploads += 1;
-      semesterData.uploads.push(upload);
+      semesterData.uploads.push({
+        ...upload,
+        avgRating: ratingMap.get(upload.id) ?? 0,
+        totalRatings: upload._count.ratings,
+      });
     }
 
-    // Konversi hasil ke array
+    // Konversi hasil ke array, urutkan uploads per semester berdasarkan avgRating DESC
     const groupedArray = Array.from(groupedMap.values()).map((prodiData) => ({
       prodi: prodiData.prodi,
       totalUploads: prodiData.totalUploads,
-      semesters: Array.from(prodiData.semesters.values()),
+      semesters: Array.from(prodiData.semesters.values()).map((sem) => ({
+        ...sem,
+        uploads: sem.uploads.sort(
+          (a: { avgRating: number; uploadedAt: Date }, b: { avgRating: number; uploadedAt: Date }) => {
+            if (b.avgRating !== a.avgRating) return b.avgRating - a.avgRating;
+            return new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime();
+          },
+        ),
+      })),
     }));
 
     logger.info(`Fetched uploads list (count: ${filteredUploads.length})`, { filters: req.query });

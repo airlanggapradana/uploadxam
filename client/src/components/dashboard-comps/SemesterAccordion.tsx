@@ -6,15 +6,27 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@/components/ui/collapsible";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useIncrementDownload, useIncrementView } from "@/utils/query";
+import { StarRating } from "@/components/reusables/StarRating";
+import { getCookieClient } from "@/utils/cookie-client";
+import { decodeJwtPayload, type JWTPayload } from "@/utils/helper";
 
 function SemesterAccordion({ semester }: { semester: Semester }) {
   const [open, setOpen] = useState(false);
+  const [session, setSession] = useState<JWTPayload | null>(null);
   const { mutate: trackDownload } = useIncrementDownload();
   const { mutate: trackView } = useIncrementView();
+
+  useEffect(() => {
+    const token = getCookieClient("token");
+    if (token) {
+      const decoded = decodeJwtPayload(token);
+      if (decoded) setSession(decoded);
+    }
+  }, []);
 
   return (
     <Collapsible
@@ -100,6 +112,17 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
                   </span>
                 </div>
               </div>
+
+              {/* Rating Section */}
+              <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-700">
+                <StarRating
+                  uploadId={upload.id}
+                  session={session}
+                  avgRating={upload.avgRating}
+                  totalRatings={upload.totalRatings}
+                />
+              </div>
+
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-xs text-slate-500 dark:text-slate-400">
                   {new Date(upload.uploadedAt).toLocaleTimeString("id-ID", {
@@ -133,3 +156,4 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
 }
 
 export default SemesterAccordion;
+

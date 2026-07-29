@@ -455,3 +455,62 @@ export const useIncrementDownload = () => {
     },
   });
 };
+
+export const useUpsertRating = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      userId,
+      uploadId,
+      value,
+    }: {
+      userId: string;
+      uploadId: string;
+      value: number;
+    }) => {
+      try {
+        return await axios
+          .post(
+            `${env.NEXT_PUBLIC_API_URL}/ratings`,
+            { userId, uploadId, value },
+            { headers: { "Content-Type": "application/json" } },
+          )
+          .then((res) => res.data as { message: string; data: { id: string; value: number } });
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["exams"] });
+      void queryClient.invalidateQueries({ queryKey: ["user-rating"] });
+    },
+  });
+};
+
+export const useGetUserRating = (uploadId: string, userId: string | undefined) => {
+  return useQuery<{ data: { id: string; value: number } | null }>({
+    queryKey: ["user-rating", { uploadId, userId }],
+    queryFn: async () => {
+      try {
+        return await axios
+          .get(`${env.NEXT_PUBLIC_API_URL}/ratings/${uploadId}?userId=${userId}`)
+          .then((res) => res.data as { data: { id: string; value: number } | null });
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    enabled: !!uploadId && !!userId,
+  });
+};
