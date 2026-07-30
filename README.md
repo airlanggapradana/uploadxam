@@ -2,13 +2,16 @@
 
 <img width="1024" height="572" alt="image" src="https://github.com/user-attachments/assets/806ba151-8781-43ef-a131-5686d7046633" />
 
-**UploadXam** adalah platform berbasis web yang ditujukan untuk seluruh mahasiswa **Fakultas Komunikasi dan Informatika, Universitas Muhammadiyah Surakarta (UMS)**.  
-Tujuannya sederhana: **mempermudah akses dan kolaborasi antar mahasiswa** dalam berbagi serta mengarsipkan **soal-soal ujian UTS dan UAS dari tahun ke tahun.**
+**UploadXam** adalah platform berbasis web yang ditujukan untuk seluruh mahasiswa **Fakultas Komunikasi dan Informatika, Universitas Muhammadiyah Surakarta (UMS)**.
+
+Tujuannya sederhana: **mempermudah akses dan kolaborasi antar mahasiswa** dalam berbagi serta mengarsipkan **soal-soal ujian UTS dan UAS dari tahun ke tahun**, sekaligus menyediakan **AI Assistant** yang dapat membantu mahasiswa memperoleh informasi akademik secara cepat dan akurat.
 
 Melalui UploadXam, setiap mahasiswa dapat:
+
 - 📤 Mengunggah soal ujian yang pernah mereka miliki.
 - 📚 Mengakses kumpulan soal dari berbagai mata kuliah.
 - 🤝 Berkontribusi dalam membangun bank soal komprehensif yang bermanfaat bagi seluruh civitas akademika.
+- 🤖 Bertanya kepada AI Assistant mengenai informasi akademik FKI UMS maupun materi yang tersedia di dalam sistem.
 
 ---
 
@@ -19,6 +22,15 @@ Melalui UploadXam, setiap mahasiswa dapat:
 
 - 📂 **Upload File Ujian**  
   Mahasiswa dapat mengunggah file ujian dalam format **PDF** dengan mudah menggunakan integrasi **EdgeStore**.
+
+- 🤖 **AI Chatbot (RAG Powered)**  
+  AI Assistant yang menggunakan teknologi **Retrieval-Augmented Generation (RAG)** untuk memberikan jawaban berdasarkan knowledge base yang dimiliki sistem, seperti:
+  - Informasi akademik FKI UMS.
+  - Kurikulum, konsentrasi, dan mata kuliah.
+  - FAQ dan panduan penggunaan UploadXam.
+  - Knowledge base akademik yang tersedia pada sistem.
+
+  Dengan pendekatan RAG, AI memberikan jawaban berdasarkan dokumen yang relevan sehingga respons menjadi lebih akurat dan kontekstual.
 
 - 👤 **User Authentication**  
   Login menggunakan akun mahasiswa (melalui NIM) untuk memastikan kontribusi berasal dari civitas FKI UMS.
@@ -34,16 +46,22 @@ Melalui UploadXam, setiap mahasiswa dapat:
 ## 🧩 Tech Stack
 
 ### 🖥️ Frontend
-- [Next.js 15](https://nextjs.org/) — React framework untuk rendering cepat dan efisien  
-- [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS framework  
-- [Shadcn UI](https://ui.shadcn.com/) — Komponen UI modern dan konsisten  
-- [Tanstack Query](https://tanstack.com/query/latest) — Data fetching dan state management  
+
+- [Next.js 15](https://nextjs.org/) — React framework untuk rendering cepat dan efisien
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS framework
+- [Shadcn UI](https://ui.shadcn.com/) — Komponen UI modern dan konsisten
+- [TanStack Query](https://tanstack.com/query/latest) — Data fetching dan state management
 - [EdgeStore](https://edgestore.dev/) — File uploading service untuk penyimpanan PDF ujian
 
 ### 🗄️ Backend
-- [Express.js](https://expressjs.com/) — Web framework untuk Node.js  
-- [TypeScript](https://www.typescriptlang.org/) — Superset JavaScript dengan tipe statis  
-- [Prisma ORM](https://www.prisma.io/) — ORM untuk interaksi database  
+
+- [Express.js](https://expressjs.com/) — Web framework untuk Node.js
+- [TypeScript](https://www.typescriptlang.org/) — Superset JavaScript dengan tipe statis
+- [Prisma ORM](https://www.prisma.io/) — ORM untuk interaksi database
 - [PostgreSQL](https://www.postgresql.org/) — Database relasional yang andal dan kuat
 
----
+### 🧠 Artificial Intelligence
+
+- **Google Gemini** — Large Language Model (LLM) untuk AI Assistant.
+- **Retrieval-Augmented Generation (RAG)** — Mengambil konteks dari knowledge base sebelum menghasilkan jawaban.
+- **Markdown Knowledge Base** — Seluruh informasi akademik FKI UMS disimpan dalam dokumen Markdown yang diindeks sebagai sumber pengetahuan AI.
