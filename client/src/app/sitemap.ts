@@ -1,24 +1,27 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = "https://uploadxam.fostiums.org";
+  const now = new Date();
+
   return [
     {
-      url: "https://uploadxam.fostiums.org",
-      lastModified: new Date(),
+      url: baseUrl,
+      lastModified: now,
       changeFrequency: "weekly",
-      priority: 1,
+      priority: 1.0,
     },
     {
-      url: "https://uploadxam.fostiums.org/auth/login",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
+      url: `${baseUrl}/explore`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
     },
     {
-      url: "https://uploadxam.fostiums.org/auth/register",
-      lastModified: new Date(),
+      url: `${baseUrl}/docs`,
+      lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.5,
+      priority: 0.7,
     },
   ];
 }

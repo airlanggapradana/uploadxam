@@ -1,10 +1,24 @@
 import React from "react";
+import type { Metadata } from "next";
 import DashboardHeader from "@/components/dashboard-comps/DashboardHeader";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { decodeJwtPayload } from "@/utils/helper";
 import { UserSessionProvider } from "@/hooks/context";
 import Footer from "@/components/reusables/Footer";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Dashboard pengguna UploadXam untuk mengelola dan mengunggah soal ujian.",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+};
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = await cookies();

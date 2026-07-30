@@ -36,7 +36,7 @@ const Statistics = () => {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
-        <h1 className="max-w-4xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl leading-tight font-extrabold tracking-tight text-transparent sm:text-6xl">
+        <h2 className="max-w-4xl bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-5 text-4xl leading-tight font-extrabold tracking-tight text-transparent sm:text-6xl">
           Dari Mahasiswa, Untuk Mahasiswa. Gabung Bersama +
           <CountUp
             from={0}
@@ -48,7 +48,7 @@ const Statistics = () => {
             className="inline"
           />{" "}
           Pengguna Lainnya!
-        </h1>
+        </h2>
 
         <div className="mt-12 space-y-4">
           <div className="mt-12 mb-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

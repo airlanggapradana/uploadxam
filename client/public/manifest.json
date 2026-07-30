@@ -1,0 +1,77 @@
+{
+  "name": "UploadXam — Bank Soal Digital FKI UMS",
+  "short_name": "UploadXam",
+  "description": "Platform bank soal ujian digital untuk mahasiswa FKI Universitas Muhammadiyah Surakarta.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#b91c1c",
+  "orientation": "portrait-primary",
+  "lang": "id",
+  "scope": "/",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon_io/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon_io/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon_io/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon_io/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon_io/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/dashboard.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "label": "Dashboard UploadXam"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Explore Soal",
+      "short_name": "Explore",
+      "description": "Jelajahi semua soal ujian",
+      "url": "/explore",
+      "icons": [
+        {
+          "src": "/favicon_io/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Dokumentasi",
+      "short_name": "Docs",
+      "description": "Panduan penggunaan UploadXam",
+      "url": "/docs",
+      "icons": [
+        {
+          "src": "/favicon_io/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

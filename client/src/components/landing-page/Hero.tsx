@@ -94,17 +94,24 @@ const Hero = () => {
         </p>
 
         {/* Public search bar right inside Hero */}
-        <form onSubmit={handleSearchSubmit} className="relative z-20 w-full max-w-md mx-auto mb-8 px-2 sm:px-0">
+        <form
+          onSubmit={handleSearchSubmit}
+          className="relative z-20 w-full max-w-md mx-auto mb-8 px-2 sm:px-0"
+          role="search"
+          aria-label="Cari soal ujian"
+        >
           <div className="relative">
             <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
               <Search className="h-5 w-5 text-red-500" />
             </span>
             <input
+              id="hero-search"
               type="text"
               className="w-full h-12 rounded-xl border border-red-800/30 bg-black/60 pl-11 pr-28 text-sm text-white placeholder:text-gray-500 shadow-lg shadow-red-950/20 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none"
               placeholder="Cari mata kuliah (contoh: Algoritma)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Cari mata kuliah"
             />
             <button
               type="submit"
@@ -183,7 +190,7 @@ const Hero = () => {
           <h2 className="text-sm font-semibold text-gray-300">Supported by:</h2>
           <Image
             src="https://teknikinformatika.ums.ac.id/wp-content/uploads/sites/57/2022/10/logo-informatika.svg"
-            alt="infor"
+            alt="Logo Program Studi Teknik Informatika UMS"
             width={180}
             height={180}
             className="h-auto w-54 sm:w-60"

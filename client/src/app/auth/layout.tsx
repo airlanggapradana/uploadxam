@@ -1,4 +1,18 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Autentikasi",
+  description: "Login atau daftar ke UploadXam menggunakan NIM mahasiswa FKI UMS.",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+};
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -29,7 +29,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed z-20 w-full bg-black/30 shadow-md backdrop-blur-md">
+    <nav
+      className="fixed z-20 w-full bg-black/30 shadow-md backdrop-blur-md"
+      aria-label="Navigasi utama"
+    >
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:py-5">
         {/* Logos */}
         <div className="flex items-center gap-6">
@@ -37,7 +40,7 @@ const Navbar = () => {
             src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
             width={100}
             height={100}
-            alt="logo"
+            alt="Logo FOSTI UMS"
             className="h-9 w-auto md:h-10"
           />
           <div className="h-6 w-px bg-white/30" aria-hidden="true" />
@@ -45,7 +48,7 @@ const Navbar = () => {
             src="https://res.cloudinary.com/airlanggapradana/image/upload/v1762154491/upscalemedia-transformed_1_zuugzn.webp"
             width={100}
             height={100}
-            alt="secondary-logo"
+            alt="Logo UploadXam"
             className="h-9 w-auto md:h-10"
           />
         </div>
@@ -106,6 +109,9 @@ const Navbar = () => {
         <button
           onClick={() => setOpen(!open)}
           className="text-gray-100 focus:outline-none sm:hidden"
+          aria-label={open ? "Tutup menu navigasi" : "Buka menu navigasi"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
           {open ? (
             <FaXmark className="h-6 w-6" />
@@ -116,7 +122,12 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {open && (
-          <div className="absolute top-full left-0 flex w-full flex-col items-center gap-4 bg-black/95 py-6 shadow-xl sm:hidden">
+          <div
+            id="mobile-menu"
+            className="absolute top-full left-0 flex w-full flex-col items-center gap-4 bg-black/95 py-6 shadow-xl sm:hidden"
+            role="dialog"
+            aria-label="Menu navigasi mobile"
+          >
             <Link
               href="/explore"
               onClick={() => setOpen(false)}

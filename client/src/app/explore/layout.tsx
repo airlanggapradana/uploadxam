@@ -1,23 +1,26 @@
 import React from "react";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/reusables/JsonLd";
-import media from "../../../public/docs.png";
+import media from "../../../public/media.png";
 
 const BASE_URL = "https://uploadxam.fostiums.org";
 const OG_IMAGE = `${BASE_URL}${media.src}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Dokumentasi Penggunaan",
+  title: "Explore Soal Ujian",
   description:
-    "Panduan lengkap penggunaan UploadXam untuk mahasiswa FKI UMS. Pelajari cara mengakses, mencari, dan mengunduh soal ujian dari semua prodi.",
+    "Jelajahi ribuan soal ujian dari semua prodi FKI UMS — Informatika, Sistem Informasi, Ilmu Komunikasi, dan Kecerdasan Buatan. Cari soal berdasarkan mata kuliah dan semester.",
   keywords: [
-    "dokumentasi UploadXam",
-    "panduan penggunaan",
-    "cara pakai UploadXam",
-    "tutorial Bank Soal",
-    "FKI UMS",
-    "soal ujian mahasiswa",
+    "soal ujian FKI UMS",
+    "explore soal",
+    "cari soal ujian",
+    "bank soal Informatika UMS",
+    "bank soal Sistem Informasi UMS",
+    "bank soal Kecerdasan Buatan UMS",
+    "bank soal Ilmu Komunikasi UMS",
+    "soal semester",
+    "UploadXam explore",
     "FOSTI UMS",
   ],
   authors: [{ name: "Airlangga Pradana" }, { name: "FOSTI UMS" }],
@@ -37,16 +40,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: `${BASE_URL}/docs`,
-    title: "Dokumentasi Penggunaan | UploadXam",
+    url: `${BASE_URL}/explore`,
+    title: "Explore Soal Ujian | UploadXam",
     description:
-      "Panduan lengkap penggunaan UploadXam untuk mahasiswa FKI UMS. Pelajari cara mengakses, mencari, dan mengunduh soal ujian.",
+      "Jelajahi ribuan soal ujian dari semua prodi FKI UMS. Cari soal berdasarkan mata kuliah dan semester.",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Dokumentasi Penggunaan UploadXam — Bank Soal Digital FKI UMS",
+        alt: "Explore Soal Ujian — UploadXam Bank Soal Digital FKI UMS",
         type: "image/png",
       },
     ],
@@ -54,24 +57,24 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dokumentasi Penggunaan | UploadXam",
+    title: "Explore Soal Ujian | UploadXam",
     description:
-      "Panduan lengkap penggunaan UploadXam untuk mahasiswa FKI UMS.",
+      "Jelajahi ribuan soal ujian dari semua prodi FKI UMS — Informatika, Sistem Informasi, Ilmu Komunikasi, Kecerdasan Buatan.",
     images: [OG_IMAGE],
   },
   alternates: {
-    canonical: `${BASE_URL}/docs`,
+    canonical: `${BASE_URL}/explore`,
   },
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const docsWebPageSchema = {
+const exploreWebPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Dokumentasi Penggunaan UploadXam",
+  name: "Explore Soal Ujian — UploadXam",
   description:
-    "Panduan lengkap penggunaan UploadXam untuk mahasiswa FKI UMS.",
-  url: `${BASE_URL}/docs`,
+    "Jelajahi ribuan soal ujian dari semua prodi FKI UMS.",
+  url: `${BASE_URL}/explore`,
   inLanguage: "id",
   isPartOf: {
     "@type": "WebSite",
@@ -90,20 +93,20 @@ const docsWebPageSchema = {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Dokumentasi",
-        item: `${BASE_URL}/docs`,
+        name: "Explore Soal",
+        item: `${BASE_URL}/explore`,
       },
     ],
   },
 };
 
-const DocsLayout = ({ children }: { children: React.ReactNode }) => {
+const ExploreLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <JsonLd data={docsWebPageSchema} />
-      <div>{children}</div>
+      <JsonLd data={exploreWebPageSchema} />
+      <>{children}</>
     </>
   );
 };
 
-export default DocsLayout;
+export default ExploreLayout;
