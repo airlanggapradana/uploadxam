@@ -67,6 +67,7 @@ interface QueryAnalysis {
  * overview → concentration → electives → global docs
  */
 export function retrieveKnowledge(analysis: QueryAnalysis): string[] {
+  const startTime = performance.now();
   const documents: string[] = [];
   const folder = mapProgramToFolder(analysis.program);
 
@@ -168,6 +169,7 @@ export function retrieveKnowledge(analysis: QueryAnalysis): string[] {
     documents.push(mainCurriculumData);
   }
 
-  logger.info(`Retrieved ${documents.length} knowledge document(s)`);
+  const durationMs = Number((performance.now() - startTime).toFixed(2));
+  logger.info(`Retrieved ${documents.length} knowledge document(s) in ${durationMs}ms`, { durationMs });
   return documents;
 }
