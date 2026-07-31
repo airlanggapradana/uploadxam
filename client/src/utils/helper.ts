@@ -2,6 +2,7 @@ export interface JWTPayload {
   id: string;
   name: string;
   nim: string;
+  role: "ADMIN" | "USER";
   prodi:
     | "Informatika"
     | "Sistem_Informasi"

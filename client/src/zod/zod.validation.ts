@@ -55,8 +55,47 @@ export const feedbackSchema = z.object({
     .max(1000, { message: "Pesan harus antara 10 sampai 1000 karakter" }),
 });
 
+export const createReportSchema = z
+  .object({
+    examId: z.string().min(1, "Exam ID harus diisi"),
+    reason: z.enum(
+      [
+        "FILE_RUSAK",
+        "SALAH_MATA_KULIAH",
+        "SALAH_SEMESTER",
+        "SALAH_TAHUN",
+        "SOAL_DUPLIKAT",
+        "KONTEN_TIDAK_PANTAS",
+        "HAK_CIPTA",
+        "LAINNYA",
+      ],
+      { message: "Alasan laporan harus dipilih" },
+    ),
+    description: z
+      .string()
+      .max(500, "Deskripsi maksimal 500 karakter")
+      .optional(),
+    email: z
+      .string()
+      .email("Email tidak valid")
+      .optional()
+      .or(z.literal("")),
+    anonymous: z.boolean().default(false),
+  })
+  .refine(
+    (data) =>
+      data.reason !== "LAINNYA" ||
+      (data.description && data.description.trim().length >= 10),
+    {
+      message: "Deskripsi wajib diisi (min. 10 karakter) jika memilih 'Lainnya'",
+      path: ["description"],
+    },
+  );
+
 export type FeedbackInput = z.infer<typeof feedbackSchema>;
 export type UpdateUploadInput = z.infer<typeof updateUploadSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type MakeUploadInput = z.infer<typeof makeUploadSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
+export type ReportInput = z.infer<typeof createReportSchema>;
+

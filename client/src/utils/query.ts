@@ -5,6 +5,7 @@ import type {
   LoginInput,
   MakeUploadInput,
   UpdateUploadInput,
+  ReportInput,
 } from "@/zod/zod.validation";
 import { env } from "@/env";
 import type { GetExamsResponse } from "@/types/get-exams.type";
@@ -12,6 +13,12 @@ import type { GetUserUploadsResponse } from "@/types/get-user-uploads.type";
 import type { GetRecentActivType } from "@/types/get-recent-activ.type";
 import type { GetUsersStatsResponse } from "@/types/get-users-stats.type";
 import type { GetRepoStatsType } from "@/types/get-repo-stats.type";
+import type {
+  GetAdminReportsResponse,
+  GetAdminReportByIdResponse,
+  Report,
+} from "@/types/report.type";
+
 
 export const useRegister = () => {
   const queryClient = useQueryClient();
@@ -512,5 +519,160 @@ export const useGetUserRating = (uploadId: string, userId: string | undefined) =
       }
     },
     enabled: !!uploadId && !!userId,
+  });
+};
+
+// ============================================================================
+// Report hooks
+// ============================================================================
+
+export const useCreateReport = () => {
+  return useMutation({
+    mutationFn: async (data: ReportInput) => {
+      try {
+        return await axios
+          .post(
+            `${env.NEXT_PUBLIC_API_URL}/reports`,
+            data,
+            { headers: { "Content-Type": "application/json" } },
+          )
+          .then((res) => res.data as { message: string; data: Report });
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+  });
+};
+
+export const useGetAdminReports = ({
+  page = 1,
+  limit = 10,
+  status,
+  reason,
+  search,
+  sortBy = "createdAt",
+  order = "desc",
+}: {
+  page?: number;
+  limit?: number;
+  status?: string;
+  reason?: string;
+  search?: string;
+  sortBy?: string;
+  order?: "asc" | "desc";
+}) => {
+  return useQuery<GetAdminReportsResponse>({
+    queryKey: ["admin-reports", { page, limit, status, reason, search, sortBy, order }],
+    queryFn: async () => {
+      try {
+        const params = new URLSearchParams();
+        params.append("page", String(page));
+        params.append("limit", String(limit));
+        if (status) params.append("status", status);
+        if (reason) params.append("reason", reason);
+        if (search) params.append("search", search);
+        params.append("sortBy", sortBy);
+        params.append("order", order);
+
+        return await axios
+          .get(`${env.NEXT_PUBLIC_API_URL}/reports/admin?${params.toString()}`, {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((res) => res.data as GetAdminReportsResponse);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+  });
+};
+
+export const useGetAdminReportById = (id: string) => {
+  return useQuery<GetAdminReportByIdResponse>({
+    queryKey: ["admin-report", { id }],
+    queryFn: async () => {
+      try {
+        return await axios
+          .get(`${env.NEXT_PUBLIC_API_URL}/reports/admin/${id}`, {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((res) => res.data as GetAdminReportByIdResponse);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    enabled: !!id,
+  });
+};
+
+export const useUpdateReportStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      try {
+        return await axios
+          .patch(
+            `${env.NEXT_PUBLIC_API_URL}/reports/admin/${id}`,
+            { status },
+            { headers: { "Content-Type": "application/json" } },
+          )
+          .then((res) => res.data as { message: string; data: Report });
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["admin-reports"] });
+      await queryClient.invalidateQueries({ queryKey: ["admin-report"] });
+    },
+  });
+};
+
+export const useDeleteReport = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      try {
+        return await axios
+          .delete(`${env.NEXT_PUBLIC_API_URL}/reports/admin/${id}`, {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((res) => res.data as { message: string });
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
+            e.response?.data.message ?? "Terjadi kesalahan tak terduga",
+          );
+        }
+        throw new Error("An unknown error occurred");
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["admin-reports"] });
+    },
   });
 };

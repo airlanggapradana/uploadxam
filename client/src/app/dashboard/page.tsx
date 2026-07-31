@@ -43,20 +43,25 @@ import { deleteCookie } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
 import UserUploads from "@/components/account-comps/UserUploads";
 import DialogAddFileUpload from "@/components/dashboard-comps/DialogAddFileUpload";
-import { FileText, User as UserIcon, Plus } from "lucide-react";
+import { FileText, User as UserIcon, Flag } from "lucide-react";
+import AdminReportPanel from "@/components/dashboard-comps/AdminReportPanel";
+
+type TabType = "uploads" | "profile" | "reports";
 
 const Dashboard = () => {
   const router = useRouter();
   const session = useUserSession();
-  const [activeTab, setActiveTab] = useState<"uploads" | "profile">("uploads");
-  
+  const isAdmin = session.role === "ADMIN";
+  const [activeTab, setActiveTab] = useState<TabType>("uploads");
+
   // Edit profile states
   const [isEdit, setIsEdit] = useState(false);
   const [dialogConfirm, setDialogConfirm] = useState(false);
   const [dialogDeleteConfirm, setDialogDeleteConfirm] = useState(false);
   const [formData, setFormData] = useState<Partial<CreateUserInput>>({});
   const { mutateAsync: handleUpdate, isPending } = useUpdateProfile();
-  const { mutateAsync: handleDeleteAccount, isPending: isDeleting } = useDeleteAccount();
+  const { mutateAsync: handleDeleteAccount, isPending: isDeleting } =
+    useDeleteAccount();
 
   const form = useForm<Partial<CreateUserInput>>({
     defaultValues: {
@@ -128,12 +133,18 @@ const Dashboard = () => {
                 Selamat datang kembali, {session.name}! 👋
               </h1>
               <p className="text-xs text-slate-200 sm:text-sm">
-                NIM: {session.nim} | Program Studi: {session.prodi?.replace(/_/g, " ")}
+                NIM: {session.nim} | Program Studi:{" "}
+                {session.prodi?.replace(/_/g, " ")}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge className="bg-white/20 text-white hover:bg-white/30 border-0">
+            {isAdmin && (
+              <Badge className="border-0 bg-amber-400/90 text-amber-900 hover:bg-amber-400">
+                ⚡ Admin
+              </Badge>
+            )}
+            <Badge className="border-0 bg-white/20 text-white hover:bg-white/30">
               FKI UMS
             </Badge>
           </div>
@@ -148,7 +159,7 @@ const Dashboard = () => {
             "flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all duration-200 outline-none",
             activeTab === "uploads"
               ? "border-red-600 text-red-600 dark:border-red-500 dark:text-red-500"
-              : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200"
+              : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200",
           )}
         >
           <FileText className="h-4 w-4" />
@@ -160,12 +171,29 @@ const Dashboard = () => {
             "flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all duration-200 outline-none",
             activeTab === "profile"
               ? "border-red-600 text-red-600 dark:border-red-500 dark:text-red-500"
-              : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200"
+              : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200",
           )}
         >
           <UserIcon className="h-4 w-4" />
           Ubah Profil Akun
         </button>
+
+        {/* Tab Laporan — hanya untuk ADMIN */}
+        {isAdmin && (
+          <button
+            id="dashboard-tab-reports"
+            onClick={() => setActiveTab("reports")}
+            className={cn(
+              "flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all duration-200 outline-none",
+              activeTab === "reports"
+                ? "border-red-600 text-red-600 dark:border-red-500 dark:text-red-500"
+                : "border-transparent text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200",
+            )}
+          >
+            <Flag className="h-4 w-4" />
+            Manajemen Laporan
+          </button>
+        )}
       </div>
 
       {/* Tab 1: Soal Saya */}
@@ -177,10 +205,10 @@ const Dashboard = () => {
                 Koleksi Unggahan Soal
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
-                Tempat Anda mengelola dan melihat semua soal ujian yang telah Anda bagikan.
+                Tempat Anda mengelola dan melihat semua soal ujian yang telah
+                Anda bagikan.
               </p>
             </div>
-            {/* Direct Upload Button */}
             <div>
               <DialogAddFileUpload />
             </div>
@@ -188,7 +216,6 @@ const Dashboard = () => {
 
           <Separator />
 
-          {/* UserUploads Grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <UserUploads />
           </div>
@@ -279,10 +306,18 @@ const Dashboard = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="Informatika">Informatika</SelectItem>
-                            <SelectItem value="Sistem_Informasi">Sistem Informasi</SelectItem>
-                            <SelectItem value="Ilmu_Komunikasi">Ilmu Komunikasi</SelectItem>
-                            <SelectItem value="Kecerdasan_Buatan">Kecerdasan Buatan</SelectItem>
+                            <SelectItem value="Informatika">
+                              Informatika
+                            </SelectItem>
+                            <SelectItem value="Sistem_Informasi">
+                              Sistem Informasi
+                            </SelectItem>
+                            <SelectItem value="Ilmu_Komunikasi">
+                              Ilmu Komunikasi
+                            </SelectItem>
+                            <SelectItem value="Kecerdasan_Buatan">
+                              Kecerdasan Buatan
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -309,16 +344,28 @@ const Dashboard = () => {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Program Studi</span>
-                  <span className="font-semibold">{session.prodi?.replace(/_/g, " ")}</span>
+                  <span className="font-semibold">
+                    {session.prodi?.replace(/_/g, " ")}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Fakultas</span>
-                  <span className="font-semibold text-red-600 dark:text-red-400">FKI UMS</span>
+                  <span className="font-semibold text-red-600 dark:text-red-400">
+                    FKI UMS
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Role</span>
-                  <Badge variant="outline" className="border-red-500 text-red-500 font-semibold">
-                    MAHASISWA
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "font-semibold",
+                      isAdmin
+                        ? "border-amber-500 text-amber-600 dark:text-amber-400"
+                        : "border-red-500 text-red-500",
+                    )}
+                  >
+                    {isAdmin ? "ADMIN" : "MAHASISWA"}
                   </Badge>
                 </div>
               </div>
@@ -330,7 +377,9 @@ const Dashboard = () => {
                   Zona Bahaya
                 </h4>
                 <p className="text-[11px] leading-relaxed text-slate-500 dark:text-gray-400">
-                  Menghapus akun Anda akan menghapus data profil secara permanen. Berkas soal yang telah Anda unggah akan tetap dipertahankan di platform.
+                  Menghapus akun Anda akan menghapus data profil secara
+                  permanen. Berkas soal yang telah Anda unggah akan tetap
+                  dipertahankan di platform.
                 </p>
                 <Button
                   variant="destructive"
@@ -346,20 +395,29 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Tab 3: Manajemen Laporan — ADMIN only */}
+      {activeTab === "reports" && isAdmin && <AdminReportPanel />}
+
       {/* Profile confirm Dialog */}
       <AlertDialog open={dialogConfirm} onOpenChange={setDialogConfirm}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Konfirmasi Perubahan Profil</AlertDialogTitle>
             <AlertDialogDescription>
-              Apakah Anda yakin ingin memperbarui data profil Anda? Anda akan diminta untuk masuk log (login) kembali untuk memperbarui sesi Anda.
+              Apakah Anda yakin ingin memperbarui data profil Anda? Anda akan
+              diminta untuk masuk log (login) kembali untuk memperbarui sesi
+              Anda.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setDialogConfirm(false)}>
               Batal
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirm} disabled={isPending} className="bg-red-600 text-white hover:bg-red-700">
+            <AlertDialogAction
+              onClick={handleConfirm}
+              disabled={isPending}
+              className="bg-red-600 text-white hover:bg-red-700"
+            >
               {isPending ? "Memproses..." : "Perbarui & Relogin"}
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -367,12 +425,19 @@ const Dashboard = () => {
       </AlertDialog>
 
       {/* Delete Account confirm Dialog */}
-      <AlertDialog open={dialogDeleteConfirm} onOpenChange={setDialogDeleteConfirm}>
+      <AlertDialog
+        open={dialogDeleteConfirm}
+        onOpenChange={setDialogDeleteConfirm}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-red-600">Konfirmasi Hapus Akun</AlertDialogTitle>
+            <AlertDialogTitle className="text-red-600">
+              Konfirmasi Hapus Akun
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Apakah Anda yakin ingin menghapus akun Anda secara permanen? Tindakan ini tidak dapat dibatalkan. Data profil Anda akan dihapus sepenuhnya dari server.
+              Apakah Anda yakin ingin menghapus akun Anda secara permanen?
+              Tindakan ini tidak dapat dibatalkan. Data profil Anda akan dihapus
+              sepenuhnya dari server.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

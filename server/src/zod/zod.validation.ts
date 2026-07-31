@@ -33,7 +33,40 @@ export const loginSchema = z.object({
   nim: z.string().min(8).max(15),
 });
 
+export const createReportSchema = z.object({
+  examId: z.string().min(1, "Exam ID harus diisi"),
+  reason: z.enum(
+    [
+      "FILE_RUSAK",
+      "SALAH_MATA_KULIAH",
+      "SALAH_SEMESTER",
+      "SALAH_TAHUN",
+      "SOAL_DUPLIKAT",
+      "KONTEN_TIDAK_PANTAS",
+      "HAK_CIPTA",
+      "LAINNYA",
+    ],
+    { error: "Alasan tidak valid" },
+  ),
+  description: z
+    .string()
+    .max(500, "Deskripsi maksimal 500 karakter")
+    .optional(),
+  email: z.string().email("Email tidak valid").optional().or(z.literal("")),
+  anonymous: z.boolean().default(false),
+  reporterIp: z.string().optional(),
+});
+
+export const updateReportStatusSchema = z.object({
+  status: z.enum(["PENDING", "UNDER_REVIEW", "RESOLVED", "REJECTED"], {
+    error: "Status tidak valid",
+  }),
+});
+
 export type UpdateUploadInput = z.infer<typeof updateUploadSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type MakeUploadInput = z.infer<typeof makeUploadSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
+export type CreateReportInput = z.infer<typeof createReportSchema>;
+export type UpdateReportStatusInput = z.infer<typeof updateReportStatusSchema>;
+

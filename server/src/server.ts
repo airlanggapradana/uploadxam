@@ -8,6 +8,7 @@ import authRouter from "./controllers/auth.controller";
 import { rateLimit } from "express-rate-limit";
 import chatRouter from "./controllers/chat.controller";
 import ratingRouter from "./controllers/rating.controller";
+import reportRouter from "./controllers/report.controller";
 import { logger } from "./utils/logger";
 
 const app: Application = express();
@@ -26,6 +27,7 @@ app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/ratings", ratingRouter);
+app.use("/api/reports", reportRouter);
 
 app.use(errorHandler);
 

@@ -80,6 +80,7 @@ export const login = async (
         id: existingUser.id,
         name: existingUser.name,
         nim: existingUser.nim,
+        role: existingUser.role,
         prodi: existingUser.prodi,
       },
       env.SECRET,

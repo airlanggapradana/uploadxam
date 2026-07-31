@@ -45,6 +45,26 @@ model Upload {
   userId  String
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ratings Rating[]
+  reports Report[]
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  examId      String
+  reason      ReportReason
+  description String?
+  status      ReportStatus @default(PENDING)
+  email       String?
+  anonymous   Boolean      @default(false)
+  aiSummary   String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  exam Upload @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@index([examId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 model Rating {
@@ -81,4 +101,22 @@ enum Prodi {
   Sistem_Informasi
   Ilmu_Komunikasi
   Kecerdasan_Buatan
+}
+
+enum ReportReason {
+  FILE_RUSAK
+  SALAH_MATA_KULIAH
+  SALAH_SEMESTER
+  SALAH_TAHUN
+  SOAL_DUPLIKAT
+  KONTEN_TIDAK_PANTAS
+  HAK_CIPTA
+  LAINNYA
+}
+
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
 }

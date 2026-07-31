@@ -13,6 +13,7 @@ import { useIncrementDownload, useIncrementView } from "@/utils/query";
 import { StarRating } from "@/components/reusables/StarRating";
 import { getCookieClient } from "@/utils/cookie-client";
 import { decodeJwtPayload, type JWTPayload } from "@/utils/helper";
+import DialogReportSoal from "@/components/dashboard-comps/DialogReportSoal";
 
 function SemesterAccordion({ semester }: { semester: Semester }) {
   const [open, setOpen] = useState(false);
@@ -134,18 +135,26 @@ function SemesterAccordion({ semester }: { semester: Semester }) {
                     hour12: true,
                   })}
                 </span>
-                <Link
-                  href={upload.fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    trackView(upload.id);
-                    trackDownload(upload.id);
-                  }}
-                  className="text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
-                >
-                  Lihat File →
-                </Link>
+                <div className="flex items-center gap-2">
+                  {session && (
+                    <DialogReportSoal
+                      examId={upload.id}
+                      examTitle={upload.title}
+                    />
+                  )}
+                  <Link
+                    href={upload.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      trackView(upload.id);
+                      trackDownload(upload.id);
+                    }}
+                    className="text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    Lihat File →
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
