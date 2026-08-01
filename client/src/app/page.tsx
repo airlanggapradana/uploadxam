@@ -6,6 +6,7 @@ import SlidesSection from "@/components/landing-page/SlideSection";
 import { Chatbot } from "@/components/Chatbot";
 import Statistics from "@/components/landing-page/Statistics";
 import Teams from "@/components/landing-page/Teams";
+import { SeoDirectory } from "@/components/landing-page/SeoDirectory";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Statistics />
       <SlidesSection />
       <Preview />
+      <SeoDirectory />
       <Teams />
       <Contributions />
       <Chatbot />

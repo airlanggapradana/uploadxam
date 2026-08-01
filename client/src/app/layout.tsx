@@ -25,18 +25,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "UploadXam | Bank Soal Digital FKI UMS",
+    default: "UploadXam | Bank Soal Digital FKI UMS – Arsip Soal UTS & UAS",
     template: "%s | UploadXam",
   },
   description:
-    "UploadXam adalah solusi digital untuk mengelola dan mengakses soal-soal ujian mahasiswa dari semua prodi di FKI UMS. Temukan soal ujian tiap semester secara mudah.",
+    "UploadXam: Bank soal digital FKI UMS. Akses arsip soal UTS & UAS Informatika, Sistem Informasi, Ilmu Komunikasi & AI per semester dan dosen pengampu.",
   keywords: [
     "UploadXam",
     "Bank Soal Digital",
     "FKI UMS",
-    "Soal Ujian",
-    "Digital Soal",
-    "Manajemen Soal",
+    "Soal Ujian UTS UAS",
+    "Digital Soal UMS",
+    "Manajemen Soal UMS",
     "Prodi FKI UMS",
     "Informatika UMS",
     "Sistem Informasi UMS",
@@ -64,9 +64,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     url: BASE_URL,
-    title: "UploadXam | Bank Soal Digital FKI UMS",
+    title: "UploadXam | Bank Soal Digital FKI UMS – Arsip Soal UTS & UAS",
     description:
-      "UploadXam adalah solusi digital untuk mengelola dan mengakses soal-soal ujian mahasiswa dari semua prodi di FKI UMS.",
+      "UploadXam: Bank soal digital FKI UMS. Akses arsip soal UTS & UAS Informatika, Sistem Informasi, Ilmu Komunikasi & AI per semester dan dosen pengampu.",
     images: [
       {
         url: OG_IMAGE,
@@ -80,9 +80,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UploadXam | Bank Soal Digital FKI UMS",
+    title: "UploadXam | Bank Soal Digital FKI UMS – Arsip Soal UTS & UAS",
     description:
-      "UploadXam adalah solusi digital untuk mengelola dan mengakses soal-soal ujian mahasiswa dari semua prodi di FKI UMS.",
+      "UploadXam: Bank soal digital FKI UMS. Akses arsip soal UTS & UAS Informatika, Sistem Informasi, Ilmu Komunikasi & AI per semester dan dosen pengampu.",
     images: [OG_IMAGE],
   },
   alternates: {
