@@ -14,7 +14,7 @@ import {
   buildPageMetadata,
   generateCollectionPageSchema,
 } from "@/utils/seo-helpers";
-import { COURSES_BY_PRODI } from "@/data/courses";
+import { getCoursesByProdiAndSemester } from "@/data/courses";
 import { ArrowRight, BookOpen, Search, Folder } from "lucide-react";
 
 interface PageProps {
@@ -73,7 +73,7 @@ export default async function SemesterPage({ params }: PageProps) {
   }
 
   const displayName = getDisplayNameFromProdi(prodiKey);
-  const allCourses = COURSES_BY_PRODI[prodiKey] ?? [];
+  const semesterCourses = getCoursesByProdiAndSemester(prodiKey, semNum);
   const semestersList = [1, 2, 3, 4, 5, 6, 7, 8];
 
   const breadcrumbs = [
@@ -156,10 +156,10 @@ export default async function SemesterPage({ params }: PageProps) {
         <section className="mb-12">
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-red-500" />
-            Mata Kuliah {displayName}
+            Mata Kuliah Semester {semNum} — {displayName}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {allCourses.slice(0, 12).map((course) => (
+            {semesterCourses.map((course) => (
               <Link
                 key={course}
                 href={`/program/${resolvedParams.slug}/subject/${slugify(course)}`}
