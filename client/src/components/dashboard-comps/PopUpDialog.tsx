@@ -55,7 +55,7 @@ export default function DonationDialog() {
             Mungkin nanti
           </button>
           <a
-            href="https://saweria.co/devuploadxam"
+            href="https://saweria.co/fostiums"
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleClose}

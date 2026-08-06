@@ -394,6 +394,14 @@ const Hero = () => {
               height={30}
               className="h-14 w-auto opacity-80 transition hover:opacity-100"
             />
+            <div className="h-6 w-px bg-white/20" />
+            <Image
+              src="https://res.cloudinary.com/airlanggapradana/image/upload/v1762154491/upscalemedia-transformed_1_zuugzn.webp"
+              alt="FKI UMS"
+              width={120}
+              height={40}
+              className="h-14 w-auto opacity-80 transition hover:opacity-100"
+            />
           </div>
         </div>
       </div>
