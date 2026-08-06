@@ -460,8 +460,9 @@ export const getUserStats = async (
   next: NextFunction,
 ) => {
   try {
-    // Hitung total user
+    // Hitung total user & total uploads
     const totalUsers = await prisma.user.count();
+    const totalUploads = await prisma.upload.count();
 
     // Group user berdasarkan prodi
     const usersByProdi = await prisma.user.groupBy({
@@ -489,10 +490,11 @@ export const getUserStats = async (
       };
     });
 
-    logger.info(`Calculated user statistics`, { totalUsers });
+    logger.info(`Calculated user statistics`, { totalUsers, totalUploads });
 
     res.status(200).json({
       totalUsers,
+      totalUploads,
       breakdown: normalized,
     });
     return;

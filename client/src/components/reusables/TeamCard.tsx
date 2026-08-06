@@ -50,9 +50,8 @@ export function TeamCard({
 
   return (
     <div
-      className="group relative w-[260px] overflow-hidden rounded-3xl shadow-2xl transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(0,0,0,0.45)]"
+      className="group relative w-[270px] overflow-hidden rounded-3xl glass-card glass-card-hover border border-white/10 shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-red-500/40"
       style={{
-        background: "#1a1a1f",
         transform: "translateZ(0)",
         willChange: "transform",
       }}

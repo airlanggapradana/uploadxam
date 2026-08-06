@@ -1,5 +1,6 @@
 export interface GetUsersStatsResponse {
   totalUsers: number;
+  totalUploads?: number;
   breakdown: Breakdown[];
 }
 

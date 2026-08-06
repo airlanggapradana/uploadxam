@@ -25,12 +25,13 @@ const slides = [
 
 const SlidesSection = () => {
   return (
-    <section className="to-bg-background bg-black bg-gradient-to-b from-black/40 px-4 py-12 sm:px-6 sm:py-16 md:py-24">
+    <section className="bg-[#050505] border-t border-white/10 px-4 py-16 sm:px-6 sm:py-20 md:py-24 relative overflow-hidden">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-8 text-center sm:mb-10 md:mb-12">
-          <span className="mb-3 inline-block rounded-full border border-red-500 bg-red-700 px-3 py-1 text-xs font-medium text-red-200 sm:mb-4 sm:px-4 sm:py-1.5 sm:text-sm">
-            Presentation
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-950/40 px-3.5 py-1 text-xs font-semibold text-red-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+            <span>Presentasi Platform</span>
           </span>
           <h2 className="mb-3 bg-gradient-to-br from-red-100 to-red-700 bg-clip-text py-4 text-2xl font-extrabold tracking-tight text-transparent sm:mb-4 sm:text-3xl md:text-4xl lg:text-5xl">
             Ini Platform Apa Sih Kak?
