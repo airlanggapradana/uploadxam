@@ -12,6 +12,18 @@ const config = {
   poweredByHeader: false,
   // SEO: consistent URL without trailing slash
   trailingSlash: false,
+  // SEO: redirect URLs that previously returned 404 to the correct pages
+  async redirects() {
+    return [
+      {
+        // /panduan was indexed by Google but the route doesn't exist;
+        // redirect permanently (301) to /docs so Google updates its index.
+        source: "/panduan",
+        destination: "/docs",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
