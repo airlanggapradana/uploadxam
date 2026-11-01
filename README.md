@@ -65,3 +65,21 @@ Melalui UploadXam, setiap mahasiswa dapat:
 - **Google Gemini** — Large Language Model (LLM) untuk AI Assistant.
 - **Retrieval-Augmented Generation (RAG)** — Mengambil konteks dari knowledge base sebelum menghasilkan jawaban.
 - **Markdown Knowledge Base** — Seluruh informasi akademik FKI UMS disimpan dalam dokumen Markdown yang diindeks sebagai sumber pengetahuan AI.
+
+
+---
+
+## ⚡ Cara Menjalankan (Development)
+
+Untuk menjalankan Frontend dan Backend sekaligus dalam satu waktu:
+
+```bash
+# Jalankan dari root folder
+npm run dev
+```
+
+Atau opsi lainnya:
+- **Windows Batch**: Klik ganda atau jalankan `dev.bat`
+- **PowerShell**: Jalankan `.\dev.ps1`
+- **Hanya Backend**: `npm run dev:server`
+- **Hanya Frontend**: `npm run dev:client`
