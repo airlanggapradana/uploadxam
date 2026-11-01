@@ -104,16 +104,8 @@ const Hero = () => {
 
       {/* 2. Hero Content Area */}
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center text-center">
-        {/* Top Pill Badge (Reference Style) */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-950/40 px-3.5 py-1.5 shadow-lg shadow-red-950/40 backdrop-blur-md">
-          <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-red-200 uppercase">
-            <Sparkles className="h-3.5 w-3.5 text-red-400" /> Platform Digital
-            FKI UMS
-          </span>
-        </div>
-
         {/* Hero Title with Red Gradient Accent */}
-        <h1 className="mb-6 max-w-4xl text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-6xl md:text-7xl">
+        <h1 className="mt-10 mb-6 max-w-4xl text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-6xl md:text-7xl">
           Bank Soal Digital <br />
           <span className="glow-text-red bg-gradient-to-r from-red-400 via-rose-500 to-red-600 bg-clip-text text-transparent">
             Arsip UTS & UAS
@@ -385,14 +377,6 @@ const Hero = () => {
               width={180}
               height={40}
               className="h-16 w-auto opacity-80 transition hover:opacity-100"
-            />
-            <div className="h-6 w-px bg-white/20" />
-            <Image
-              src="https://res.cloudinary.com/airlanggapradana/image/upload/v1755442684/LOGO_FOSTI_PUTIH_imvkxw.png"
-              alt="FOSTI UMS"
-              width={100}
-              height={30}
-              className="h-14 w-auto opacity-80 transition hover:opacity-100"
             />
             <div className="h-6 w-px bg-white/20" />
             <Image
