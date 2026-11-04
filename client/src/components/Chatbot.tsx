@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { MessageCircle, X, Send, Loader2, Bot } from "lucide-react";
 import { env } from "@/env";
 import ReactMarkdown from "react-markdown";
@@ -147,8 +148,14 @@ export function Chatbot() {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#5C1A1A] bg-[#240A0A] px-5 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-xl font-bold text-white shadow-inner">
-              <Bot />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-purple-700 to-indigo-600 p-1.5 shadow-inner">
+              <Image
+                src="/logo-icon.webp"
+                alt="Xandy AI"
+                width={32}
+                height={32}
+                className="h-full w-full object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <h3 className="text-base leading-tight font-bold text-white">

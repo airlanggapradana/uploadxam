@@ -33,17 +33,18 @@ const Navbar = () => {
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         {/* Left Brand Logo */}
         <div className="flex items-center gap-3">
-          <Link href="/" className="group flex items-center gap-2.5">
-            <div className="flex flex-col text-left">
-              <div className="flex items-center gap-1">
-                <span className="text-lg font-extrabold tracking-tight text-white sm:text-xl">
-                  Upload<span className="text-red-500">Xam</span>
-                </span>
-              </div>
-              <span className="text-[10px] font-medium tracking-widest text-red-300/80 uppercase">
-                Bank Soal FKI UMS
-              </span>
-            </div>
+          <Link
+            href="/"
+            className="group flex items-center gap-3 transition-transform hover:opacity-95"
+          >
+            <Image
+              src="/logo-dark.webp"
+              alt="UploadXam - Bank Soal Digital FKI UMS"
+              width={160}
+              height={36}
+              priority
+              className="h-8 w-auto object-contain sm:h-10"
+            />
           </Link>
         </div>
 
@@ -147,6 +148,18 @@ const Navbar = () => {
       {/* Mobile Drawer Menu */}
       {open && (
         <div className="mt-3 rounded-2xl border border-white/10 bg-black/95 p-5 shadow-2xl backdrop-blur-2xl md:hidden">
+          <div className="mb-3 flex items-center justify-between border-b border-white/10 px-1 pb-3">
+            <Image
+              src="/logo-dark.webp"
+              alt="UploadXam"
+              width={130}
+              height={28}
+              className="h-7 w-auto object-contain"
+            />
+            <span className="text-[10px] font-semibold tracking-wider text-purple-300 uppercase">
+              FKI UMS
+            </span>
+          </div>
           <div className="flex flex-col gap-3">
             <Link
               href="/"

@@ -112,9 +112,9 @@ const organizationSchema = {
   url: BASE_URL,
   logo: {
     "@type": "ImageObject",
-    url: `${BASE_URL}/favicon_io/android-chrome-512x512.png`,
-    width: 512,
-    height: 512,
+    url: `${BASE_URL}/logo.png`,
+    width: 1733,
+    height: 393,
   },
   description:
     "Platform bank soal digital untuk mahasiswa FKI UMS, dikembangkan oleh FOSTI UMS.",

@@ -4,7 +4,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
-  BookOpen,
   Upload,
   Search,
   Users,
@@ -31,6 +30,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import Image from "next/image";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface NavItem {
@@ -385,10 +385,20 @@ const DocsPage = () => {
                 </SheetTrigger>
                 <SheetContent side="left" className="w-[240px] sm:w-[300px] bg-white dark:bg-gray-900">
                   <div className="flex items-center gap-2 py-4">
-                    <BookOpen className="h-5 w-5 text-slate-900 dark:text-slate-100" />
-                    <span className="text-lg font-bold text-slate-800 dark:text-white">
-                      upload<span className="text-red-600">xam</span>
-                    </span>
+                    <Image
+                      src="/logo.webp"
+                      alt="UploadXam"
+                      width={130}
+                      height={30}
+                      className="h-7 w-auto object-contain dark:hidden"
+                    />
+                    <Image
+                      src="/logo-dark.webp"
+                      alt="UploadXam"
+                      width={130}
+                      height={30}
+                      className="hidden h-7 w-auto object-contain dark:block"
+                    />
                   </div>
                   <Separator className="my-2" />
                   <MobileNavigation />
@@ -397,7 +407,7 @@ const DocsPage = () => {
             )}
             <Link
               href="/"
-              className="flex items-center gap-1 text-xs font-semibold text-slate-600 transition hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 sm:text-sm"
+              className="flex items-center gap-1 text-xs font-semibold text-slate-600 transition hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400 sm:text-sm"
             >
               <ArrowLeft className="h-4 w-4" />
               Beranda
@@ -405,9 +415,24 @@ const DocsPage = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-sm font-black tracking-tight text-slate-800 dark:text-white">
-              upload<span className="text-red-600">xam</span>
-            </span>
+            <Link href="/" className="group flex items-center transition-transform hover:opacity-90">
+              <Image
+                src="/logo.webp"
+                alt="UploadXam"
+                width={130}
+                height={30}
+                priority
+                className="h-7 sm:h-8 w-auto object-contain dark:hidden"
+              />
+              <Image
+                src="/logo-dark.webp"
+                alt="UploadXam"
+                width={130}
+                height={30}
+                priority
+                className="hidden h-7 sm:h-8 w-auto object-contain dark:block"
+              />
+            </Link>
           </div>
 
           <div className="flex items-center gap-3">

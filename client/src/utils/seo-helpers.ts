@@ -59,8 +59,9 @@ export function getDisplayNameFromProdi(prodi: string): string {
   const direct = PRODI_DISPLAY_NAMES[prodi];
   if (direct) return direct;
   const mappedKey = PRODI_SLUG_MAP[prodi];
-  if (mappedKey && PRODI_DISPLAY_NAMES[mappedKey]) {
-    return PRODI_DISPLAY_NAMES[mappedKey];
+  if (mappedKey) {
+    const val = PRODI_DISPLAY_NAMES[mappedKey];
+    if (val) return val;
   }
   return prodi;
 }

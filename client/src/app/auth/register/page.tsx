@@ -1,13 +1,13 @@
 import React from "react";
 import {
   Card,
-  CardAction,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import RegisterForm from "@/components/auth/RegisterForm";
 import Link from "next/link";
+import Image from "next/image";
+import RegisterForm from "@/components/auth/RegisterForm";
 import type { Metadata } from "next";
 import media from "../../../../public/media.png";
 
@@ -73,18 +73,35 @@ const Register = () => {
   return (
     <main className="relative z-20 flex min-h-screen flex-col items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
       <Card className="w-full max-w-2xl rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-white/3 to-white/6 p-6 shadow-2xl backdrop-blur-lg sm:p-8">
-        <div className="mb-4 flex items-center justify-between">
-          <Link href="/" className="text-sm text-white/70 hover:text-white/90">
-            ← Back to Home
+        <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+          <Link
+            href="/"
+            className="group flex items-center gap-2 transition-transform hover:opacity-90"
+          >
+            <Image
+              src="/logo-dark.webp"
+              alt="UploadXam"
+              width={140}
+              height={32}
+              priority
+              className="h-8 w-auto object-contain"
+            />
           </Link>
-          <CardAction className="p-0">
+          <div className="flex items-center gap-3">
             <Link
               href={"/auth/login"}
-              className="text-sm text-sky-400 transition-colors hover:text-sky-300"
+              className="text-xs sm:text-sm text-purple-300 transition-colors hover:text-purple-200"
             >
               Udah punya akun?
             </Link>
-          </CardAction>
+            <span className="text-white/30">•</span>
+            <Link
+              href="/"
+              className="text-xs sm:text-sm text-white/70 hover:text-white"
+            >
+              Beranda
+            </Link>
+          </div>
         </div>
 
         <CardHeader className="border-b border-white/10">
