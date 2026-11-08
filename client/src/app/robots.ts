@@ -21,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/dashboard/", "/api/", "/auth/"],
       },
     ],
-    sitemap: "https://uploadxam.fostiums.org/sitemap.xml",
-    host: "https://uploadxam.fostiums.org",
+    sitemap: "https://www.uploadxam.web.id/sitemap.xml",
+    host: "https://www.uploadxam.web.id",
   };
 }

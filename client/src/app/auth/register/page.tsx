@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 import media from "../../../../public/media.png";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://uploadxam.fostiums.org/auth/register"),
+  metadataBase: new URL("https://www.uploadxam.web.id/auth/register"),
   title: "UploadXam | Register Akun",
   description:
     "Merupakan solusi digital untuk mengelola soal-soal ujian mahasiswa dari semua prodi di FKI UMS.",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://uploadxam.fostiums.org/auth/register",
+    url: "https://www.uploadxam.web.id/auth/register",
     title: "UploadXam | Bank Soal Digital FKI UMS",
     description:
       "Merupakan solusi digital untuk mengelola soal-soal ujian mahasiswa dari semua prodi di FKI UMS.",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     images: [media.src],
   },
   alternates: {
-    canonical: "https://uploadxam.fostiums.org/auth/register",
+    canonical: "https://www.uploadxam.web.id/auth/register",
   },
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

@@ -10,7 +10,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { JsonLd } from "@/components/reusables/JsonLd";
 import media from "../../public/media.png";
 
-const BASE_URL = "https://uploadxam.fostiums.org";
+const BASE_URL = "https://www.uploadxam.web.id";
 const OG_IMAGE = `${BASE_URL}${media.src}`;
 
 export const viewport: Viewport = {

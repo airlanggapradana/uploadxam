@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://uploadxam.fostiums.org",
+  siteUrl: "https://www.uploadxam.web.id",
   generateRobotsTxt: true,
   sitemapSize: 7000,
 };

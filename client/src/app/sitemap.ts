@@ -3,7 +3,7 @@ import { PRODI_SLUG_MAP, slugify } from "@/utils/seo-helpers";
 import { COURSES_BY_PRODI } from "@/data/courses";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://uploadxam.fostiums.org";
+  const baseUrl = "https://www.uploadxam.web.id";
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [

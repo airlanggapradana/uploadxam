@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { COURSES_BY_PRODI } from "@/data/courses";
 
-export const BASE_URL = "https://uploadxam.fostiums.org";
+export const BASE_URL = "https://www.uploadxam.web.id";
 
 export const PRODI_SLUG_MAP: Record<string, string> = {
   "teknik-informatika": "Informatika",
